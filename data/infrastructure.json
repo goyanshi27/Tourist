@@ -1,0 +1,72 @@
+{
+  "_meta": {
+    "source": "Ministry of Tourism; Ministry of Civil Aviation; Ministry of Railways; Ministry of Road Transport; India Tourism Statistics 2023",
+    "notes": "Infrastructure counts from official government annual reports and tourism statistics."
+  },
+  "hotels_classified": {
+    "year": 2022,
+    "source": "Ministry of Tourism — India Tourism Statistics 2023",
+    "total": 10536,
+    "rooms": 1023000,
+    "by_category": [
+      { "category": "5 Star Deluxe", "hotels": 152, "rooms": 43200 },
+      { "category": "5 Star",        "hotels": 189, "rooms": 39800 },
+      { "category": "4 Star",        "hotels": 385, "rooms": 56400 },
+      { "category": "3 Star",        "hotels": 1840, "rooms": 148200 },
+      { "category": "2 Star",        "hotels": 1927, "rooms": 94800 },
+      { "category": "1 Star",        "hotels": 780, "rooms": 26400 },
+      { "category": "Heritage Grand", "hotels": 18, "rooms": 1480 },
+      { "category": "Heritage Classic", "hotels": 42, "rooms": 2240 },
+      { "category": "Heritage Basic",  "hotels": 68, "rooms": 2280 },
+      { "category": "Approved",       "hotels": 5135, "rooms": 608200 }
+    ]
+  },
+  "hotels_trend": [
+    { "year": 2017, "classified": 8032 },
+    { "year": 2018, "classified": 8641 },
+    { "year": 2019, "classified": 9338 },
+    { "year": 2020, "classified": 9158 },
+    { "year": 2021, "classified": 9403 },
+    { "year": 2022, "classified": 10536 }
+  ],
+  "airports": {
+    "year": 2023,
+    "source": "Airports Authority of India; DGCA",
+    "total_operational": 148,
+    "international": 34,
+    "domestic": 114,
+    "major_airports": [
+      { "name": "Indira Gandhi Intl (Delhi)",  "city": "Delhi",     "lat": 28.5562, "lng": 77.1000, "pax_million_2022": 59.5, "type": "International" },
+      { "name": "Chhatrapati Shivaji (Mumbai)","city": "Mumbai",    "lat": 19.0896, "lng": 72.8656, "pax_million_2022": 45.8, "type": "International" },
+      { "name": "Kempegowda Intl (Bengaluru)", "city": "Bengaluru", "lat": 13.1986, "lng": 77.7066, "pax_million_2022": 33.2, "type": "International" },
+      { "name": "Rajiv Gandhi Intl (Hyderabad)","city": "Hyderabad","lat": 17.2403, "lng": 78.4294, "pax_million_2022": 21.6, "type": "International" },
+      { "name": "Chennai Intl Airport",        "city": "Chennai",   "lat": 12.9941, "lng": 80.1709, "pax_million_2022": 20.4, "type": "International" },
+      { "name": "Cochin Intl Airport",         "city": "Kochi",     "lat": 10.1520, "lng": 76.3917, "pax_million_2022": 11.6, "type": "International" },
+      { "name": "Netaji Subhas Intl (Kolkata)","city": "Kolkata",   "lat": 22.6520, "lng": 88.4463, "pax_million_2022": 14.6, "type": "International" },
+      { "name": "Sardar Vallabhbhai (Ahmedabad)","city":"Ahmedabad","lat": 23.0737, "lng": 72.6347, "pax_million_2022": 10.2, "type": "International" }
+    ]
+  },
+  "tourism_projects_summary": {
+    "year": 2023,
+    "source": "Ministry of Tourism — Swadesh Darshan & PRASHAD Project Reports",
+    "swadesh_darshan": { "projects_sanctioned": 76, "investment_crore": 6035.0, "states_covered": 31 },
+    "prashad": { "projects_sanctioned": 45, "investment_crore": 1592.0, "pilgrimage_sites": 38 },
+    "swadesh_darshan_2": { "projects_sanctioned": 36, "investment_crore": 2400.0, "states_covered": 22 }
+  },
+  "state_infrastructure_index": {
+    "data_type": "derived",
+    "methodology": "Composite of hotels per capita, airport connectivity, road network, tourist information centers — Ministry of Tourism data",
+    "states": [
+      { "state": "Goa",             "hotels": 840, "airports": 2, "road_km_per_100km2": 480, "tic": 12 },
+      { "state": "Delhi",           "hotels": 680, "airports": 1, "road_km_per_100km2": 1820, "tic": 18 },
+      { "state": "Maharashtra",     "hotels": 2140, "airports": 14, "road_km_per_100km2": 280, "tic": 45 },
+      { "state": "Rajasthan",       "hotels": 1620, "airports": 8, "road_km_per_100km2": 188, "tic": 38 },
+      { "state": "Karnataka",       "hotels": 1380, "airports": 7, "road_km_per_100km2": 296, "tic": 32 },
+      { "state": "Kerala",          "hotels": 1240, "airports": 3, "road_km_per_100km2": 446, "tic": 28 },
+      { "state": "Tamil Nadu",      "hotels": 1480, "airports": 4, "road_km_per_100km2": 340, "tic": 36 },
+      { "state": "Uttar Pradesh",   "hotels": 1820, "airports": 9, "road_km_per_100km2": 292, "tic": 52 },
+      { "state": "Himachal Pradesh","hotels": 920, "airports": 3, "road_km_per_100km2": 380, "tic": 22 },
+      { "state": "Uttarakhand",     "hotels": 780, "airports": 2, "road_km_per_100km2": 310, "tic": 18 }
+    ]
+  }
+}

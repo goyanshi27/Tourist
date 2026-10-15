@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Tourists — India in Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/animations.css">
+<link rel="stylesheet" href="../css/responsive.css">
+<style>
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-5);margin-bottom:var(--space-5);}
+.pg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-5);margin-bottom:var(--space-5);}
+.crow{display:grid;grid-template-columns:28px 1fr 90px 90px 90px;align-items:center;gap:12px;padding:9px 16px;border-bottom:1px solid var(--border-subtle);font-family:'Inter',sans-serif;font-size:.82rem;}
+.crow:hover{background:var(--bg-elevated);}
+.gbar-wrap{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-subtle);}
+.gbar{flex:1;height:5px;background:var(--bg-elevated);border-radius:3px;overflow:hidden;}
+.gbar-fill{height:100%;background:linear-gradient(90deg,var(--saffron),var(--gold));border-radius:3px;}
+@media(max-width:1023px){.pg3{grid-template-columns:1fr 1fr;}}
+@media(max-width:767px){.pg,.pg3{grid-template-columns:1fr;}.crow{grid-template-columns:1fr 80px;}}
+</style>
+</head>
+<body>
+<div id="cursor-light" aria-hidden="true"></div>
+<div id="scroll-progress" aria-hidden="true"></div>
+<nav id="main-nav" class="visible" role="navigation">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo"><span class="nav-logo-title">INDIA IN MOTION</span><span class="nav-logo-sub">Tourism Intelligence Atlas</span></a>
+    <ul class="nav-links" role="list">
+      <li><a href="../index.html">Overview</a></li><li><a href="tourists.html" class="active" aria-current="page">Tourists</a></li>
+      <li><a href="destinations.html">Destinations</a></li><li><a href="states.html">States</a></li>
+      <li><a href="economy.html">Economy</a></li><li><a href="culture.html">Culture</a></li>
+      <li><a href="infrastructure.html">Infrastructure</a></li><li><a href="sustainability.html">Sustainability</a></li>
+      <li><a href="insights.html">Insights</a></li><li><a href="data-lab.html">Data Lab</a></li>
+    </ul>
+    <div class="nav-controls">
+      <button id="search-open-btn" class="nav-btn" aria-label="Search"><i class="fas fa-search"></i></button>
+      <button id="theme-toggle" class="nav-btn" aria-label="Toggle theme"><i class="fas fa-sun"></i></button>
+      <button id="fullscreen-btn" class="nav-btn" aria-label="Fullscreen"><i class="fas fa-expand"></i></button>
+      <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+</nav>
+<div id="mobile-nav-drawer" class="mobile-nav-drawer">
+  <a href="../index.html">Overview</a><a href="tourists.html">Tourists</a><a href="destinations.html">Destinations</a>
+  <a href="states.html">States</a><a href="economy.html">Economy</a><a href="culture.html">Culture</a>
+  <a href="infrastructure.html">Infrastructure</a><a href="sustainability.html">Sustainability</a>
+  <a href="insights.html">Insights</a><a href="data-lab.html">Data Lab</a>
+</div>
+<div id="search-overlay" role="search"><div class="search-input-wrap"><input type="text" id="search-input" placeholder="Search destinations, states, countries..."><button class="search-close" id="search-close"><i class="fas fa-times"></i></button></div><div id="search-results" class="search-results"></div></div>
+
+<main class="page-wrapper page-content">
+<header style="background:var(--bg-secondary);border-bottom:1px solid var(--border-subtle);padding:var(--space-12) 0 var(--space-8);">
+  <div class="container-wide">
+    <p class="section-label animate-in">International Tourism</p>
+    <h1 class="section-title animate-in" style="font-size:clamp(2rem,4vw,3.2rem);">Where Does the World Come From?</h1>
+    <p class="section-desc animate-in">Source markets, arrival trends, continental distribution and entry gateways of India's international tourism.</p>
+  </div>
+</header>
+
+<div class="container-wide" style="padding:var(--space-10) 0 var(--space-16);">
+
+  <!-- KPIs -->
+  <div class="kpi-grid stagger-children" style="margin-bottom:var(--space-8);">
+    <article class="kpi-card"><p class="kpi-label">Total FTA 2022</p><div style="display:flex;align-items:baseline;gap:6px;"><span class="kpi-value"><span class="counter" data-target="6.19" data-decimals="2">—</span></span><span class="kpi-unit">Million</span></div><div class="kpi-change positive"><i class="fas fa-arrow-up"></i>+306% vs 2021</div><p class="kpi-source"><strong>Source:</strong> Bureau of Immigration · 2022</p></article>
+    <article class="kpi-card"><p class="kpi-label">Top Source Country</p><div style="display:flex;align-items:baseline;"><span class="kpi-value" style="font-size:1.4rem;">Bangladesh</span></div><div class="kpi-change positive">32.2% market share</div><p class="kpi-source"><strong>Source:</strong> Ministry of Tourism · 2022</p></article>
+    <article class="kpi-card"><p class="kpi-label">Top Entry Gateway</p><div style="display:flex;align-items:baseline;"><span class="kpi-value" style="font-size:1.4rem;">Delhi</span></div><div class="kpi-change positive">36.2% of arrivals</div><p class="kpi-source"><strong>Source:</strong> Bureau of Immigration · 2022</p></article>
+    <article class="kpi-card"><p class="kpi-label">FTA Recovery vs 2019</p><div style="display:flex;align-items:baseline;gap:6px;"><span class="kpi-value"><span class="counter" data-target="56.6" data-decimals="1">—</span></span><span class="kpi-unit">%</span></div><div class="kpi-change positive"><i class="fas fa-arrow-up"></i>Recovering</div><p class="kpi-source"><strong>Source:</strong> Derived from Ministry of Tourism</p></article>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tab-nav" role="tablist">
+    <button class="tab-btn active" data-tab="t-sources">Source Markets</button>
+    <button class="tab-btn" data-tab="t-continents">Continents</button>
+    <button class="tab-btn" data-tab="t-gateways">Gateways</button>
+    <button class="tab-btn" data-tab="t-trends">Trends</button>
+    <button class="tab-btn" data-tab="t-purpose">Purpose</button>
+  </div>
+
+  <div id="t-sources" class="tab-panel active">
+    <div class="pg">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Top 10 Source Markets</p><p class="chart-subtitle">Arrivals (Thousand) · 2022</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:300px;"><canvas id="ch-top10"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Bureau of Immigration · Thousand · 2022</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Continental Distribution</p><p class="chart-subtitle">Share of FTA by continent · 2022</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:300px;"><canvas id="ch-cont-donut"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism · 2022</p></div></div>
+    </div>
+    <div class="chart-card animate-in">
+      <div class="chart-header"><div><p class="chart-title">All Source Market Rankings</p><p class="chart-subtitle">Ranked by 2022 arrivals · with YoY change</p></div><span class="chart-badge official">Official</span></div>
+      <div style="padding:0;"><div style="display:grid;grid-template-columns:30px 1fr 90px 80px 90px;gap:12px;padding:8px 16px;border-bottom:1px solid var(--border-light);background:var(--bg-elevated);"><span class="label-caps">#</span><span class="label-caps">Country</span><span class="label-caps" style="text-align:right;">Arrivals</span><span class="label-caps" style="text-align:right;">Share</span><span class="label-caps" style="text-align:right;">YoY</span></div><div id="country-table" style="max-height:380px;overflow-y:auto;"></div></div>
+      <div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Bureau of Immigration · Thousand · 2022</p></div>
+    </div>
+  </div>
+
+  <div id="t-continents" class="tab-panel">
+    <div class="pg3">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Continental Arrivals</p><p class="chart-subtitle">FTA by continent (Thousand) · 2022</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:240px;"><canvas id="ch-cont-bar"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism · 2022</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Recovery vs 2019</p><p class="chart-subtitle">Estimated recovery by continent (%)</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:240px;"><canvas id="ch-recovery"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Derived from Ministry of Tourism</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Top Asian Markets</p><p class="chart-subtitle">Asian source countries (Thousand) · 2022</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:240px;"><canvas id="ch-asia"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Bureau of Immigration · 2022</p></div></div>
+    </div>
+  </div>
+
+  <div id="t-gateways" class="tab-panel">
+    <div class="pg">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Entry Gateway Arrivals</p><p class="chart-subtitle">International arrivals by airport (Thousand) · 2022</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:320px;"><canvas id="ch-gw-bar"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Bureau of Immigration · 2022</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Gateway Share</p><p class="chart-subtitle">% of total international arrivals</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:320px;"><canvas id="ch-gw-donut"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Bureau of Immigration · 2022</p></div></div>
+    </div>
+    <div class="chart-card animate-in"><div class="chart-header"><p class="chart-title">Gateway Breakdown</p></div><div id="gw-list" style="padding:var(--space-4) var(--space-6);"></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Bureau of Immigration · 2022</p></div></div>
+  </div>
+
+  <div id="t-trends" class="tab-panel">
+    <div class="pg">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Top 5 Markets — Historical Trend</p><p class="chart-subtitle">Arrivals (Thousand) · 2017–2022</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:300px;"><canvas id="ch-market-trend"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism · 2017–2022</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Total FTA Trend</p><p class="chart-subtitle">Foreign tourist arrivals (Million) · 2013–2023</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:300px;"><canvas id="ch-fta-trend"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism · 2013–2023</p></div></div>
+    </div>
+  </div>
+
+  <div id="t-purpose" class="tab-panel">
+    <div style="background:var(--saffron-dim);border:1px solid var(--border-saffron);border-radius:var(--radius-md);padding:var(--space-4) var(--space-5);margin-bottom:var(--space-5);display:flex;gap:12px;"><i class="fas fa-circle-info" style="color:var(--saffron);flex-shrink:0;margin-top:2px;"></i><p style="font-size:.82rem;color:var(--text-secondary);line-height:1.6;"><strong style="color:var(--text-primary);">Data Note:</strong> Purpose of visit figures are indicative estimates from India Tourism Statistics 2023 survey data. These are <strong>illustrative</strong> — not precise official breakdowns.</p></div>
+    <div class="pg">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Purpose of Visit</p><p class="chart-subtitle">Indicative distribution</p></div><span class="chart-badge illustrative">Illustrative</span></div><div class="chart-body" style="height:300px;"><canvas id="ch-purpose"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> India Tourism Statistics 2023 · Survey-based estimate · Illustrative</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Purpose by Region</p><p class="chart-subtitle">Indicative purpose split by continent</p></div><span class="chart-badge illustrative">Illustrative</span></div><div class="chart-body" style="height:300px;"><canvas id="ch-purpose-region"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> India Tourism Statistics 2023 · Illustrative only</p></div></div>
+    </div>
+  </div>
+
+</div>
+<footer style="background:var(--bg-secondary);border-top:1px solid var(--border-subtle);padding:var(--space-6) 0;"><div class="container-wide" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;"><p style="font-family:'Playfair Display',serif;font-weight:700;color:var(--text-primary);">INDIA IN MOTION</p><p style="font-size:.68rem;color:var(--text-muted);">Data: Ministry of Tourism, GoI · Bureau of Immigration · 2022</p></div></footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="../js/data-loader.js"></script>
+<script src="../js/charts.js"></script>
+<script src="../js/page-common.js"></script>
+<script>
+setTimeout(function() {
+(function(){
+  const D = window.TOURISM_DATA;
+  const cn = D['countries'];
+  const nat = D['national-tourism'];
+  const top10 = cn.top_sources_2022.slice(0,10);
+  const cont  = cn.continental_2022;
+  const tr    = cn.trend_top5;
+  const gw = [{name:'Delhi',v:2241.4,s:36.2},{name:'Mumbai',v:1178.3,s:19.0},{name:'Chennai',v:612.4,s:9.9},{name:'Bengaluru',v:521.8,s:8.4},{name:'Hyderabad',v:248.2,s:4.0},{name:'Kolkata',v:245.0,s:4.0},{name:'Kochi',v:218.9,s:3.5},{name:'Others',v:817.5,s:13.2}];
+
+  ChartFactory.horizontalBar('ch-top10', top10.map(c=>c.country), [{label:'Arrivals (K)',data:top10.map(c=>c.arrivals),colors:ChartFactory.PALETTE}], {plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>v+'K'}}}});
+  ChartFactory.donut('ch-cont-donut', cont.map(c=>c.continent), cont.map(c=>c.arrivals), ChartFactory.PALETTE);
+  ChartFactory.bar('ch-cont-bar', cont.map(c=>c.continent), [{label:'Arrivals (K)',data:cont.map(c=>c.arrivals),colors:ChartFactory.PALETTE}], {plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>v+'K'}}}});
+  ChartFactory.bar('ch-recovery', ['Asia','Europe','Americas','Middle East','Africa','Oceania'], [{label:'Recovery %',data:[62,55,44,48,35,57],colors:['#40916C','#40916C','#E8770A','#E8770A','#E05252','#40916C']}], {plugins:{legend:{display:false}},scales:{y:{max:100,ticks:{callback:v=>v+'%'}}}});
+  const asian = cn.top_sources_2022.filter(c=>c.continent==='Asia').slice(0,6);
+  ChartFactory.horizontalBar('ch-asia', asian.map(c=>c.country), [{label:'Arrivals (K)',data:asian.map(c=>c.arrivals),color:'#E8770A'}], {plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>v+'K'}}}});
+  ChartFactory.horizontalBar('ch-gw-bar', gw.map(g=>g.name), [{label:'Arrivals (K)',data:gw.map(g=>g.v),colors:ChartFactory.PALETTE}], {plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>v+'K'}}}});
+  ChartFactory.donut('ch-gw-donut', gw.map(g=>g.name), gw.map(g=>g.v), ChartFactory.PALETTE);
+
+  const gwEl = document.getElementById('gw-list');
+  if(gwEl) gwEl.innerHTML = gw.map((g,i)=>`<div class="gbar-wrap"><span style="font-family:'Inter',sans-serif;font-size:.7rem;font-weight:700;color:var(--text-muted);width:20px;">${i+1}</span><span style="font-size:.85rem;color:var(--text-primary);width:110px;flex-shrink:0;">${g.name}</span><div class="gbar"><div class="gbar-fill" style="width:${(g.v/2241.4*100).toFixed(0)}%;"></div></div><span style="font-family:'Inter',sans-serif;font-size:.78rem;font-weight:600;color:var(--text-primary);width:80px;text-align:right;">${g.v.toLocaleString()}K</span><span style="font-size:.72rem;color:var(--text-muted);width:50px;text-align:right;">${g.s}%</span></div>`).join('');
+
+  ChartFactory.line('ch-market-trend', tr.years, [{label:'Bangladesh',data:tr.Bangladesh,color:'#E8770A'},{label:'USA',data:tr.USA,color:'#C8A84B'},{label:'UK',data:tr.UK,color:'#40916C'},{label:'Canada',data:tr.Canada,color:'#7B9EA6'},{label:'Australia',data:tr.Australia,color:'#B5470B'}], {scales:{y:{ticks:{callback:v=>v+'K'}}}});
+  ChartFactory.area('ch-fta-trend', nat.yearly.map(y=>y.year), [{label:'FTA (M)',data:nat.yearly.map(y=>y.fta),color:'#E8770A',fill:true}], {plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>v+'M'}}}});
+  ChartFactory.donut('ch-purpose', ['Leisure','Business','Pilgrimage','Medical','Visiting F&R','Education','Other'], [41,15,18,6,10,3,7], ChartFactory.PALETTE);
+  ChartFactory.stackedBar('ch-purpose-region', ['Asia','Europe','Americas','Middle East','Oceania'], [{label:'Leisure',data:[35,58,62,40,70],color:'#E8770A'},{label:'Business',data:[18,20,16,32,14],color:'#C8A84B'},{label:'Pilgrimage',data:[25,8,6,10,4],color:'#40916C'},{label:'Other',data:[22,14,16,18,12],color:'#7B9EA6'}], {scales:{x:{stacked:true},y:{stacked:true,ticks:{callback:v=>v+'%'}}}});
+
+  const ctEl = document.getElementById('country-table');
+  if(ctEl) ctEl.innerHTML = cn.top_sources_2022.map(c=>{const chg=((c.arrivals-c.prev_year)/c.prev_year*100).toFixed(1);const pos=parseFloat(chg)>=0;return `<div class="crow"><span style="color:var(--text-muted);text-align:center;">${c.rank}</span><span style="color:var(--text-primary);">${c.country} <span style="color:var(--text-muted);font-size:.7rem;">${c.continent}</span></span><span style="text-align:right;font-weight:600;">${c.arrivals.toFixed(1)}K</span><span style="text-align:right;color:var(--text-secondary);">${c.share_pct}%</span><span style="text-align:right;color:${pos?'var(--positive)':'var(--negative)'};font-weight:600;">${pos?'+':''}${chg}%</span></div>`;}).join('');
+})();
+}, 50);
+</script>
+</body></html>

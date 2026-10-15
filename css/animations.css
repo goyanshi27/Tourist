@@ -1,0 +1,250 @@
+/* ============================================================
+   INDIA IN MOTION — Animation System
+   ============================================================ */
+
+/* ── Reduced Motion Support ──────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  #cursor-light { display: none; }
+}
+
+/* ── Intro Animations ────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes drawLine {
+  from { stroke-dashoffset: 1000; }
+  to   { stroke-dashoffset: 0; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(200,168,75,0); }
+  50%       { box-shadow: 0 0 16px 4px rgba(200,168,75,0.15); }
+}
+
+@keyframes mapPulse {
+  0%   { r: 3; opacity: 0.8; }
+  50%  { r: 6; opacity: 0.4; }
+  100% { r: 3; opacity: 0.8; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-6px); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+/* ── Loading Skeleton ────────────────────────────────────── */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-elevated) 25%,
+    var(--bg-tertiary) 50%,
+    var(--bg-elevated) 75%
+  );
+  background-size: 400px 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Number Counter Animation ────────────────────────────── */
+.counter {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+  will-change: contents;
+}
+
+/* ── Sparkline Animation ─────────────────────────────────── */
+.sparkline-path {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  transition: stroke-dashoffset 1s ease 0.3s;
+}
+
+.sparkline-path.drawn { stroke-dashoffset: 0; }
+
+/* ── Map Point Animations ────────────────────────────────── */
+.map-point {
+  transform-origin: center;
+}
+
+.map-point circle.pulse {
+  animation: mapPulse 2s ease-in-out infinite;
+}
+
+.map-connection {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawLine 2s ease forwards;
+}
+
+/* ── Card Interactions ───────────────────────────────────── */
+.kpi-card,
+.chart-card,
+.destination-card {
+  will-change: transform;
+}
+
+.card-hover-lift {
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.card-hover-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ── Intro Sequence Classes ─────────────────────────────── */
+.intro-animate-1 { animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.4s both; }
+.intro-animate-2 { animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.7s both; }
+.intro-animate-3 { animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) 1.0s both; }
+.intro-animate-4 { animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) 1.3s both; }
+.intro-animate-5 { animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) 1.6s both; }
+
+/* ── Stagger Grid Animations ─────────────────────────────── */
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.stagger-children.visible > *:nth-child(1)  { opacity: 1; transform: none; transition-delay: 0.0s; }
+.stagger-children.visible > *:nth-child(2)  { opacity: 1; transform: none; transition-delay: 0.08s; }
+.stagger-children.visible > *:nth-child(3)  { opacity: 1; transform: none; transition-delay: 0.16s; }
+.stagger-children.visible > *:nth-child(4)  { opacity: 1; transform: none; transition-delay: 0.24s; }
+.stagger-children.visible > *:nth-child(5)  { opacity: 1; transform: none; transition-delay: 0.32s; }
+.stagger-children.visible > *:nth-child(6)  { opacity: 1; transform: none; transition-delay: 0.40s; }
+.stagger-children.visible > *:nth-child(7)  { opacity: 1; transform: none; transition-delay: 0.48s; }
+.stagger-children.visible > *:nth-child(8)  { opacity: 1; transform: none; transition-delay: 0.56s; }
+
+/* ── Intro Canvas Particles ──────────────────────────────── */
+#intro-canvas {
+  opacity: 0.6;
+}
+
+/* ── Transition Overlay ──────────────────────────────────── */
+#transition-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-primary);
+  z-index: calc(var(--z-top) - 1);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#transition-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ── Scroll Progress ─────────────────────────────────────── */
+#scroll-progress {
+  position: fixed;
+  top: 62px;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--saffron), var(--gold));
+  z-index: var(--z-nav);
+  transition: width 0.1s linear;
+  transform-origin: left;
+}
+
+/* ── Tooltip Animate ─────────────────────────────────────── */
+.tooltip-custom.visible { opacity: 1; }
+
+/* ── Chart Entry Animations ──────────────────────────────── */
+.chart-entering {
+  animation: scaleIn 0.5s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+/* ── Story Mode Parallax ─────────────────────────────────── */
+.story-bg-text {
+  opacity: 0.03;
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 20vw, 18rem);
+  font-weight: 900;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  color: var(--ivory);
+  line-height: 1;
+}
+
+/* ── India 360 Orbit Animation ───────────────────────────── */
+.orbit-item {
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1),
+              opacity 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+.orbit-item:hover {
+  transform: scale(1.08);
+  z-index: 10;
+}
+
+/* ── Gauge Needle ────────────────────────────────────────── */
+@keyframes needleIn {
+  from { transform: rotate(-130deg); }
+}
+
+/* ── Waterfall Bar Entry ──────────────────────────────────── */
+.waterfall-bar {
+  transition: height 0.6s cubic-bezier(0.16,1,0.3,1), y 0.6s cubic-bezier(0.16,1,0.3,1);
+}
+
+/* ── Flow Path Animation ─────────────────────────────────── */
+@keyframes flowDash {
+  to { stroke-dashoffset: 0; }
+}
+
+.flow-path {
+  stroke-dasharray: 8 4;
+  stroke-dashoffset: 48;
+  animation: flowDash 2s linear infinite;
+}
+
+/* ── Highlight Pulse (for search results) ────────────────── */
+@keyframes highlightPulse {
+  0%   { background: var(--gold-dim); }
+  100% { background: transparent; }
+}
+
+.highlight-pulse {
+  animation: highlightPulse 1.5s ease forwards;
+}

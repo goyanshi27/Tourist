@@ -1,0 +1,51 @@
+{
+  "_meta": {
+    "source": "Ministry of Environment, Forest & Climate Change; Ministry of Tourism; Wildlife Institute of India; India Tourism Statistics",
+    "notes": "Sustainability indicators derived from official sources. Tourism pressure index is a derived analytical metric — not an official government index."
+  },
+  "protected_areas": {
+    "year": 2023,
+    "source": "Ministry of Environment, Forest & Climate Change",
+    "national_parks": 106,
+    "wildlife_sanctuaries": 551,
+    "tiger_reserves": 54,
+    "biosphere_reserves": 18,
+    "ramsar_wetlands": 75,
+    "total_protected_area_sq_km": 165088
+  },
+  "eco_tourism_destinations": [
+    { "name": "Munnar",        "state": "Kerala",          "type": "Nature",   "lat": 10.0889, "lng": 77.0595 },
+    { "name": "Coorg",         "state": "Karnataka",       "type": "Nature",   "lat": 12.3375, "lng": 75.8069 },
+    { "name": "Spiti Valley",  "state": "Himachal Pradesh","type": "Adventure","lat": 32.2461, "lng": 78.0338 },
+    { "name": "Ziro Valley",   "state": "Arunachal Pradesh","type": "Cultural","lat": 27.5486, "lng": 93.8284 },
+    { "name": "Chilika Lake",  "state": "Odisha",          "type": "Wildlife", "lat": 19.7167, "lng": 85.3167 },
+    { "name": "Rann of Kutch", "state": "Gujarat",         "type": "Nature",   "lat": 23.7337, "lng": 70.7000 },
+    { "name": "Majuli Island", "state": "Assam",           "type": "Cultural", "lat": 26.9500, "lng": 94.2167 },
+    { "name": "Tawang",        "state": "Arunachal Pradesh","type": "Nature",  "lat": 27.5860, "lng": 91.8670 }
+  ],
+  "tourism_pressure_index": {
+    "data_type": "derived",
+    "methodology": "Derived from tourist volume relative to state area and population. Not an official government metric.",
+    "note": "Higher index indicates greater relative visitor concentration.",
+    "states": [
+      { "state": "Goa",               "visitors_2022": 7.4,  "area_km2": 3702,   "population_million": 1.6, "index": 9.2 },
+      { "state": "Delhi",             "visitors_2022": 18.2, "area_km2": 1484,   "population_million": 20.0, "index": 8.4 },
+      { "state": "Uttar Pradesh",     "visitors_2022": 321.6,"area_km2": 240928, "population_million": 241.5, "index": 7.1 },
+      { "state": "Rajasthan",         "visitors_2022": 76.6, "area_km2": 342239, "population_million": 81.0, "index": 5.8 },
+      { "state": "Tamil Nadu",        "visitors_2022": 225.3,"area_km2": 130058, "population_million": 77.8, "index": 7.8 },
+      { "state": "Kerala",            "visitors_2022": 63.0, "area_km2": 38852,  "population_million": 35.7, "index": 7.4 },
+      { "state": "Himachal Pradesh",  "visitors_2022": 19.1, "area_km2": 55673,  "population_million": 7.5, "index": 6.8 },
+      { "state": "Uttarakhand",       "visitors_2022": 38.4, "area_km2": 53483,  "population_million": 11.1, "index": 6.9 },
+      { "state": "Karnataka",         "visitors_2022": 155.6,"area_km2": 191791, "population_million": 67.6, "index": 6.2 },
+      { "state": "Maharashtra",       "visitors_2022": 121.0,"area_km2": 307713, "population_million": 126.4, "index": 5.2 }
+    ]
+  },
+  "sustainability_initiatives": [
+    { "name": "Swadesh Darshan 2.0",  "focus": "Sustainable & Responsible Tourism", "ministry": "Tourism", "year": 2022 },
+    { "name": "PRASHAD Scheme",       "focus": "Pilgrimage Rejuvenation", "ministry": "Tourism", "year": 2015 },
+    { "name": "Incredible India 2.0", "focus": "Sustainable Tourism Marketing", "ministry": "Tourism", "year": 2017 },
+    { "name": "Project Tiger",        "focus": "Tiger Conservation", "ministry": "Environment", "year": 1973 },
+    { "name": "Project Elephant",     "focus": "Elephant Conservation", "ministry": "Environment", "year": 1992 },
+    { "name": "Green Tourism Certification", "focus": "Eco-Hotel Standards", "ministry": "Tourism", "year": 2019 }
+  ]
+}

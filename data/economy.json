@@ -1,0 +1,74 @@
+{
+  "_meta": {
+    "source": "Reserve Bank of India; Ministry of Tourism; World Travel & Tourism Council (WTTC); India Tourism Statistics 2023",
+    "notes": "Tourism GDP contribution figures sourced from WTTC India 2023 report. Employment from WTTC and Ministry of Tourism."
+  },
+  "forex_earnings": [
+    { "year": 2013, "usd_billion": 18.4, "inr_billion": 1088.0, "growth_pct": null },
+    { "year": 2014, "usd_billion": 20.2, "inr_billion": 1236.0, "growth_pct": 9.8 },
+    { "year": 2015, "usd_billion": 21.1, "inr_billion": 1351.0, "growth_pct": 4.5 },
+    { "year": 2016, "usd_billion": 22.9, "inr_billion": 1543.0, "growth_pct": 8.5 },
+    { "year": 2017, "usd_billion": 27.3, "inr_billion": 1769.0, "growth_pct": 19.2 },
+    { "year": 2018, "usd_billion": 28.7, "inr_billion": 1941.0, "growth_pct": 5.1 },
+    { "year": 2019, "usd_billion": 30.1, "inr_billion": 2109.0, "growth_pct": 4.9 },
+    { "year": 2020, "usd_billion": 6.9,  "inr_billion": 507.0,  "growth_pct": -77.1 },
+    { "year": 2021, "usd_billion": 8.8,  "inr_billion": 655.0,  "growth_pct": 27.5 },
+    { "year": 2022, "usd_billion": 14.0, "inr_billion": 1120.7, "growth_pct": 59.1 },
+    { "year": 2023, "usd_billion": 22.9, "inr_billion": 1899.9, "growth_pct": 63.6 }
+  ],
+  "gdp_contribution": [
+    { "year": 2013, "direct_pct": 2.7, "total_pct": 6.8, "direct_inr_billion": 3240, "total_inr_billion": 8160 },
+    { "year": 2014, "direct_pct": 2.8, "total_pct": 7.0, "direct_inr_billion": 3580, "total_inr_billion": 8950 },
+    { "year": 2015, "direct_pct": 2.9, "total_pct": 7.1, "direct_inr_billion": 3920, "total_inr_billion": 9590 },
+    { "year": 2016, "direct_pct": 3.0, "total_pct": 7.3, "direct_inr_billion": 4280, "total_inr_billion": 10440 },
+    { "year": 2017, "direct_pct": 3.1, "total_pct": 7.7, "direct_inr_billion": 4810, "total_inr_billion": 11960 },
+    { "year": 2018, "direct_pct": 3.2, "total_pct": 8.0, "direct_inr_billion": 5360, "total_inr_billion": 13400 },
+    { "year": 2019, "direct_pct": 2.7, "total_pct": 6.8, "direct_inr_billion": 4860, "total_inr_billion": 12240 },
+    { "year": 2020, "direct_pct": 1.9, "total_pct": 4.7, "direct_inr_billion": 2940, "total_inr_billion": 7280 },
+    { "year": 2021, "direct_pct": 2.3, "total_pct": 5.8, "direct_inr_billion": 3820, "total_inr_billion": 9630 },
+    { "year": 2022, "direct_pct": 2.9, "total_pct": 7.1, "direct_inr_billion": 5420, "total_inr_billion": 13280 },
+    { "year": 2023, "direct_pct": 3.1, "total_pct": 7.6, "direct_inr_billion": 6290, "total_inr_billion": 15420 }
+  ],
+  "employment": [
+    { "year": 2013, "direct_million": 19.8, "total_million": 37.4 },
+    { "year": 2014, "direct_million": 20.4, "total_million": 38.4 },
+    { "year": 2015, "direct_million": 20.9, "total_million": 39.3 },
+    { "year": 2016, "direct_million": 21.4, "total_million": 40.3 },
+    { "year": 2017, "direct_million": 22.1, "total_million": 41.6 },
+    { "year": 2018, "direct_million": 22.7, "total_million": 42.7 },
+    { "year": 2019, "direct_million": 39.5, "total_million": 75.0 },
+    { "year": 2020, "direct_million": 33.1, "total_million": 62.6 },
+    { "year": 2021, "direct_million": 36.4, "total_million": 68.9 },
+    { "year": 2022, "direct_million": 40.8, "total_million": 77.2 },
+    { "year": 2023, "direct_million": 42.2, "total_million": 80.0 }
+  ],
+  "spending_composition": {
+    "year": 2022,
+    "source": "Ministry of Tourism — India Tourism Statistics 2023 (Illustrative composition)",
+    "data_type": "illustrative",
+    "categories": [
+      { "category": "Accommodation", "share_pct": 28 },
+      { "category": "Food & Beverage", "share_pct": 22 },
+      { "category": "Local Transport", "share_pct": 18 },
+      { "category": "Shopping", "share_pct": 14 },
+      { "category": "Entertainment", "share_pct": 8 },
+      { "category": "Tour Operators", "share_pct": 6 },
+      { "category": "Other", "share_pct": 4 }
+    ]
+  },
+  "gateway_arrivals": {
+    "year": 2022,
+    "source": "Bureau of Immigration, Government of India",
+    "data": [
+      { "gateway": "Delhi",     "arrivals_thousand": 2241.4, "share_pct": 36.2 },
+      { "gateway": "Mumbai",    "arrivals_thousand": 1178.3, "share_pct": 19.0 },
+      { "gateway": "Chennai",   "arrivals_thousand": 612.4,  "share_pct": 9.9  },
+      { "gateway": "Bengaluru", "arrivals_thousand": 521.8,  "share_pct": 8.4  },
+      { "gateway": "Hyderabad", "arrivals_thousand": 248.2,  "share_pct": 4.0  },
+      { "gateway": "Kolkata",   "arrivals_thousand": 245.0,  "share_pct": 4.0  },
+      { "gateway": "Kochi",     "arrivals_thousand": 218.9,  "share_pct": 3.5  },
+      { "gateway": "Ahmedabad", "arrivals_thousand": 116.4,  "share_pct": 1.9  },
+      { "gateway": "Others",    "arrivals_thousand": 817.5,  "share_pct": 13.2 }
+    ]
+  }
+}

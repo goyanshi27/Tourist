@@ -1,0 +1,208 @@
+{
+  "_meta": {
+    "source": "Ministry of Tourism, Government of India — State-wise Tourist Visits; India Tourism Statistics 2023",
+    "year": 2022,
+    "unit": "Million visits",
+    "notes": "Domestic tourist visits; foreign tourist arrivals at state level where officially reported."
+  },
+  "states": [
+    {
+      "name": "Uttar Pradesh",  "code": "UP",
+      "dtv_2022": 321.6,  "dtv_2019": 540.1,
+      "fta_2022": 2.3,    "fta_2019": 4.5,
+      "growth_dtv_pct": 121.9,
+      "top_destinations": ["Agra", "Varanasi", "Mathura", "Vrindavan", "Allahabad"],
+      "categories": ["Heritage", "Spiritual", "Cultural"],
+      "lat": 27.1303, "lng": 80.8594,
+      "capital": "Lucknow",
+      "tourism_tagline": "The Land of Heritage"
+    },
+    {
+      "name": "Tamil Nadu",     "code": "TN",
+      "dtv_2022": 225.3,  "dtv_2019": 348.6,
+      "fta_2022": 0.66,   "fta_2019": 0.91,
+      "growth_dtv_pct": 155.8,
+      "top_destinations": ["Chennai", "Madurai", "Ooty", "Kanyakumari", "Rameswaram"],
+      "categories": ["Heritage", "Spiritual", "Beach", "Nature"],
+      "lat": 11.1271, "lng": 78.6569,
+      "capital": "Chennai",
+      "tourism_tagline": "The Land of Temples"
+    },
+    {
+      "name": "Andhra Pradesh", "code": "AP",
+      "dtv_2022": 166.7,  "dtv_2019": 265.4,
+      "fta_2022": 0.35,   "fta_2019": 0.52,
+      "growth_dtv_pct": 130.2,
+      "top_destinations": ["Tirupati", "Vijayawada", "Visakhapatnam", "Araku Valley"],
+      "categories": ["Spiritual", "Heritage", "Nature"],
+      "lat": 15.9129, "lng": 79.7400,
+      "capital": "Amaravati",
+      "tourism_tagline": "The Sunrise State"
+    },
+    {
+      "name": "Karnataka",      "code": "KA",
+      "dtv_2022": 155.6,  "dtv_2019": 175.1,
+      "fta_2022": 1.22,   "fta_2019": 1.48,
+      "growth_dtv_pct": 118.4,
+      "top_destinations": ["Mysore", "Hampi", "Coorg", "Bangalore", "Badami"],
+      "categories": ["Heritage", "Nature", "Cultural", "Wildlife"],
+      "lat": 15.3173, "lng": 75.7139,
+      "capital": "Bengaluru",
+      "tourism_tagline": "One State, Many Worlds"
+    },
+    {
+      "name": "Maharashtra",    "code": "MH",
+      "dtv_2022": 121.0,  "dtv_2019": 155.6,
+      "fta_2022": 1.89,   "fta_2019": 2.36,
+      "growth_dtv_pct": 109.3,
+      "top_destinations": ["Mumbai", "Pune", "Aurangabad", "Nashik", "Lonavala"],
+      "categories": ["Cultural", "Heritage", "Beach", "Spiritual"],
+      "lat": 19.7515, "lng": 75.7139,
+      "capital": "Mumbai",
+      "tourism_tagline": "Unlimited"
+    },
+    {
+      "name": "Madhya Pradesh",  "code": "MP",
+      "dtv_2022": 97.4,   "dtv_2019": 116.5,
+      "fta_2022": 0.58,   "fta_2019": 0.85,
+      "growth_dtv_pct": 141.9,
+      "top_destinations": ["Khajuraho", "Bhopal", "Ujjain", "Gwalior", "Orchha"],
+      "categories": ["Heritage", "Wildlife", "Spiritual"],
+      "lat": 22.9734, "lng": 78.6569,
+      "capital": "Bhopal",
+      "tourism_tagline": "The Heart of Incredible India"
+    },
+    {
+      "name": "Rajasthan",       "code": "RJ",
+      "dtv_2022": 76.6,   "dtv_2019": 118.0,
+      "fta_2022": 1.26,   "fta_2019": 1.61,
+      "growth_dtv_pct": 101.4,
+      "top_destinations": ["Jaipur", "Udaipur", "Jodhpur", "Jaisalmer", "Pushkar"],
+      "categories": ["Heritage", "Cultural", "Desert"],
+      "lat": 27.0238, "lng": 74.2179,
+      "capital": "Jaipur",
+      "tourism_tagline": "Padharo Mhare Desh"
+    },
+    {
+      "name": "West Bengal",     "code": "WB",
+      "dtv_2022": 72.2,   "dtv_2019": 91.4,
+      "fta_2022": 1.28,   "fta_2019": 1.58,
+      "growth_dtv_pct": 122.7,
+      "top_destinations": ["Kolkata", "Darjeeling", "Sundarbans", "Digha", "Murshidabad"],
+      "categories": ["Cultural", "Nature", "Heritage", "Wildlife"],
+      "lat": 22.9868, "lng": 87.8550,
+      "capital": "Kolkata",
+      "tourism_tagline": "Biswa Bangla"
+    },
+    {
+      "name": "Kerala",          "code": "KL",
+      "dtv_2022": 63.0,   "dtv_2019": 173.6,
+      "fta_2022": 0.47,   "fta_2019": 1.22,
+      "growth_dtv_pct": 167.2,
+      "top_destinations": ["Kochi", "Munnar", "Alleppey", "Thekkady", "Kovalam"],
+      "categories": ["Nature", "Wellness", "Beach", "Wildlife"],
+      "lat": 10.8505, "lng": 76.2711,
+      "capital": "Thiruvananthapuram",
+      "tourism_tagline": "God's Own Country"
+    },
+    {
+      "name": "Gujarat",         "code": "GJ",
+      "dtv_2022": 55.6,   "dtv_2019": 65.6,
+      "fta_2022": 0.54,   "fta_2019": 0.72,
+      "growth_dtv_pct": 96.0,
+      "top_destinations": ["Ahmedabad", "Rann of Kutch", "Gir", "Somnath", "Dwarka"],
+      "categories": ["Heritage", "Wildlife", "Spiritual", "Nature"],
+      "lat": 22.2587, "lng": 71.1924,
+      "capital": "Gandhinagar",
+      "tourism_tagline": "Vibrant Gujarat"
+    },
+    {
+      "name": "Odisha",          "code": "OD",
+      "dtv_2022": 50.7,   "dtv_2019": 63.1,
+      "fta_2022": 0.14,   "fta_2019": 0.17,
+      "growth_dtv_pct": 113.0,
+      "top_destinations": ["Puri", "Bhubaneswar", "Konark", "Cuttack", "Chilika Lake"],
+      "categories": ["Spiritual", "Heritage", "Beach", "Wildlife"],
+      "lat": 20.9517, "lng": 85.0985,
+      "capital": "Bhubaneswar",
+      "tourism_tagline": "Incredible Odisha"
+    },
+    {
+      "name": "Himachal Pradesh","code": "HP",
+      "dtv_2022": 19.1,   "dtv_2019": 17.0,
+      "fta_2022": 0.13,   "fta_2019": 0.21,
+      "growth_dtv_pct": 71.0,
+      "top_destinations": ["Shimla", "Manali", "Dharamsala", "Dalhousie", "Spiti"],
+      "categories": ["Nature", "Adventure", "Spiritual"],
+      "lat": 31.1048, "lng": 77.1734,
+      "capital": "Shimla",
+      "tourism_tagline": "Himachal — Unforgettable"
+    },
+    {
+      "name": "Uttarakhand",     "code": "UK",
+      "dtv_2022": 38.4,   "dtv_2019": 43.7,
+      "fta_2022": 0.16,   "fta_2019": 0.24,
+      "growth_dtv_pct": 92.5,
+      "top_destinations": ["Haridwar", "Rishikesh", "Mussoorie", "Nainital", "Jim Corbett"],
+      "categories": ["Spiritual", "Nature", "Adventure", "Wildlife"],
+      "lat": 30.0668, "lng": 79.0193,
+      "capital": "Dehradun",
+      "tourism_tagline": "Simply Heaven"
+    },
+    {
+      "name": "Goa",             "code": "GA",
+      "dtv_2022": 7.4,    "dtv_2019": 9.3,
+      "fta_2022": 0.72,   "fta_2019": 0.84,
+      "growth_dtv_pct": 132.1,
+      "top_destinations": ["Panaji", "Calangute", "Baga", "Old Goa", "Dudhsagar"],
+      "categories": ["Beach", "Heritage", "Nature"],
+      "lat": 15.2993, "lng": 74.1240,
+      "capital": "Panaji",
+      "tourism_tagline": "Go Goa"
+    },
+    {
+      "name": "Bihar",           "code": "BR",
+      "dtv_2022": 40.4,   "dtv_2019": 49.3,
+      "fta_2022": 0.64,   "fta_2019": 0.76,
+      "growth_dtv_pct": 130.0,
+      "top_destinations": ["Patna", "Bodh Gaya", "Nalanda", "Rajgir", "Vaishali"],
+      "categories": ["Spiritual", "Heritage", "Cultural"],
+      "lat": 25.0961, "lng": 85.3131,
+      "capital": "Patna",
+      "tourism_tagline": "Blissful Bihar"
+    },
+    {
+      "name": "Delhi",           "code": "DL",
+      "dtv_2022": 18.2,   "dtv_2019": 19.8,
+      "fta_2022": 2.94,   "fta_2019": 3.43,
+      "growth_dtv_pct": 97.8,
+      "top_destinations": ["Red Fort", "Qutub Minar", "Humayun's Tomb", "India Gate", "Lotus Temple"],
+      "categories": ["Heritage", "Cultural", "Shopping"],
+      "lat": 28.7041, "lng": 77.1025,
+      "capital": "New Delhi",
+      "tourism_tagline": "Dil Walon Ki Delhi"
+    },
+    {
+      "name": "Assam",           "code": "AS",
+      "dtv_2022": 8.6,    "dtv_2019": 9.2,
+      "fta_2022": 0.06,   "fta_2019": 0.08,
+      "growth_dtv_pct": 82.5,
+      "top_destinations": ["Guwahati", "Kaziranga", "Manas", "Majuli Island"],
+      "categories": ["Wildlife", "Nature", "Cultural"],
+      "lat": 26.2006, "lng": 92.9376,
+      "capital": "Dispur",
+      "tourism_tagline": "Flavours of Assam"
+    },
+    {
+      "name": "Punjab",          "code": "PB",
+      "dtv_2022": 16.2,   "dtv_2019": 21.4,
+      "fta_2022": 0.26,   "fta_2019": 0.35,
+      "growth_dtv_pct": 86.4,
+      "top_destinations": ["Amritsar", "Chandigarh", "Ludhiana", "Anandpur Sahib"],
+      "categories": ["Spiritual", "Heritage", "Cultural"],
+      "lat": 31.1471, "lng": 75.3412,
+      "capital": "Chandigarh",
+      "tourism_tagline": "Punjab: India's Heartland"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "_meta": {
+    "source": "Ministry of Tourism, Government of India — India Tourism Statistics 2023; Bureau of Immigration",
+    "year": 2022,
+    "unit": "Thousand visitors",
+    "notes": "Top source markets ranked by FTA. Share calculated from total FTA."
+  },
+  "top_sources_2022": [
+    { "rank": 1,  "country": "Bangladesh",    "code": "BD", "arrivals": 1993.1, "share_pct": 32.2, "prev_year": 242.3, "continent": "Asia" },
+    { "rank": 2,  "country": "USA",           "code": "US", "arrivals": 631.4,  "share_pct": 10.2, "prev_year": 259.9, "continent": "Americas" },
+    { "rank": 3,  "country": "UK",            "code": "GB", "arrivals": 453.1,  "share_pct": 7.3,  "prev_year": 181.0, "continent": "Europe" },
+    { "rank": 4,  "country": "Australia",     "code": "AU", "arrivals": 198.6,  "share_pct": 3.2,  "prev_year": 70.4,  "continent": "Oceania" },
+    { "rank": 5,  "country": "Canada",        "code": "CA", "arrivals": 188.9,  "share_pct": 3.0,  "prev_year": 60.3,  "continent": "Americas" },
+    { "rank": 6,  "country": "Germany",       "code": "DE", "arrivals": 155.2,  "share_pct": 2.5,  "prev_year": 51.2,  "continent": "Europe" },
+    { "rank": 7,  "country": "Sri Lanka",     "code": "LK", "arrivals": 148.6,  "share_pct": 2.4,  "prev_year": 12.1,  "continent": "Asia" },
+    { "rank": 8,  "country": "Malaysia",      "code": "MY", "arrivals": 134.4,  "share_pct": 2.2,  "prev_year": 13.3,  "continent": "Asia" },
+    { "rank": 9,  "country": "France",        "code": "FR", "arrivals": 123.1,  "share_pct": 2.0,  "prev_year": 43.5,  "continent": "Europe" },
+    { "rank": 10, "country": "Nepal",         "code": "NP", "arrivals": 118.4,  "share_pct": 1.9,  "prev_year": 8.4,   "continent": "Asia" },
+    { "rank": 11, "country": "China",         "code": "CN", "arrivals": 85.6,   "share_pct": 1.4,  "prev_year": 1.2,   "continent": "Asia" },
+    { "rank": 12, "country": "UAE",           "code": "AE", "arrivals": 80.4,   "share_pct": 1.3,  "prev_year": 26.8,  "continent": "Middle East" },
+    { "rank": 13, "country": "Singapore",     "code": "SG", "arrivals": 75.3,   "share_pct": 1.2,  "prev_year": 20.1,  "continent": "Asia" },
+    { "rank": 14, "country": "Italy",         "code": "IT", "arrivals": 72.1,   "share_pct": 1.2,  "prev_year": 24.3,  "continent": "Europe" },
+    { "rank": 15, "country": "Japan",         "code": "JP", "arrivals": 68.9,   "share_pct": 1.1,  "prev_year": 8.2,   "continent": "Asia" },
+    { "rank": 16, "country": "Pakistan",      "code": "PK", "arrivals": 63.2,   "share_pct": 1.0,  "prev_year": 3.2,   "continent": "Asia" },
+    { "rank": 17, "country": "Russia",        "code": "RU", "arrivals": 58.7,   "share_pct": 0.9,  "prev_year": 18.9,  "continent": "Europe" },
+    { "rank": 18, "country": "Switzerland",   "code": "CH", "arrivals": 48.2,   "share_pct": 0.8,  "prev_year": 16.3,  "continent": "Europe" },
+    { "rank": 19, "country": "Netherlands",   "code": "NL", "arrivals": 44.8,   "share_pct": 0.7,  "prev_year": 13.9,  "continent": "Europe" },
+    { "rank": 20, "country": "Israel",        "code": "IL", "arrivals": 42.3,   "share_pct": 0.7,  "prev_year": 9.1,   "continent": "Middle East" }
+  ],
+  "continental_2022": [
+    { "continent": "Asia",        "arrivals": 2792.4, "share_pct": 45.1 },
+    { "continent": "Europe",      "arrivals": 1110.2, "share_pct": 17.9 },
+    { "continent": "Americas",    "arrivals": 879.3,  "share_pct": 14.2 },
+    { "continent": "Middle East", "arrivals": 370.1,  "share_pct": 6.0  },
+    { "continent": "Africa",      "arrivals": 207.8,  "share_pct": 3.4  },
+    { "continent": "Oceania",     "arrivals": 221.4,  "share_pct": 3.6  },
+    { "continent": "Other/NRI",   "arrivals": 609.8,  "share_pct": 9.8  }
+  ],
+  "trend_top5": {
+    "years": [2017, 2018, 2019, 2020, 2021, 2022],
+    "Bangladesh": [754.9, 888.0, 1129.9, 242.3, 215.6, 1993.1],
+    "USA":        [1267.6, 1332.1, 1436.0, 259.9, 143.8, 631.4],
+    "UK":         [940.9, 1000.7, 1071.3, 181.0, 104.5, 453.1],
+    "Canada":     [368.1, 395.7, 431.9, 60.3, 38.8, 188.9],
+    "Australia":  [326.0, 361.8, 387.9, 70.4, 42.1, 198.6]
+  }
+}

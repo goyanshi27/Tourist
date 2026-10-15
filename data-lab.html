@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Data Lab — India in Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/animations.css"><link rel="stylesheet" href="../css/responsive.css">
+<style>
+.lab-layout{display:grid;grid-template-columns:260px 1fr;gap:var(--space-6);align-items:start;}
+.fpanel{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:var(--space-5);position:sticky;top:80px;}
+.fsel{width:100%;padding:8px 10px;background:var(--bg-elevated);border:1px solid var(--border-light);border-radius:var(--radius-sm);color:var(--text-primary);font-family:'Inter',sans-serif;font-size:.8rem;cursor:pointer;outline:none;margin-bottom:8px;}
+.fsel:focus{border-color:var(--gold);}
+.abtn{width:100%;padding:10px;background:var(--saffron);border:none;border-radius:var(--radius-sm);color:white;font-family:'Inter',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .2s;}
+.abtn:hover{background:var(--terracotta);}
+.rbtn{width:100%;padding:8px;background:transparent;border:1px solid var(--border-light);border-radius:var(--radius-sm);color:var(--text-muted);font-family:'Inter',sans-serif;font-size:.72rem;cursor:pointer;margin-top:6px;}
+.rbtn:hover{border-color:var(--gold);color:var(--gold);}
+.spill{display:inline-flex;flex-direction:column;gap:2px;padding:10px 14px;background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:var(--radius-md);}
+.spill-v{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--text-primary);}
+.spill-l{font-family:'Inter',sans-serif;font-size:.62rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em;}
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-5);}
+.src-card{background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:10px 12px;}
+.metric-row{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-subtle);}
+.metric-row:last-child{border-bottom:none;}
+@media(max-width:1023px){.lab-layout{grid-template-columns:1fr;}.fpanel{position:static;}.pg{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div id="cursor-light" aria-hidden="true"></div><div id="scroll-progress" aria-hidden="true"></div>
+<nav id="main-nav" class="visible" role="navigation"><div class="nav-inner">
+  <a href="../index.html" class="nav-logo"><span class="nav-logo-title">INDIA IN MOTION</span><span class="nav-logo-sub">Tourism Intelligence Atlas</span></a>
+  <ul class="nav-links" role="list"><li><a href="../index.html">Overview</a></li><li><a href="tourists.html">Tourists</a></li><li><a href="destinations.html">Destinations</a></li><li><a href="states.html">States</a></li><li><a href="economy.html">Economy</a></li><li><a href="culture.html">Culture</a></li><li><a href="infrastructure.html">Infrastructure</a></li><li><a href="sustainability.html">Sustainability</a></li><li><a href="insights.html">Insights</a></li><li><a href="data-lab.html" class="active" aria-current="page">Data Lab</a></li></ul>
+  <div class="nav-controls"><button id="search-open-btn" class="nav-btn" aria-label="Search"><i class="fas fa-search"></i></button><button id="theme-toggle" class="nav-btn" aria-label="Toggle theme"><i class="fas fa-sun"></i></button><button id="fullscreen-btn" class="nav-btn" aria-label="Fullscreen"><i class="fas fa-expand"></i></button><button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu" aria-expanded="false"><i class="fas fa-bars"></i></button></div>
+</div></nav>
+<div id="mobile-nav-drawer" class="mobile-nav-drawer"><a href="../index.html">Overview</a><a href="tourists.html">Tourists</a><a href="destinations.html">Destinations</a><a href="states.html">States</a><a href="economy.html">Economy</a><a href="culture.html">Culture</a><a href="infrastructure.html">Infrastructure</a><a href="sustainability.html">Sustainability</a><a href="insights.html">Insights</a><a href="data-lab.html">Data Lab</a></div>
+<div id="search-overlay" role="search"><div class="search-input-wrap"><input type="text" id="search-input" placeholder="Search the data..."><button class="search-close" id="search-close"><i class="fas fa-times"></i></button></div><div id="search-results" class="search-results"></div></div>
+
+<main class="page-wrapper page-content">
+<header style="background:var(--bg-secondary);border-bottom:1px solid var(--border-subtle);padding:var(--space-12) 0 var(--space-8);">
+  <div class="container-wide"><p class="section-label animate-in">Data Exploration</p><h1 class="section-title animate-in" style="font-size:clamp(2rem,4vw,3.2rem);">Data Lab</h1><p class="section-desc animate-in">Explore, filter, compare and export India tourism data. All data sourced from official government reports.</p></div>
+</header>
+
+<div class="container-wide" style="padding:var(--space-8) 0 var(--space-16);">
+  <div class="tab-nav" role="tablist" style="margin-bottom:var(--space-6);">
+    <button class="tab-btn active" data-tab="tl-explore">Explore Data</button>
+    <button class="tab-btn" data-tab="tl-compare">Compare Tool</button>
+    <button class="tab-btn" data-tab="tl-method">Methodology</button>
+  </div>
+
+  <div id="tl-explore" class="tab-panel active">
+    <div class="lab-layout">
+      <aside class="fpanel">
+        <p style="font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;color:var(--text-primary);margin-bottom:var(--space-5);">Filter Data</p>
+        <p class="label-caps" style="margin-bottom:6px;">Dataset</p>
+        <select class="fsel" id="f-dataset">
+          <option value="national">National Tourism Trends</option>
+          <option value="states">State-wise Tourism</option>
+          <option value="countries">Source Countries</option>
+          <option value="economy">Tourism Economy</option>
+        </select>
+        <p class="label-caps" style="margin-bottom:6px;margin-top:8px;">Chart Type</p>
+        <select class="fsel" id="f-chart">
+          <option value="line">Line Chart</option>
+          <option value="bar">Bar Chart</option>
+          <option value="area">Area Chart</option>
+        </select>
+        <button class="abtn" id="apply-btn">Apply Filters</button>
+        <button class="rbtn" id="reset-btn">Reset</button>
+        <div style="border-top:1px solid var(--border-subtle);margin-top:var(--space-5);padding-top:var(--space-5);">
+          <p class="label-caps" style="margin-bottom:8px;">Export</p>
+          <button class="rbtn" id="export-csv-btn" style="margin-top:0;"><i class="fas fa-download"></i> Download CSV</button>
+          <button class="rbtn" id="export-chart-btn"><i class="fas fa-image"></i> Export Chart</button>
+        </div>
+      </aside>
+      <div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:var(--space-6);" id="stat-pills"></div>
+        <div class="chart-card animate-in" style="margin-bottom:var(--space-5);">
+          <div class="chart-header"><div><p class="chart-title" id="lab-chart-title">National Tourism Trends</p><p class="chart-subtitle" id="lab-chart-sub">FTA · Domestic visits · Forex earnings</p></div><span class="chart-badge official" id="lab-badge">Official</span></div>
+          <div class="chart-body" style="height:320px;"><canvas id="chart-lab-main"></canvas></div>
+          <div class="chart-footer"><p class="chart-source" id="lab-source"><strong>Source:</strong> Ministry of Tourism / RBI</p></div>
+        </div>
+        <div class="chart-card animate-in">
+          <div class="chart-header"><div><p class="chart-title">Data Table</p></div><button class="chart-action-btn" id="tbl-export-btn"><i class="fas fa-download"></i> CSV</button></div>
+          <div class="data-table-wrap"><table class="data-table" id="lab-table"><thead id="lab-thead"></thead><tbody id="lab-tbody"></tbody></table></div>
+          <div class="chart-footer"><p class="chart-source" id="lab-tbl-src"></p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tl-compare" class="tab-panel">
+    <div style="background:var(--gold-dim);border:1px solid var(--border-accent);border-radius:var(--radius-md);padding:var(--space-4) var(--space-5);margin-bottom:var(--space-6);display:flex;gap:10px;"><i class="fas fa-circle-info" style="color:var(--gold);flex-shrink:0;margin-top:2px;"></i><p style="font-size:.82rem;color:var(--text-secondary);">Compare any two states or years. This is an analytical tool — no entity is ranked as better.</p></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-5);margin-bottom:var(--space-6);">
+      <div><label class="label-caps" for="cmp-type">Compare Type</label><select class="fsel" id="cmp-type" style="width:100%;margin-top:6px;"><option value="states">State vs State</option><option value="years">Year vs Year</option></select></div>
+      <div><label class="label-caps" for="cmp-metric">Metric</label><select class="fsel" id="cmp-metric" style="width:100%;margin-top:6px;"><option value="dtv">Domestic Visits</option><option value="fta">Foreign Arrivals</option><option value="forex">Forex Earnings</option></select></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:var(--space-4);align-items:end;margin-bottom:var(--space-6);">
+      <div><label class="label-caps" for="cmp-a">Entity A</label><select class="fsel" id="cmp-a" style="width:100%;margin-top:6px;"></select></div>
+      <span style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--text-muted);padding-bottom:8px;">vs</span>
+      <div><label class="label-caps" for="cmp-b">Entity B</label><select class="fsel" id="cmp-b" style="width:100%;margin-top:6px;"></select></div>
+    </div>
+    <div class="pg" style="margin-bottom:var(--space-5);">
+      <div class="chart-card animate-in"><div class="chart-header"><p class="chart-title" id="cmp-title-1">Comparison</p></div><div class="chart-body" style="height:280px;"><canvas id="ch-cmp-1"></canvas></div><div class="chart-footer"><p class="chart-source">Source: Ministry of Tourism, GoI</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><p class="chart-title" id="cmp-title-2">Trend View</p></div><div class="chart-body" style="height:280px;"><canvas id="ch-cmp-2"></canvas></div><div class="chart-footer"><p class="chart-source">Source: Ministry of Tourism, GoI</p></div></div>
+    </div>
+    <div id="cmp-summary" style="background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:var(--space-5) var(--space-6);"></div>
+  </div>
+
+  <div id="tl-method" class="tab-panel">
+    <div class="pg" style="margin-bottom:var(--space-6);">
+      <div style="background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:var(--space-6);">
+        <p class="section-label" style="margin-bottom:var(--space-4);">Primary Sources</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div class="src-card"><p style="font-family:'Inter',sans-serif;font-size:.82rem;font-weight:600;color:var(--text-primary);margin-bottom:2px;">Ministry of Tourism, GoI</p><p style="font-size:.72rem;color:var(--text-muted);">Annual Reports, India Tourism Statistics 2023</p><p style="font-size:.65rem;color:var(--gold);">tourism.gov.in</p></div>
+          <div class="src-card"><p style="font-family:'Inter',sans-serif;font-size:.82rem;font-weight:600;color:var(--text-primary);margin-bottom:2px;">Bureau of Immigration, GoI</p><p style="font-size:.72rem;color:var(--text-muted);">Foreign Tourist Arrivals, Gateway-wise statistics</p><p style="font-size:.65rem;color:var(--gold);">boi.gov.in</p></div>
+          <div class="src-card"><p style="font-family:'Inter',sans-serif;font-size:.82rem;font-weight:600;color:var(--text-primary);margin-bottom:2px;">Reserve Bank of India</p><p style="font-size:.72rem;color:var(--text-muted);">Foreign Exchange Earnings from Tourism</p><p style="font-size:.65rem;color:var(--gold);">rbi.org.in</p></div>
+          <div class="src-card"><p style="font-family:'Inter',sans-serif;font-size:.82rem;font-weight:600;color:var(--text-primary);margin-bottom:2px;">ASI / UNESCO</p><p style="font-size:.72rem;color:var(--text-muted);">Monument visitors, Heritage site classifications</p><p style="font-size:.65rem;color:var(--gold);">asi.nic.in · whc.unesco.org</p></div>
+          <div class="src-card"><p style="font-family:'Inter',sans-serif;font-size:.82rem;font-weight:600;color:var(--text-primary);margin-bottom:2px;">WTTC India 2023</p><p style="font-size:.72rem;color:var(--text-muted);">GDP contribution, Employment figures</p><p style="font-size:.65rem;color:var(--gold);">wttc.org</p></div>
+          <div class="src-card"><p style="font-family:'Inter',sans-serif;font-size:.82rem;font-weight:600;color:var(--text-primary);margin-bottom:2px;">MoEFCC / NTCA</p><p style="font-size:.72rem;color:var(--text-muted);">Protected areas, Tiger reserves, Biosphere reserves</p><p style="font-size:.65rem;color:var(--gold);">moefcc.nic.in</p></div>
+        </div>
+      </div>
+      <div style="background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:var(--space-6);">
+        <p class="section-label" style="margin-bottom:var(--space-4);">Data Classification</p>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:var(--space-5);">
+          <div style="padding:12px;background:rgba(64,145,108,.06);border:1px solid rgba(64,145,108,.2);border-left:3px solid var(--positive);border-radius:var(--radius-md);"><p style="font-family:'Inter',sans-serif;font-size:.75rem;font-weight:700;color:var(--positive);margin-bottom:4px;">OFFICIAL DATA</p><p style="font-size:.8rem;color:var(--text-secondary);line-height:1.5;">Directly reproduced from government/intergovernmental sources. Source and year always cited.</p></div>
+          <div style="padding:12px;background:var(--gold-dim);border:1px solid var(--border-accent);border-left:3px solid var(--gold);border-radius:var(--radius-md);"><p style="font-family:'Inter',sans-serif;font-size:.75rem;font-weight:700;color:var(--gold);margin-bottom:4px;">DERIVED METRIC</p><p style="font-size:.8rem;color:var(--text-secondary);line-height:1.5;">Calculated from official data with a transparent formula. Methodology always stated.</p></div>
+          <div style="padding:12px;background:rgba(154,148,144,.06);border:1px solid var(--border-subtle);border-left:3px solid var(--text-muted);border-radius:var(--radius-md);"><p style="font-family:'Inter',sans-serif;font-size:.75rem;font-weight:700;color:var(--text-muted);margin-bottom:4px;">ILLUSTRATIVE</p><p style="font-size:.8rem;color:var(--text-secondary);line-height:1.5;">Used only when data is unavailable. Always clearly labeled — never presented as measured statistics.</p></div>
+        </div>
+        <p class="section-label" style="margin-bottom:var(--space-4);">Key Metric Definitions</p>
+        <div style="display:flex;flex-direction:column;gap:0;">
+          <div class="metric-row"><span style="font-family:'Inter',sans-serif;font-size:.72rem;font-weight:700;color:var(--saffron);min-width:80px;flex-shrink:0;">FTA</span><span style="font-size:.78rem;color:var(--text-secondary);">Foreign Tourist Arrivals — visitors crossing international borders into India</span></div>
+          <div class="metric-row"><span style="font-family:'Inter',sans-serif;font-size:.72rem;font-weight:700;color:var(--saffron);min-width:80px;flex-shrink:0;">FTE</span><span style="font-size:.78rem;color:var(--text-secondary);">Foreign Tourist Expenditure — subset of FTA paying for tourist services</span></div>
+          <div class="metric-row"><span style="font-family:'Inter',sans-serif;font-size:.72rem;font-weight:700;color:var(--saffron);min-width:80px;flex-shrink:0;">DTV</span><span style="font-size:.78rem;color:var(--text-secondary);">Domestic Tourist Visits — visits by Indian residents (not unique visitors)</span></div>
+          <div class="metric-row"><span style="font-family:'Inter',sans-serif;font-size:.72rem;font-weight:700;color:var(--saffron);min-width:80px;flex-shrink:0;">Forex</span><span style="font-size:.78rem;color:var(--text-secondary);">Foreign Exchange Earnings — reported by Reserve Bank of India</span></div>
+          <div class="metric-row"><span style="font-family:'Inter',sans-serif;font-size:.72rem;font-weight:700;color:var(--saffron);min-width:80px;flex-shrink:0;">GDP %</span><span style="font-size:.78rem;color:var(--text-secondary);">Total tourism contribution (direct + indirect) as % of India's GDP — WTTC methodology</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer style="background:var(--bg-secondary);border-top:1px solid var(--border-subtle);padding:var(--space-6) 0;"><div class="container-wide" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;"><p style="font-family:'Playfair Display',serif;font-weight:700;color:var(--text-primary);">INDIA IN MOTION</p><p style="font-size:.68rem;color:var(--text-muted);">This platform is an independent data visualization project. All official statistics cited with source.</p></div></footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="../js/data-loader.js"></script>
+<script src="../js/charts.js"></script>
+<script src="../js/page-common.js"></script>
+<script>
+var allD = window.TOURISM_DATA;
+
+function renderTable(headers,rows,src){
+  var th=document.getElementById('lab-thead'),tb=document.getElementById('lab-tbody'),s=document.getElementById('lab-tbl-src');
+  if(th) th.innerHTML='<tr>'+headers.map(h=>'<th>'+h+'</th>').join('')+'</tr>';
+  if(tb) tb.innerHTML=rows.map(r=>'<tr>'+r.map(c=>'<td>'+(c??'—')+'</td>').join('')+'</tr>').join('');
+  if(s) s.innerHTML='<strong>Source:</strong> '+src;
+}
+
+function renderStats(items){
+  var el=document.getElementById('stat-pills');
+  if(!el) return;
+  el.innerHTML=items.map(function(i){return '<div class="spill"><span class="spill-v">'+i.v+'</span><span class="spill-l">'+i.l+'</span></div>';}).join('');
+}
+
+function renderDefault(){
+  var nat=allD['national-tourism'];
+  var yrs=nat.yearly,labels=yrs.map(y=>y.year);
+  ChartFactory.line('chart-lab-main',labels,[{label:'FTA (M)',data:yrs.map(y=>y.fta),color:'#E8770A'},{label:'Domestic (×100M)',data:yrs.map(y=>+(y.dtv/100).toFixed(1)),color:'#C8A84B'},{label:'Forex USD B',data:yrs.map(y=>y.forex_usd),color:'#40916C'}]);
+  var last=yrs[yrs.length-1],prev=yrs[yrs.length-2];
+  renderStats([{v:last.year,l:'Latest Year'},{v:last.fta+'M',l:'FTA'},{v:'$'+last.forex_usd+'B',l:'Forex'},{v:last.tourism_gdp_pct+'%',l:'Tourism GDP'}]);
+  renderTable(['Year','FTA (M)','FTE (M)','Domestic (M)','Forex USD B','GDP %','Emp (M)'],yrs.map(y=>[y.year,y.fta,y.fte,y.dtv,y.forex_usd,y.tourism_gdp_pct,y.employment_million]),'Ministry of Tourism, GoI · Reserve Bank of India · WTTC');
+}
+
+document.getElementById('apply-btn').addEventListener('click',function(){
+  var ds=document.getElementById('f-dataset').value,ct=document.getElementById('f-chart').value;
+  if(ds==='national'){renderDefault();return;}
+  if(ds==='states'){
+    var st=allD['states'].states.sort((a,b)=>b.dtv_2022-a.dtv_2022);
+    if(ct==='area') ChartFactory.area('chart-lab-main',st.map(s=>s.name.replace(' Pradesh','')),[{label:'Domestic (M)',data:st.map(s=>s.dtv_2022),color:'#E8770A',fill:true}],{plugins:{legend:{display:false}}});
+    else ChartFactory.horizontalBar('chart-lab-main',st.map(s=>s.name.replace(' Pradesh','')),[{label:'Domestic (M)',data:st.map(s=>s.dtv_2022),colors:ChartFactory.PALETTE}],{plugins:{legend:{display:false}}});
+    renderStats([{v:st.length,l:'States'},{v:st[0].dtv_2022+'M',l:'Top State'},{v:st[0].name,l:'Leader'}]);
+    renderTable(['State','Domestic (M)','Foreign (M)','Capital','Recovery %'],st.map(s=>[s.name,s.dtv_2022,s.fta_2022,s.capital,s.dtv_2019?+(s.dtv_2022/s.dtv_2019*100).toFixed(0)+'%':'—']),'Ministry of Tourism, GoI · State Tourism Departments · 2022');
+    return;
+  }
+  if(ds==='countries'){
+    var c=allD['countries'].top_sources_2022;
+    ChartFactory.horizontalBar('chart-lab-main',c.map(x=>x.country),[{label:'Arrivals (K)',data:c.map(x=>x.arrivals),colors:ChartFactory.PALETTE}],{plugins:{legend:{display:false}}});
+    renderStats([{v:c.length,l:'Markets'},{v:c[0].country,l:'Top Market'},{v:c[0].share_pct+'%',l:'Top Share'}]);
+    renderTable(['Rank','Country','Arrivals (K)','Share %','Continent'],c.map(x=>[x.rank,x.country,x.arrivals,x.share_pct+'%',x.continent]),'Bureau of Immigration, GoI · 2022');
+    return;
+  }
+  if(ds==='economy'){
+    var ec=allD['economy'];
+    var fx=ec.forex_earnings;
+    ChartFactory.area('chart-lab-main',fx.map(r=>r.year),[{label:'Forex USD B',data:fx.map(r=>r.usd_billion),color:'#C8A84B',fill:true}],{plugins:{legend:{display:false}}});
+    renderStats([{v:'$'+fx[fx.length-1].usd_billion+'B',l:'Latest Forex'},{v:fx[fx.length-1].growth_pct+'%',l:'Growth'}]);
+    renderTable(['Year','USD Billion','INR Billion','Growth %'],fx.map(r=>[r.year,r.usd_billion,r.inr_billion,r.growth_pct!==null?r.growth_pct+'%':'—']),'Reserve Bank of India');
+  }
+});
+
+document.getElementById('reset-btn').addEventListener('click',function(){renderDefault();document.getElementById('f-dataset').selectedIndex=0;document.getElementById('f-chart').selectedIndex=0;});
+
+function exportCSV(){
+  var table=document.getElementById('lab-table');if(!table)return;
+  var rows=Array.from(table.querySelectorAll('tr'));
+  var csv=rows.map(r=>Array.from(r.querySelectorAll('th,td')).map(c=>'"'+c.textContent+'"').join(',')).join('\n');
+  var blob=new Blob([csv],{type:'text/csv'});var link=document.createElement('a');link.href=URL.createObjectURL(blob);link.download='india-tourism-data.csv';link.click();
+}
+
+document.getElementById('export-csv-btn').addEventListener('click',exportCSV);
+document.getElementById('tbl-export-btn').addEventListener('click',exportCSV);
+document.getElementById('export-chart-btn').addEventListener('click',function(){
+  var c=document.getElementById('chart-lab-main');if(!c)return;
+  var link=document.createElement('a');link.download='chart.png';link.href=c.toDataURL();link.click();
+});
+
+setTimeout(function() { renderDefault(); }, 50);
+
+/* Compare tool */
+var typeEl=document.getElementById('cmp-type'),aEl=document.getElementById('cmp-a'),bEl=document.getElementById('cmp-b'),metEl=document.getElementById('cmp-metric');
+function populateCmp(){
+  var type=typeEl.value,opts=[];
+  if(type==='states') opts=allD['states'].states.map(s=>s.name);
+  else opts=allD['national-tourism'].yearly.map(y=>y.year);
+  [aEl,bEl].forEach(function(el,idx){el.innerHTML=opts.map(function(o,j){return '<option value="'+o+'"'+(j===idx?' selected':'')+'>'+o+'</option>';}).join('');});
+  runCmp();
+}
+function runCmp(){
+  var type=typeEl.value,a=aEl.value,b=bEl.value,met=metEl.value;
+  if(type==='states'){
+    var st=allD['states'].states,sa=st.find(s=>s.name===a),sb=st.find(s=>s.name===b);
+    if(!sa||!sb) return;
+    var mkey=met==='fta'?'fta_2022':'dtv_2022';
+    ChartFactory.bar('ch-cmp-1',[a.replace(' Pradesh',''),b.replace(' Pradesh','')],[{label:met==='fta'?'Foreign (M)':'Domestic (M)',data:[sa[mkey],sb[mkey]],colors:['#E8770A','#C8A84B']}],{plugins:{legend:{display:false}}});
+    ChartFactory.radar('ch-cmp-2',['Domestic','Foreign','Recovery','Destinations','Categories'],[{label:a.replace(' Pradesh',''),data:[sa.dtv_2022/5,sa.fta_2022*3,sa.dtv_2019?+(sa.dtv_2022/sa.dtv_2019*10).toFixed(1):5,(sa.top_destinations||[]).length*1.5,(sa.categories||[]).length*2],color:'#E8770A'},{label:b.replace(' Pradesh',''),data:[sb.dtv_2022/5,sb.fta_2022*3,sb.dtv_2019?+(sb.dtv_2022/sb.dtv_2019*10).toFixed(1):5,(sb.top_destinations||[]).length*1.5,(sb.categories||[]).length*2],color:'#C8A84B'}]);
+    var s=document.getElementById('cmp-summary');
+    if(s) s.innerHTML='<p class="label-caps" style="margin-bottom:12px;">Summary · Ministry of Tourism · 2022</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">'
+      +[sa,sb].map(function(st){return '<div><p style="font-family:\'Playfair Display\',serif;font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:8px;">'+st.name+'</p><p style="font-size:.8rem;color:var(--text-secondary);margin-bottom:4px;"><strong>Domestic:</strong> '+st.dtv_2022+'M</p><p style="font-size:.8rem;color:var(--text-secondary);margin-bottom:4px;"><strong>Foreign:</strong> '+st.fta_2022+'M</p><p style="font-size:.8rem;color:var(--text-secondary);"><strong>Recovery:</strong> '+(st.dtv_2019?+(st.dtv_2022/st.dtv_2019*100).toFixed(0)+'%':'—')+'</p></div>';}).join('')
+      +'</div><p style="font-size:.65rem;color:var(--text-muted);margin-top:12px;">Analytical comparison only — no entity ranked as superior. Source: Ministry of Tourism, GoI.</p>';
+  } else {
+    var nat=allD['national-tourism'],ya=nat.yearly.find(y=>y.year==a),yb=nat.yearly.find(y=>y.year==b);
+    if(!ya||!yb) return;
+    var mets=['FTA (M)','Domestic (M)','Forex B','GDP %'],da=[ya.fta,+(ya.dtv/100).toFixed(1),ya.forex_usd,ya.tourism_gdp_pct],db=[yb.fta,+(yb.dtv/100).toFixed(1),yb.forex_usd,yb.tourism_gdp_pct];
+    ChartFactory.bar('ch-cmp-1',mets,[{label:String(a),data:da,color:'#E8770A'},{label:String(b),data:db,color:'#C8A84B'}]);
+    ChartFactory.line('ch-cmp-2',nat.yearly.map(y=>y.year),[{label:'FTA (M)',data:nat.yearly.map(y=>y.fta),color:'#E8770A'}],{plugins:{legend:{display:false}}});
+  }
+}
+typeEl.addEventListener('change',populateCmp);
+aEl.addEventListener('change',runCmp);
+bEl.addEventListener('change',runCmp);
+metEl.addEventListener('change',runCmp);
+populateCmp();
+</script>
+</body></html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Economy — India in Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/animations.css"><link rel="stylesheet" href="../css/responsive.css">
+<style>.pg{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-5);margin-bottom:var(--space-5);}.pg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-5);margin-bottom:var(--space-5);}@media(max-width:1023px){.pg3{grid-template-columns:1fr 1fr;}}@media(max-width:767px){.pg,.pg3{grid-template-columns:1fr;}}</style>
+</head>
+<body>
+<div id="cursor-light" aria-hidden="true"></div><div id="scroll-progress" aria-hidden="true"></div>
+<nav id="main-nav" class="visible" role="navigation"><div class="nav-inner">
+  <a href="../index.html" class="nav-logo"><span class="nav-logo-title">INDIA IN MOTION</span><span class="nav-logo-sub">Tourism Intelligence Atlas</span></a>
+  <ul class="nav-links" role="list"><li><a href="../index.html">Overview</a></li><li><a href="tourists.html">Tourists</a></li><li><a href="destinations.html">Destinations</a></li><li><a href="states.html">States</a></li><li><a href="economy.html" class="active" aria-current="page">Economy</a></li><li><a href="culture.html">Culture</a></li><li><a href="infrastructure.html">Infrastructure</a></li><li><a href="sustainability.html">Sustainability</a></li><li><a href="insights.html">Insights</a></li><li><a href="data-lab.html">Data Lab</a></li></ul>
+  <div class="nav-controls"><button id="search-open-btn" class="nav-btn" aria-label="Search"><i class="fas fa-search"></i></button><button id="theme-toggle" class="nav-btn" aria-label="Toggle theme"><i class="fas fa-sun"></i></button><button id="fullscreen-btn" class="nav-btn" aria-label="Fullscreen"><i class="fas fa-expand"></i></button><button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu" aria-expanded="false"><i class="fas fa-bars"></i></button></div>
+</div></nav>
+<div id="mobile-nav-drawer" class="mobile-nav-drawer"><a href="../index.html">Overview</a><a href="tourists.html">Tourists</a><a href="destinations.html">Destinations</a><a href="states.html">States</a><a href="economy.html">Economy</a><a href="culture.html">Culture</a><a href="infrastructure.html">Infrastructure</a><a href="sustainability.html">Sustainability</a><a href="insights.html">Insights</a><a href="data-lab.html">Data Lab</a></div>
+<div id="search-overlay" role="search"><div class="search-input-wrap"><input type="text" id="search-input" placeholder="Search economy, revenue..."><button class="search-close" id="search-close"><i class="fas fa-times"></i></button></div><div id="search-results" class="search-results"></div></div>
+
+<main class="page-wrapper page-content">
+<header style="background:var(--bg-secondary);border-bottom:1px solid var(--border-subtle);padding:var(--space-12) 0 var(--space-8);">
+  <div class="container-wide"><p class="section-label animate-in">Economic Intelligence</p><h1 class="section-title animate-in" style="font-size:clamp(2rem,4vw,3.2rem);">Tourism = Economic Engine</h1><p class="section-desc animate-in">India's tourism GDP contribution, forex earnings, employment and economic flows — sourced from RBI, WTTC and Ministry of Tourism.</p></div>
+</header>
+
+<div class="container-wide" style="padding:var(--space-10) 0 var(--space-16);">
+  <div class="kpi-grid stagger-children" style="margin-bottom:var(--space-8);">
+    <article class="kpi-card"><p class="kpi-label">Forex Earnings 2023</p><div style="display:flex;align-items:baseline;gap:4px;"><span style="font-size:1rem;color:var(--text-muted);">$</span><span class="kpi-value"><span class="counter" data-target="22.9" data-decimals="1">—</span></span><span class="kpi-unit">Billion USD</span></div><div class="kpi-change positive"><i class="fas fa-arrow-up"></i>+63.6% vs 2022</div><p class="kpi-source"><strong>Source:</strong> Reserve Bank of India · 2023</p></article>
+    <article class="kpi-card"><p class="kpi-label">Tourism GDP Share</p><div style="display:flex;align-items:baseline;gap:4px;"><span class="kpi-value"><span class="counter" data-target="7.6" data-decimals="1">—</span></span><span class="kpi-unit">% of GDP</span></div><div class="kpi-change positive"><i class="fas fa-arrow-up"></i>+0.5pp vs 2022</div><p class="kpi-source"><strong>Source:</strong> WTTC / Ministry of Tourism · 2023</p></article>
+    <article class="kpi-card"><p class="kpi-label">Direct GDP Contribution</p><div style="display:flex;align-items:baseline;gap:4px;"><span class="kpi-value"><span class="counter" data-target="3.1" data-decimals="1">—</span></span><span class="kpi-unit">% of GDP</span></div><div class="kpi-change positive"><i class="fas fa-arrow-up"></i>+0.2pp vs 2022</div><p class="kpi-source"><strong>Source:</strong> WTTC India 2023</p></article>
+    <article class="kpi-card"><p class="kpi-label">Total Employment</p><div style="display:flex;align-items:baseline;gap:4px;"><span class="kpi-value"><span class="counter" data-target="80" data-decimals="0">—</span></span><span class="kpi-unit">Million</span></div><div class="kpi-change positive"><i class="fas fa-arrow-up"></i>+3.6% vs 2022</div><p class="kpi-source"><strong>Source:</strong> WTTC / Ministry of Tourism · 2023</p></article>
+  </div>
+
+  <div class="tab-nav" role="tablist">
+    <button class="tab-btn active" data-tab="te-forex">Forex &amp; Revenue</button>
+    <button class="tab-btn" data-tab="te-gdp">GDP Contribution</button>
+    <button class="tab-btn" data-tab="te-emp">Employment</button>
+    <button class="tab-btn" data-tab="te-spend">Spending</button>
+    <button class="tab-btn" data-tab="te-gw">Gateways</button>
+  </div>
+
+  <div id="te-forex" class="tab-panel active">
+    <div class="pg">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Forex Earnings Trend</p><p class="chart-subtitle">USD Billion · 2013–2023</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:280px;"><canvas id="ch-fx-trend"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Reserve Bank of India · USD Billion</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Annual Forex Growth</p><p class="chart-subtitle">Year-on-year change (%)</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:280px;"><canvas id="ch-fx-growth"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Derived from RBI data</p></div></div>
+    </div>
+    <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Forex (INR) vs FTA</p><p class="chart-subtitle">Correlation: FTA (M) vs forex earnings (INR Billion)</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:260px;"><canvas id="ch-fx-scatter"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> RBI / Ministry of Tourism</p></div></div>
+  </div>
+
+  <div id="te-gdp" class="tab-panel">
+    <div class="pg">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Total Tourism GDP %</p><p class="chart-subtitle">Direct + indirect as % of India's GDP</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:280px;"><canvas id="ch-gdp-pct"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> WTTC India 2023</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Direct vs Indirect GDP</p><p class="chart-subtitle">Stacked contribution in INR Billion</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:280px;"><canvas id="ch-gdp-split"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> WTTC India 2023</p></div></div>
+    </div>
+    <div class="pg">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Direct GDP (INR B)</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:240px;"><canvas id="ch-gdp-abs"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> WTTC India 2023 · INR Billion</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">GDP Composition 2023</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:240px;"><canvas id="ch-gdp-donut"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> WTTC India 2023</p></div></div>
+    </div>
+  </div>
+
+  <div id="te-emp" class="tab-panel">
+    <div class="pg">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Employment Trend</p><p class="chart-subtitle">Total tourism employment (direct + indirect, M)</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:280px;"><canvas id="ch-emp-trend"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> WTTC / Ministry of Tourism</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Direct vs Indirect Employment</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:280px;"><canvas id="ch-emp-split"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> WTTC / Ministry of Tourism</p></div></div>
+    </div>
+    <div class="pg">
+      <div class="chart-card animate-in"><div class="chart-header"><p class="chart-title">Employment Mix 2023</p></div><div class="chart-body" style="height:240px;"><canvas id="ch-emp-donut"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> WTTC India 2023</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><p class="chart-title">Employment vs FTA</p></div><div class="chart-body" style="height:240px;"><canvas id="ch-emp-scatter"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Derived from WTTC / Ministry of Tourism</p></div></div>
+    </div>
+  </div>
+
+  <div id="te-spend" class="tab-panel">
+    <div style="background:var(--gold-dim);border:1px solid var(--border-accent);border-radius:var(--radius-md);padding:var(--space-4) var(--space-5);margin-bottom:var(--space-5);display:flex;gap:10px;"><i class="fas fa-circle-info" style="color:var(--gold);flex-shrink:0;margin-top:2px;"></i><p style="font-size:.82rem;color:var(--text-secondary);">Spending composition is <strong>illustrative</strong> based on India Tourism Statistics 2023 indicative data.</p></div>
+    <div class="pg">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Tourist Spending Composition</p></div><span class="chart-badge illustrative">Illustrative</span></div><div class="chart-body" style="height:280px;"><canvas id="ch-spend-donut"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> India Tourism Statistics 2023 · Illustrative · 2022</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Spending by Category</p></div><span class="chart-badge illustrative">Illustrative</span></div><div class="chart-body" style="height:280px;"><canvas id="ch-spend-bar"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> India Tourism Statistics 2023 · Illustrative · 2022</p></div></div>
+    </div>
+  </div>
+
+  <div id="te-gw" class="tab-panel">
+    <div class="pg">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Gateway Arrivals</p><p class="chart-subtitle">International arrivals by airport (Thousand) · 2022</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:300px;"><canvas id="ch-gw-bar"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Bureau of Immigration · 2022</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Gateway Share</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:300px;"><canvas id="ch-gw-donut"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Bureau of Immigration · 2022</p></div></div>
+    </div>
+  </div>
+
+</div>
+<footer style="background:var(--bg-secondary);border-top:1px solid var(--border-subtle);padding:var(--space-6) 0;"><div class="container-wide" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;"><p style="font-family:'Playfair Display',serif;font-weight:700;color:var(--text-primary);">INDIA IN MOTION</p><p style="font-size:.68rem;color:var(--text-muted);">Data: RBI · WTTC India 2023 · Ministry of Tourism</p></div></footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="../js/data-loader.js"></script>
+<script src="../js/charts.js"></script>
+<script src="../js/page-common.js"></script>
+<script>
+setTimeout(function() {
+(function(){
+  var D=window.TOURISM_DATA,ec=D['economy'],nat=D['national-tourism'];
+  var fx=ec.forex_earnings,gdp=ec.gdp_contribution,emp=ec.employment;
+  var yr=fx.map(r=>r.year);
+  ChartFactory.area('ch-fx-trend',yr,[{label:'Forex USD B',data:fx.map(r=>r.usd_billion),color:'#C8A84B',fill:true}],{plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+v+'B'}}}});
+  var gr=fx.map(r=>r.growth_pct);
+  ChartFactory.bar('ch-fx-growth',yr,[{label:'Growth %',data:gr,colors:gr.map(g=>g===null?'transparent':parseFloat(g)>=0?'#40916C':'#E05252')}],{plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>v+'%'}}}});
+  ChartFactory.scatter('ch-fx-scatter',[{label:'Year',data:nat.yearly.map(y=>({x:y.fta,y:y.forex_inr})),color:'#E8770A',radius:6}],{plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{var yr=nat.yearly.find(y=>y.fta===ctx.raw.x);return yr?yr.year+': FTA='+yr.fta+'M':'';}}}},scales:{x:{title:{display:true,text:'FTA (M)',color:'var(--text-muted)',font:{size:11}}},y:{title:{display:true,text:'Forex INR B',color:'var(--text-muted)',font:{size:11}}}}});
+  var gyr=gdp.map(r=>r.year);
+  ChartFactory.line('ch-gdp-pct',gyr,[{label:'Total %',data:gdp.map(r=>r.total_pct),color:'#E8770A'},{label:'Direct %',data:gdp.map(r=>r.direct_pct),color:'#C8A84B'}],{scales:{y:{ticks:{callback:v=>v+'%'},min:0,max:10}}});
+  ChartFactory.stackedBar('ch-gdp-split',gyr,[{label:'Direct',data:gdp.map(r=>r.direct_inr_billion),color:'#E8770A'},{label:'Indirect',data:gdp.map(r=>r.total_inr_billion-r.direct_inr_billion),color:'#C8A84B'}],{scales:{x:{stacked:true},y:{stacked:true,ticks:{callback:v=>'₹'+v+'B'}}}});
+  ChartFactory.bar('ch-gdp-abs',gyr,[{label:'Direct INR B',data:gdp.map(r=>r.direct_inr_billion),color:'#40916C'}],{plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'₹'+v+'B'}}}});
+  var lg=gdp[gdp.length-1];ChartFactory.donut('ch-gdp-donut',['Direct','Indirect'],[lg.direct_pct,lg.total_pct-lg.direct_pct],['#E8770A','#C8A84B']);
+  var eyr=emp.map(r=>r.year);
+  ChartFactory.line('ch-emp-trend',eyr,[{label:'Total (M)',data:emp.map(r=>r.total_million),color:'#40916C'},{label:'Direct (M)',data:emp.map(r=>r.direct_million),color:'#E8770A'}],{scales:{y:{ticks:{callback:v=>v+'M'}}}});
+  ChartFactory.area('ch-emp-split',eyr,[{label:'Indirect',data:emp.map(r=>+(r.total_million-r.direct_million).toFixed(1)),color:'#C8A84B',fill:true},{label:'Direct',data:emp.map(r=>r.direct_million),color:'#E8770A',fill:true}],{scales:{y:{ticks:{callback:v=>v+'M'}}}});
+  var le=emp[emp.length-1];ChartFactory.donut('ch-emp-donut',['Direct','Indirect'],[le.direct_million,le.total_million-le.direct_million],['#E8770A','#40916C']);
+  ChartFactory.scatter('ch-emp-scatter',[{label:'',data:nat.yearly.map(y=>({x:y.fta,y:emp.find(e=>e.year===y.year)?emp.find(e=>e.year===y.year).total_million:0})),color:'#7B9EA6',radius:6}],{plugins:{legend:{display:false}},scales:{x:{title:{display:true,text:'FTA (M)',color:'var(--text-muted)',font:{size:11}}},y:{title:{display:true,text:'Employment (M)',color:'var(--text-muted)',font:{size:11}}}}});
+  var sp=ec.spending_composition.categories;
+  ChartFactory.donut('ch-spend-donut',sp.map(c=>c.category),sp.map(c=>c.share_pct),ChartFactory.PALETTE);
+  ChartFactory.horizontalBar('ch-spend-bar',sp.map(c=>c.category),[{label:'Share %',data:sp.map(c=>c.share_pct),colors:ChartFactory.PALETTE}],{plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>v+'%'}}}});
+  var gw=ec.gateway_arrivals.data;
+  ChartFactory.horizontalBar('ch-gw-bar',gw.map(g=>g.gateway),[{label:'Arrivals (K)',data:gw.map(g=>g.arrivals_thousand),colors:ChartFactory.PALETTE}],{plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>v+'K'}}}});
+  ChartFactory.donut('ch-gw-donut',gw.map(g=>g.gateway),gw.map(g=>g.arrivals_thousand),ChartFactory.PALETTE);
+})();
+}, 50);
+</script>
+</body></html>

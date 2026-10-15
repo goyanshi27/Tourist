@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Insights — India in Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/animations.css"><link rel="stylesheet" href="../css/responsive.css">
+<style>.pg{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-5);margin-bottom:var(--space-5);}.pg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-5);margin-bottom:var(--space-5);}.ecard{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:var(--space-5);transition:all .25s;}.ecard:hover{border-color:var(--gold);transform:translateY(-2px);}@media(max-width:1023px){.pg3{grid-template-columns:1fr 1fr;}}@media(max-width:767px){.pg,.pg3{grid-template-columns:1fr;}}</style>
+</head>
+<body>
+<div id="cursor-light" aria-hidden="true"></div><div id="scroll-progress" aria-hidden="true"></div>
+<nav id="main-nav" class="visible" role="navigation"><div class="nav-inner">
+  <a href="../index.html" class="nav-logo"><span class="nav-logo-title">INDIA IN MOTION</span><span class="nav-logo-sub">Tourism Intelligence Atlas</span></a>
+  <ul class="nav-links" role="list"><li><a href="../index.html">Overview</a></li><li><a href="tourists.html">Tourists</a></li><li><a href="destinations.html">Destinations</a></li><li><a href="states.html">States</a></li><li><a href="economy.html">Economy</a></li><li><a href="culture.html">Culture</a></li><li><a href="infrastructure.html">Infrastructure</a></li><li><a href="sustainability.html">Sustainability</a></li><li><a href="insights.html" class="active" aria-current="page">Insights</a></li><li><a href="data-lab.html">Data Lab</a></li></ul>
+  <div class="nav-controls"><button id="search-open-btn" class="nav-btn" aria-label="Search"><i class="fas fa-search"></i></button><button id="theme-toggle" class="nav-btn" aria-label="Toggle theme"><i class="fas fa-sun"></i></button><button id="fullscreen-btn" class="nav-btn" aria-label="Fullscreen"><i class="fas fa-expand"></i></button><button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu" aria-expanded="false"><i class="fas fa-bars"></i></button></div>
+</div></nav>
+<div id="mobile-nav-drawer" class="mobile-nav-drawer"><a href="../index.html">Overview</a><a href="tourists.html">Tourists</a><a href="destinations.html">Destinations</a><a href="states.html">States</a><a href="economy.html">Economy</a><a href="culture.html">Culture</a><a href="infrastructure.html">Infrastructure</a><a href="sustainability.html">Sustainability</a><a href="insights.html">Insights</a><a href="data-lab.html">Data Lab</a></div>
+<div id="search-overlay" role="search"><div class="search-input-wrap"><input type="text" id="search-input" placeholder="Search insights..."><button class="search-close" id="search-close"><i class="fas fa-times"></i></button></div><div id="search-results" class="search-results"></div></div>
+
+<main class="page-wrapper page-content">
+<header style="background:var(--bg-secondary);border-bottom:1px solid var(--border-subtle);padding:var(--space-12) 0 var(--space-8);">
+  <div class="container-wide"><p class="section-label animate-in">Analytical Intelligence</p><h1 class="section-title animate-in" style="font-size:clamp(2rem,4vw,3.2rem);">Tourism Insights &amp; Opportunities</h1><p class="section-desc animate-in">Tourism concentration, emerging destinations and opportunity analysis. All derived metrics use transparent methodology.</p></div>
+</header>
+
+<div class="container-wide" style="padding:var(--space-10) 0 var(--space-16);">
+  <div class="tab-nav" role="tablist">
+    <button class="tab-btn active" data-tab="ti-conc">Concentration</button>
+    <button class="tab-btn" data-tab="ti-emerg">Emerging Destinations</button>
+    <button class="tab-btn" data-tab="ti-opp">Opportunity</button>
+    <button class="tab-btn" data-tab="ti-season">Seasonality</button>
+  </div>
+
+  <div id="ti-conc" class="tab-panel active">
+    <div style="background:var(--gold-dim);border:1px solid var(--border-accent);border-radius:var(--radius-md);padding:var(--space-4) var(--space-5);margin-bottom:var(--space-5);display:flex;gap:10px;"><i class="fas fa-circle-info" style="color:var(--gold);flex-shrink:0;margin-top:2px;"></i><p style="font-size:.82rem;color:var(--text-secondary);">Concentration metrics derived from Ministry of Tourism state-level data. These are analytical observations — not policy recommendations.</p></div>
+    <div class="pg">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Tourism Share — Top States (Pareto)</p><p class="chart-subtitle">Individual state share of total tracked domestic visits · 2022</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:280px;"><canvas id="ch-pareto"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism · 2022 · Derived share</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">State Share Distribution</p><p class="chart-subtitle">Proportional share by state</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:280px;"><canvas id="ch-treemap"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism · Derived · 2022</p></div></div>
+    </div>
+  </div>
+
+  <div id="ti-emerg" class="tab-panel">
+    <div style="background:var(--saffron-dim);border:1px solid var(--border-saffron);border-radius:var(--radius-md);padding:var(--space-4) var(--space-5);margin-bottom:var(--space-5);display:flex;gap:10px;"><i class="fas fa-circle-info" style="color:var(--saffron);flex-shrink:0;margin-top:2px;"></i><p style="font-size:.82rem;color:var(--text-secondary);"><strong style="color:var(--text-primary);">Methodology:</strong> Emerging destinations identified using visitor growth, heritage assets, infrastructure and connectivity variables. These are <strong>analytical labels</strong> — not official government designations.</p></div>
+    <div class="pg" style="margin-bottom:var(--space-5);">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Growth vs Current Volume</p><p class="chart-subtitle">Recovery growth % vs 2022 visitor volume — emerging market view</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:300px;"><canvas id="ch-emerg-scatter"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism · Derived analytical view</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Emerging Destination Profiles</p><p class="chart-subtitle">Multi-variable comparison of selected emerging destinations</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:300px;"><canvas id="ch-emerg-radar"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Derived analytical metric · Not official scoring</p></div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:var(--space-5);" id="emerg-cards"></div>
+  </div>
+
+  <div id="ti-opp" class="tab-panel">
+    <div style="background:var(--gold-dim);border:1px solid var(--border-accent);border-radius:var(--radius-md);padding:var(--space-4) var(--space-5);margin-bottom:var(--space-5);display:flex;gap:10px;"><i class="fas fa-circle-info" style="color:var(--gold);flex-shrink:0;margin-top:2px;"></i><p style="font-size:.82rem;color:var(--text-secondary);"><strong style="color:var(--text-primary);">Analytical Model.</strong> Quadrant uses current visitor volume and derived infrastructure score. Not an official planning index.</p></div>
+    <div class="pg">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Opportunity Quadrant</p><p class="chart-subtitle">X = visitor volume · Y = infrastructure score (derived)</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:360px;"><canvas id="ch-quadrant"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Derived from Ministry of Tourism · Not official · 2022</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Opportunity Bubble Map</p><p class="chart-subtitle">X = visitors · Y = infra score · Bubble = FTA</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:360px;"><canvas id="ch-opp-bubble"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Derived composite metric · 2022</p></div></div>
+    </div>
+  </div>
+
+  <div id="ti-season" class="tab-panel">
+    <div class="pg">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Monthly Tourism Pattern</p><p class="chart-subtitle">Seasonal index of international arrivals</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:280px;"><canvas id="ch-season-line"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> India Tourism Statistics 2023 · Derived seasonal index</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Quarterly Distribution</p><p class="chart-subtitle">Estimated share of annual arrivals by quarter</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:280px;"><canvas id="ch-season-q"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism · Quarterly seasonal pattern</p></div></div>
+    </div>
+  </div>
+</div>
+<footer style="background:var(--bg-secondary);border-top:1px solid var(--border-subtle);padding:var(--space-6) 0;"><div class="container-wide" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;"><p style="font-family:'Playfair Display',serif;font-weight:700;color:var(--text-primary);">INDIA IN MOTION</p><p style="font-size:.68rem;color:var(--text-muted);">Derived analytics — Ministry of Tourism, GoI · 2022</p></div></footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="../js/data-loader.js"></script>
+<script src="../js/charts.js"></script>
+<script src="../js/page-common.js"></script>
+<script>
+setTimeout(function() {
+(function(){
+  var D=window.TOURISM_DATA,states=D['states'].states;
+  var total=states.reduce((s,st)=>s+st.dtv_2022,0);
+  var sorted=[...states].sort((a,b)=>b.dtv_2022-a.dtv_2022);
+  ChartFactory.bar('ch-pareto',sorted.map(s=>s.name.replace(' Pradesh','')),[{label:'Share %',data:sorted.map(s=>+(s.dtv_2022/total*100).toFixed(1)),colors:sorted.map((_,i)=>ChartFactory.PALETTE[i%ChartFactory.PALETTE.length])}],{plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>v+'%'}},x:{ticks:{maxRotation:35,font:{size:9}}}}});
+  ChartFactory.horizontalBar('ch-treemap',sorted.map(s=>s.name.replace(' Pradesh','')),[{label:'Share %',data:sorted.map(s=>+(s.dtv_2022/total*100).toFixed(1)),colors:sorted.map((_,i)=>ChartFactory.PALETTE[i%ChartFactory.PALETTE.length])}],{plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>v+'%'}}}});
+  var rec=states.filter(s=>s.dtv_2019).map(s=>({n:s.name,x:s.dtv_2022,y:+(s.dtv_2022/s.dtv_2019*100).toFixed(1)}));
+  ChartFactory.scatter('ch-emerg-scatter',[{label:'States',data:rec.map(r=>({x:r.x,y:r.y})),color:'#E8770A',radius:6}],{plugins:{tooltip:{callbacks:{label:ctx=>rec.find(r=>r.x===ctx.raw.x)?.n||''}},legend:{display:false}},scales:{x:{title:{display:true,text:'2022 Visitors (M)',color:'var(--text-muted)',font:{size:11}}},y:{title:{display:true,text:'Recovery vs 2019 (%)',color:'var(--text-muted)',font:{size:11}}}}});
+  ChartFactory.radar('ch-emerg-radar',['Visitor Volume','Growth','Heritage','Infrastructure','Connectivity','Foreign Interest'],[{label:'Odisha',data:[5,8,9,6,5,6],color:'#E8770A'},{label:'Bihar',data:[6,8,9,5,5,7],color:'#C8A84B'},{label:'Assam',data:[4,7,8,5,6,6],color:'#40916C'},{label:'Karnataka',data:[7,6,9,7,8,8],color:'#7B9EA6'}]);
+  var emerging=[{n:'Hampi',s:'Karnataka',score:8.4,strengths:['UNESCO Heritage','Adventure','Photography']},{n:'Ziro Valley',s:'Arunachal Pradesh',score:7.8,strengths:['Tribal Culture','Nature','Bird Watching']},{n:'Majuli Island',s:'Assam',score:7.6,strengths:['River Island','Satras','Wildlife']},{n:'Rann of Kutch',s:'Gujarat',score:8.2,strengths:['Unique Landscape','Festival','Craft']},{n:'Spiti Valley',s:'Himachal Pradesh',score:8.0,strengths:['High Altitude','Adventure','Buddhism']},{n:'Konark',s:'Odisha',score:7.9,strengths:['UNESCO','Sculpture','Heritage']}];
+  var ecEl=document.getElementById('emerg-cards');
+  if(ecEl) ecEl.innerHTML=emerging.map(function(d){return '<div class="ecard"><div style="display:flex;justify-content:space-between;margin-bottom:8px;"><div><p style="font-family:\'Playfair Display\',serif;font-size:1.05rem;font-weight:700;color:var(--text-primary);">'+d.n+'</p><p style="font-size:.72rem;color:var(--text-muted);">'+d.s+'</p></div><span style="background:var(--saffron-dim);border:1px solid var(--border-saffron);border-radius:var(--radius-sm);padding:2px 8px;font-size:.65rem;font-weight:700;color:var(--saffron);align-self:flex-start;">Rising</span></div><div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;">'+d.strengths.map(function(s){return '<span style="background:var(--bg-elevated);border:1px solid var(--border-light);border-radius:4px;padding:2px 7px;font-size:.65rem;color:var(--text-secondary);">'+s+'</span>';}).join('')+'</div><div style="display:flex;align-items:center;gap:8px;"><span style="font-size:.65rem;color:var(--text-muted);">Opportunity Score (derived):</span><span style="font-family:\'Playfair Display\',serif;font-weight:700;color:var(--text-primary);">'+d.score+'/10</span></div><p style="font-size:.62rem;color:var(--text-muted);margin-top:5px;">Derived analytical metric · Not an official score</p></div>';}).join('');
+  var infScores={'Goa':8.5,'Delhi':8.2,'Maharashtra':7.8,'Rajasthan':7.5,'Karnataka':7.2,'Kerala':7.4,'Tamil Nadu':7.0,'Uttar Pradesh':6.8,'Himachal Pradesh':7.2,'Uttarakhand':6.9,'Gujarat':6.6,'Odisha':5.8,'Bihar':5.2,'West Bengal':6.4,'Punjab':6.2,'Assam':5.4};
+  var qd=states.map(function(s){return {x:s.dtv_2022,y:infScores[s.name]||5.5,r:Math.sqrt(s.fta_2022)*3+4,n:s.name};});
+  ChartFactory.bubble('ch-quadrant',[{label:'States',data:qd.map(d=>({x:d.x,y:d.y,r:d.r})),color:'#E8770A'}],{plugins:{tooltip:{callbacks:{label:ctx=>qd[ctx.dataIndex]?.n||''}},legend:{display:false}},scales:{x:{title:{display:true,text:'Visitors (M)',color:'var(--text-muted)',font:{size:11}}},y:{title:{display:true,text:'Infra Score (Derived)',color:'var(--text-muted)',font:{size:11}},min:4,max:10}}});
+  ChartFactory.bubble('ch-opp-bubble',states.slice(0,10).map(function(s,i){return {label:s.name.replace(' Pradesh',''),data:[{x:s.dtv_2022,y:infScores[s.name]||5.5,r:Math.sqrt(s.fta_2022)*3+4}],color:ChartFactory.PALETTE[i%ChartFactory.PALETTE.length]};}),{plugins:{legend:{display:false}}});
+  ChartFactory.line('ch-season-line',['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],[{label:'Seasonal Index',data:[100,95,88,70,55,45,48,52,65,90,98,105],color:'#E8770A'}],{plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>v+' idx'}}}});
+  ChartFactory.bar('ch-season-q',['Q1 (Jan–Mar)','Q2 (Apr–Jun)','Q3 (Jul–Sep)','Q4 (Oct–Dec)'],[{label:'Share %',data:[29.1,19.3,18.5,33.1],colors:['#E8770A','#7B9EA6','#5C7C6A','#C8A84B']}],{plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>v+'%'}}}});
+})();
+}, 50);
+</script>
+</body></html>

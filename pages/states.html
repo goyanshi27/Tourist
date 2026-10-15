@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>States — India in Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/animations.css"><link rel="stylesheet" href="../css/responsive.css">
+<style>
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-5);margin-bottom:var(--space-5);}
+.pg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-5);margin-bottom:var(--space-5);}
+.state-chip{padding:6px 14px;background:var(--bg-elevated);border:1px solid var(--border-light);border-radius:var(--radius-full);font-family:'Inter',sans-serif;font-size:.72rem;font-weight:600;color:var(--text-secondary);cursor:pointer;transition:all .2s;}
+.state-chip:hover,.state-chip.active{background:var(--saffron-dim);border-color:var(--saffron);color:var(--saffron-light);}
+.sprof{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:var(--space-5);}
+@media(max-width:1023px){.pg3{grid-template-columns:1fr 1fr;}}@media(max-width:767px){.pg,.pg3{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div id="cursor-light" aria-hidden="true"></div><div id="scroll-progress" aria-hidden="true"></div>
+<nav id="main-nav" class="visible" role="navigation"><div class="nav-inner">
+  <a href="../index.html" class="nav-logo"><span class="nav-logo-title">INDIA IN MOTION</span><span class="nav-logo-sub">Tourism Intelligence Atlas</span></a>
+  <ul class="nav-links" role="list"><li><a href="../index.html">Overview</a></li><li><a href="tourists.html">Tourists</a></li><li><a href="destinations.html">Destinations</a></li><li><a href="states.html" class="active" aria-current="page">States</a></li><li><a href="economy.html">Economy</a></li><li><a href="culture.html">Culture</a></li><li><a href="infrastructure.html">Infrastructure</a></li><li><a href="sustainability.html">Sustainability</a></li><li><a href="insights.html">Insights</a></li><li><a href="data-lab.html">Data Lab</a></li></ul>
+  <div class="nav-controls"><button id="search-open-btn" class="nav-btn" aria-label="Search"><i class="fas fa-search"></i></button><button id="theme-toggle" class="nav-btn" aria-label="Toggle theme"><i class="fas fa-sun"></i></button><button id="fullscreen-btn" class="nav-btn" aria-label="Fullscreen"><i class="fas fa-expand"></i></button><button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu" aria-expanded="false"><i class="fas fa-bars"></i></button></div>
+</div></nav>
+<div id="mobile-nav-drawer" class="mobile-nav-drawer"><a href="../index.html">Overview</a><a href="tourists.html">Tourists</a><a href="destinations.html">Destinations</a><a href="states.html">States</a><a href="economy.html">Economy</a><a href="culture.html">Culture</a><a href="infrastructure.html">Infrastructure</a><a href="sustainability.html">Sustainability</a><a href="insights.html">Insights</a><a href="data-lab.html">Data Lab</a></div>
+<div id="search-overlay" role="search"><div class="search-input-wrap"><input type="text" id="search-input" placeholder="Search states..."><button class="search-close" id="search-close"><i class="fas fa-times"></i></button></div><div id="search-results" class="search-results"></div></div>
+
+<main class="page-wrapper page-content">
+<header style="background:var(--bg-secondary);border-bottom:1px solid var(--border-subtle);padding:var(--space-12) 0 var(--space-8);">
+  <div class="container-wide"><p class="section-label animate-in">State Analysis</p><h1 class="section-title animate-in" style="font-size:clamp(2rem,4vw,3.2rem);">State Comparison Lab</h1><p class="section-desc animate-in">Compare India's states across tourism performance, growth and profiles. Select states below to build custom comparisons. This is an analytical tool — no state is ranked as "best".</p></div>
+</header>
+
+<div class="container-wide" style="padding:var(--space-10) 0 var(--space-16);">
+
+  <div class="section-header animate-in" style="padding-top:0;"><p class="section-label">National Rankings</p><h2 class="section-title">State-wise Tourist Visits · 2022</h2></div>
+  <div class="pg">
+    <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Top 10 — Domestic Visits</p><p class="chart-subtitle">Million domestic visits · 2022</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:320px;"><canvas id="ch-rank-dtv"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism / State Depts · 2022</p></div></div>
+    <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Top 10 — Foreign Arrivals</p><p class="chart-subtitle">Million foreign arrivals · 2022</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:320px;"><canvas id="ch-rank-fta"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism / Bureau of Immigration · 2022</p></div></div>
+  </div>
+
+  <div class="chart-card animate-in" style="margin-bottom:var(--space-5);"><div class="chart-header"><div><p class="chart-title">Post-Pandemic Recovery</p><p class="chart-subtitle">2022 domestic visits as % of 2019 baseline (where available)</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:240px;"><canvas id="ch-recovery"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism · Derived: 2022 vs 2019</p></div></div>
+
+  <div class="chart-card animate-in" style="margin-bottom:var(--space-8);"><div class="chart-header"><div><p class="chart-title">Domestic vs Foreign — Scatter</p><p class="chart-subtitle">X = domestic visits (M) · Y = foreign arrivals (M) · 2022</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:320px;"><canvas id="ch-scatter"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism · 2022</p></div></div>
+
+  <div class="section-header animate-in" style="padding-top:var(--space-4);"><p class="section-label">Comparison Lab</p><h2 class="section-title">Compare States Side by Side</h2><p class="section-desc">Select 2–5 states. Charts update automatically.</p></div>
+  <div style="background:var(--gold-dim);border:1px solid var(--border-accent);border-radius:var(--radius-md);padding:var(--space-4) var(--space-5);margin-bottom:var(--space-5);display:flex;gap:10px;"><i class="fas fa-circle-info" style="color:var(--gold);flex-shrink:0;margin-top:2px;"></i><p style="font-size:.82rem;color:var(--text-secondary);">This is an analytical comparison tool — it does not rank or score states.</p></div>
+  <div id="state-chips" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:var(--space-6);"></div>
+
+  <div class="tab-nav" role="tablist">
+    <button class="tab-btn active" data-tab="tc-bar">Grouped Bar</button>
+    <button class="tab-btn" data-tab="tc-radar">Radar Profile</button>
+    <button class="tab-btn" data-tab="tc-profiles">State Profiles</button>
+  </div>
+
+  <div id="tc-bar" class="tab-panel active">
+    <div class="pg">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Domestic Visits Comparison</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:260px;"><canvas id="ch-cmp-dtv"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism · 2022</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">2019 vs 2022 Comparison</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:260px;"><canvas id="ch-cmp-2yr"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism</p></div></div>
+    </div>
+  </div>
+
+  <div id="tc-radar" class="tab-panel">
+    <div class="pg">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Tourism Profile Radar</p><p class="chart-subtitle">Normalised across 5 dimensions — derived metric</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:340px;"><canvas id="ch-radar"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Derived from Ministry of Tourism · Normalised 0–10</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Recovery vs 2019</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:340px;"><canvas id="ch-cmp-rec"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Derived from Ministry of Tourism</p></div></div>
+    </div>
+  </div>
+
+  <div id="tc-profiles" class="tab-panel">
+    <div id="profiles-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--space-5);"></div>
+  </div>
+
+</div>
+<footer style="background:var(--bg-secondary);border-top:1px solid var(--border-subtle);padding:var(--space-6) 0;"><div class="container-wide" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;"><p style="font-family:'Playfair Display',serif;font-weight:700;color:var(--text-primary);">INDIA IN MOTION</p><p style="font-size:.68rem;color:var(--text-muted);">Data: Ministry of Tourism, GoI · 2022</p></div></footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="../js/data-loader.js"></script>
+<script src="../js/charts.js"></script>
+<script src="../js/page-common.js"></script>
+<script>
+setTimeout(function() {
+(function(){
+  const states = window.TOURISM_DATA['states'].states;
+  const byDtv = [...states].sort((a,b)=>b.dtv_2022-a.dtv_2022);
+  const byFta = [...states].sort((a,b)=>b.fta_2022-a.fta_2022);
+  const top10d = byDtv.slice(0,10), top10f = byFta.slice(0,10);
+
+  ChartFactory.horizontalBar('ch-rank-dtv', top10d.map(s=>s.name.replace(' Pradesh','')), [{label:'Domestic (M)',data:top10d.map(s=>s.dtv_2022),colors:ChartFactory.PALETTE}], {plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>v+'M'}}}});
+  ChartFactory.horizontalBar('ch-rank-fta', top10f.map(s=>s.name.replace(' Pradesh','')), [{label:'Foreign (M)',data:top10f.map(s=>s.fta_2022),colors:ChartFactory.PALETTE}], {plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>v+'M'}}}});
+
+  const withPre = states.filter(s=>s.dtv_2019).map(s=>({n:s.name.replace(' Pradesh','').replace('Himachal','HP'),r:+(s.dtv_2022/s.dtv_2019*100).toFixed(1)})).sort((a,b)=>b.r-a.r);
+  ChartFactory.bar('ch-recovery', withPre.map(s=>s.n), [{label:'Recovery %',data:withPre.map(s=>s.r),colors:withPre.map(s=>s.r>=100?'#40916C':s.r>=70?'#E8770A':'#E05252')}], {plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>v+'%'}},x:{ticks:{maxRotation:35,font:{size:9}}}}});
+
+  ChartFactory.scatter('ch-scatter', [{label:'States',data:states.map(s=>({x:s.dtv_2022,y:s.fta_2022,label:s.name})),color:'#E8770A',radius:7}], {plugins:{tooltip:{callbacks:{label:ctx=>states.find(s=>s.dtv_2022===ctx.raw.x)?.name||''}},legend:{display:false}},scales:{x:{title:{display:true,text:'Domestic (M)',color:'var(--text-muted)',font:{size:11}}},y:{title:{display:true,text:'Foreign (M)',color:'var(--text-muted)',font:{size:11}}}}});
+
+  /* Comparison Lab */
+  let selected = ['Kerala','Rajasthan','Goa'];
+  const chipsEl = document.getElementById('state-chips');
+  states.forEach(s=>{
+    const ch = document.createElement('button');
+    ch.className='state-chip'+(selected.includes(s.name)?' active':'');
+    ch.textContent=s.name; ch.setAttribute('aria-pressed',selected.includes(s.name));
+    ch.addEventListener('click',()=>{
+      if(selected.includes(s.name)){if(selected.length<=2)return;selected=selected.filter(x=>x!==s.name);ch.classList.remove('active');ch.setAttribute('aria-pressed','false');}
+      else{if(selected.length>=5)return;selected.push(s.name);ch.classList.add('active');ch.setAttribute('aria-pressed','true');}
+      updateCmp();
+    });
+    chipsEl.appendChild(ch);
+  });
+
+  function norm(v,mn,mx){return mx===mn?5:+((v-mn)/(mx-mn)*10).toFixed(1);}
+
+  function updateCmp(){
+    const sel=states.filter(s=>selected.includes(s.name));
+    const colors=sel.map((_,i)=>ChartFactory.PALETTE[i%ChartFactory.PALETTE.length]);
+    const allD=states.map(s=>s.dtv_2022),allF=states.map(s=>s.fta_2022),allG=states.map(s=>s.growth_dtv_pct||0);
+    const mnD=Math.min(...allD),mxD=Math.max(...allD),mnF=Math.min(...allF),mxF=Math.max(...allF),mnG=Math.min(...allG),mxG=Math.max(...allG);
+    ChartFactory.bar('ch-cmp-dtv',sel.map(s=>s.name.replace(' Pradesh','')), [{label:'Domestic (M)',data:sel.map(s=>s.dtv_2022),colors}], {plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>v+'M'}}}});
+    ChartFactory.bar('ch-cmp-2yr',sel.map(s=>s.name.replace(' Pradesh','')), [{label:'2019',data:sel.map(s=>s.dtv_2019||null),color:'#5C7C6A'},{label:'2022',data:sel.map(s=>s.dtv_2022),color:'#E8770A'}], {scales:{y:{ticks:{callback:v=>v+'M'}}}});
+    ChartFactory.radar('ch-radar',['Domestic Vol','Foreign Vol','Growth','Destinations','Categories'], sel.map((s,i)=>({label:s.name.replace(' Pradesh',''),color:colors[i],data:[norm(s.dtv_2022,mnD,mxD),norm(s.fta_2022,mnF,mxF),norm(s.growth_dtv_pct||0,mnG,mxG),norm((s.top_destinations||[]).length,0,8),norm((s.categories||[]).length,0,5)]})));
+    ChartFactory.bar('ch-cmp-rec',sel.map(s=>s.name.replace(' Pradesh','')), [{label:'Recovery %',data:sel.map(s=>s.dtv_2019?+(s.dtv_2022/s.dtv_2019*100).toFixed(1):null),colors}], {plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>v+'%'}}}});
+    const pg=document.getElementById('profiles-grid');
+    if(pg) pg.innerHTML=sel.map(s=>`<div class="sprof"><p class="label-caps-accent" style="margin-bottom:6px;">${(s.categories||[]).join(' · ')}</p><p style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--text-primary);margin-bottom:3px;">${s.name}</p><p style="font-size:.75rem;color:var(--text-muted);margin-bottom:12px;">${s.tourism_tagline||''}</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;"><div style="background:var(--bg-elevated);border-radius:6px;padding:10px;"><p class="label-caps" style="margin-bottom:3px;">Domestic</p><p style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--text-primary);">${s.dtv_2022}M</p></div><div style="background:var(--bg-elevated);border-radius:6px;padding:10px;"><p class="label-caps" style="margin-bottom:3px;">Foreign</p><p style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--text-primary);">${s.fta_2022}M</p></div></div><p class="label-caps" style="margin-bottom:6px;">Top Destinations</p><div style="display:flex;flex-wrap:wrap;gap:5px;">${(s.top_destinations||[]).map(d=>`<span style="background:var(--bg-elevated);border:1px solid var(--border-light);border-radius:4px;padding:2px 7px;font-size:.65rem;color:var(--text-secondary);">${d}</span>`).join('')}</div><p style="font-size:.65rem;color:var(--text-muted);margin-top:8px;">Source: Ministry of Tourism · 2022</p></div>`).join('');
+  }
+  updateCmp();
+})();
+}, 50);
+</script>
+</body></html>

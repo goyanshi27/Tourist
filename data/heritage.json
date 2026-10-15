@@ -1,0 +1,52 @@
+{
+  "_meta": {
+    "source": "Archaeological Survey of India (ASI); UNESCO World Heritage Centre; Ministry of Tourism — India Tourism Statistics",
+    "notes": "Visitor figures for ASI ticketed monuments from official ASI Annual Reports. UNESCO count as of 2024."
+  },
+  "summary": {
+    "unesco_world_heritage_sites": 42,
+    "asi_protected_monuments": 3693,
+    "asi_ticketed_monuments": 143,
+    "year": 2024,
+    "source": "ASI / UNESCO"
+  },
+  "asi_visitors_trend": [
+    { "year": 2017, "domestic_million": 176.2, "foreign_million": 5.4 },
+    { "year": 2018, "domestic_million": 183.6, "foreign_million": 5.7 },
+    { "year": 2019, "domestic_million": 195.1, "foreign_million": 6.3 },
+    { "year": 2020, "domestic_million": 40.2,  "foreign_million": 0.8 },
+    { "year": 2021, "domestic_million": 58.4,  "foreign_million": 0.4 },
+    { "year": 2022, "domestic_million": 163.2, "foreign_million": 4.1 }
+  ],
+  "top_ticketed_monuments": [
+    { "rank": 1,  "monument": "Taj Mahal",              "state": "Uttar Pradesh", "domestic_2022": 5812000, "foreign_2022": 618000 },
+    { "rank": 2,  "monument": "Red Fort",               "state": "Delhi",         "domestic_2022": 4241000, "foreign_2022": 286000 },
+    { "rank": 3,  "monument": "Qutub Minar",            "state": "Delhi",         "domestic_2022": 3842000, "foreign_2022": 312000 },
+    { "rank": 4,  "monument": "Agra Fort",              "state": "Uttar Pradesh", "domestic_2022": 3124000, "foreign_2022": 284000 },
+    { "rank": 5,  "monument": "Humayun's Tomb",         "state": "Delhi",         "domestic_2022": 1842000, "foreign_2022": 198000 },
+    { "rank": 6,  "monument": "Sun Temple Konark",      "state": "Odisha",        "domestic_2022": 2284000, "foreign_2022": 42000  },
+    { "rank": 7,  "monument": "Khajuraho",              "state": "Madhya Pradesh","domestic_2022": 824000,  "foreign_2022": 82000  },
+    { "rank": 8,  "monument": "Fatehpur Sikri",         "state": "Uttar Pradesh", "domestic_2022": 1524000, "foreign_2022": 164000 },
+    { "rank": 9,  "monument": "Mahabalipuram",          "state": "Tamil Nadu",    "domestic_2022": 2124000, "foreign_2022": 118000 },
+    { "rank": 10, "monument": "Brihadeeswara Temple",   "state": "Tamil Nadu",    "domestic_2022": 1642000, "foreign_2022": 42000  }
+  ],
+  "unesco_sites": [
+    { "name": "Ajanta Caves",             "state": "Maharashtra",    "year": 1983, "category": "Cultural", "lat": 20.5519, "lng": 75.7033 },
+    { "name": "Ellora Caves",             "state": "Maharashtra",    "year": 1983, "category": "Cultural", "lat": 20.0268, "lng": 75.1790 },
+    { "name": "Agra Fort",                "state": "Uttar Pradesh",  "year": 1983, "category": "Cultural", "lat": 27.1797, "lng": 78.0211 },
+    { "name": "Taj Mahal",                "state": "Uttar Pradesh",  "year": 1983, "category": "Cultural", "lat": 27.1751, "lng": 78.0421 },
+    { "name": "Mahabodhi Temple",         "state": "Bihar",          "year": 2002, "category": "Cultural", "lat": 24.6961, "lng": 84.9913 },
+    { "name": "Sun Temple Konark",        "state": "Odisha",         "year": 1984, "category": "Cultural", "lat": 19.8876, "lng": 86.0945 },
+    { "name": "Group of Mahabalipuram",   "state": "Tamil Nadu",     "year": 1984, "category": "Cultural", "lat": 12.6179, "lng": 80.1995 },
+    { "name": "Khajuraho Monuments",      "state": "Madhya Pradesh", "year": 1986, "category": "Cultural", "lat": 24.8318, "lng": 79.9199 },
+    { "name": "Hampi Monuments",          "state": "Karnataka",      "year": 1986, "category": "Cultural", "lat": 15.3350, "lng": 76.4600 },
+    { "name": "Fatehpur Sikri",           "state": "Uttar Pradesh",  "year": 1986, "category": "Cultural", "lat": 27.0945, "lng": 77.6600 },
+    { "name": "Kaziranga National Park",  "state": "Assam",          "year": 1985, "category": "Natural",  "lat": 26.5775, "lng": 93.1699 },
+    { "name": "Keoladeo National Park",   "state": "Rajasthan",      "year": 1985, "category": "Natural",  "lat": 27.1591, "lng": 77.5236 },
+    { "name": "Manas National Park",      "state": "Assam",          "year": 1985, "category": "Natural",  "lat": 26.6946, "lng": 91.0013 },
+    { "name": "Sundarbans National Park", "state": "West Bengal",    "year": 1987, "category": "Natural",  "lat": 21.9497, "lng": 88.9268 },
+    { "name": "Nanda Devi & Valley",      "state": "Uttarakhand",    "year": 1988, "category": "Natural",  "lat": 30.3752, "lng": 79.9291 },
+    { "name": "Western Ghats",            "state": "Multiple",       "year": 2012, "category": "Natural",  "lat": 14.0, "lng": 75.5 },
+    { "name": "Great Himalayan NP",       "state": "Himachal Pradesh","year": 2014, "category": "Natural", "lat": 31.8014, "lng": 77.6430 }
+  ]
+}

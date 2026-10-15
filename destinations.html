@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Destinations — India in Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/animations.css"><link rel="stylesheet" href="../css/responsive.css">
+<style>
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-5);margin-bottom:var(--space-5);}
+.pg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-5);margin-bottom:var(--space-5);}
+.dg{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--space-5);}
+.dcard{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:var(--space-5);cursor:pointer;transition:all .25s;position:relative;overflow:hidden;}
+.dcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--saffron),var(--gold));transform:scaleX(0);transform-origin:left;transition:transform .25s;}
+.dcard:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:var(--shadow-md);}
+.dcard:hover::before,.dcard.open::before{transform:scaleX(1);}
+.dcard.open{border-color:var(--saffron);}
+.dname{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--text-primary);margin-bottom:3px;}
+.dmeta{font-family:'Inter',sans-serif;font-size:.7rem;color:var(--text-muted);margin-bottom:10px;}
+.dstats{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.dstat{background:var(--bg-elevated);border-radius:6px;padding:8px 10px;}
+.dstat-v{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;color:var(--text-primary);}
+.dstat-l{font-family:'Inter',sans-serif;font-size:.6rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em;}
+.detail-panel{background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-xl);padding:var(--space-6) var(--space-8);margin-top:var(--space-6);display:none;}
+.detail-panel.open{display:block;animation:fadeUp .3s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+.cat-btn{padding:6px 16px;background:var(--bg-elevated);border:1px solid var(--border-light);border-radius:var(--radius-full);font-family:'Inter',sans-serif;font-size:.72rem;font-weight:600;color:var(--text-secondary);cursor:pointer;transition:all .2s;}
+.cat-btn:hover,.cat-btn.active{background:var(--saffron-dim);border-color:var(--saffron);color:var(--saffron-light);}
+.mbar{display:flex;gap:2px;align-items:flex-end;height:48px;}
+.mbar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;}
+.mbar-fill{width:100%;border-radius:2px 2px 0 0;min-height:2px;}
+.mbar-lbl{font-size:.55rem;color:var(--text-muted);font-family:'Inter',sans-serif;}
+@media(max-width:1023px){.pg3{grid-template-columns:1fr 1fr;}}@media(max-width:767px){.pg,.pg3{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div id="cursor-light" aria-hidden="true"></div><div id="scroll-progress" aria-hidden="true"></div>
+<nav id="main-nav" class="visible" role="navigation"><div class="nav-inner">
+  <a href="../index.html" class="nav-logo"><span class="nav-logo-title">INDIA IN MOTION</span><span class="nav-logo-sub">Tourism Intelligence Atlas</span></a>
+  <ul class="nav-links" role="list"><li><a href="../index.html">Overview</a></li><li><a href="tourists.html">Tourists</a></li><li><a href="destinations.html" class="active" aria-current="page">Destinations</a></li><li><a href="states.html">States</a></li><li><a href="economy.html">Economy</a></li><li><a href="culture.html">Culture</a></li><li><a href="infrastructure.html">Infrastructure</a></li><li><a href="sustainability.html">Sustainability</a></li><li><a href="insights.html">Insights</a></li><li><a href="data-lab.html">Data Lab</a></li></ul>
+  <div class="nav-controls"><button id="search-open-btn" class="nav-btn" aria-label="Search"><i class="fas fa-search"></i></button><button id="theme-toggle" class="nav-btn" aria-label="Toggle theme"><i class="fas fa-sun"></i></button><button id="fullscreen-btn" class="nav-btn" aria-label="Fullscreen"><i class="fas fa-expand"></i></button><button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu" aria-expanded="false"><i class="fas fa-bars"></i></button></div>
+</div></nav>
+<div id="mobile-nav-drawer" class="mobile-nav-drawer"><a href="../index.html">Overview</a><a href="tourists.html">Tourists</a><a href="destinations.html">Destinations</a><a href="states.html">States</a><a href="economy.html">Economy</a><a href="culture.html">Culture</a><a href="infrastructure.html">Infrastructure</a><a href="sustainability.html">Sustainability</a><a href="insights.html">Insights</a><a href="data-lab.html">Data Lab</a></div>
+<div id="search-overlay" role="search"><div class="search-input-wrap"><input type="text" id="search-input" placeholder="Search destinations..."><button class="search-close" id="search-close"><i class="fas fa-times"></i></button></div><div id="search-results" class="search-results"></div></div>
+
+<main class="page-wrapper page-content">
+<header style="background:var(--bg-secondary);border-bottom:1px solid var(--border-subtle);padding:var(--space-12) 0 var(--space-8);">
+  <div class="container-wide"><p class="section-label animate-in">Destination Intelligence</p><h1 class="section-title animate-in" style="font-size:clamp(2rem,4vw,3.2rem);">Destination Explorer</h1><p class="section-desc animate-in">Click any destination card to open its mini dashboard — visitor data, seasonality, growth trends and tourism profile.</p></div>
+</header>
+
+<div class="container-wide" style="padding:var(--space-10) 0 var(--space-16);">
+
+  <div class="pg3 animate-in" style="margin-bottom:var(--space-8);">
+    <div class="chart-card"><div class="chart-header"><div><p class="chart-title">Top Destinations — Visitors</p><p class="chart-subtitle">Total visits (M) · 2022</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:240px;"><canvas id="ch-dest-total"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism / ASI · 2022</p></div></div>
+    <div class="chart-card"><div class="chart-header"><div><p class="chart-title">Category Distribution</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:240px;"><canvas id="ch-dest-cats"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism · 2022</p></div></div>
+    <div class="chart-card"><div class="chart-header"><div><p class="chart-title">Domestic vs Foreign Split</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:240px;"><canvas id="ch-dest-split"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism · 2022</p></div></div>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:var(--space-6);" id="cat-filters" role="group" aria-label="Filter by category"></div>
+
+  <div class="dg" id="dest-grid" role="list"></div>
+  <div class="detail-panel" id="dest-detail" aria-live="polite"></div>
+
+</div>
+<footer style="background:var(--bg-secondary);border-top:1px solid var(--border-subtle);padding:var(--space-6) 0;"><div class="container-wide" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;"><p style="font-family:'Playfair Display',serif;font-weight:700;color:var(--text-primary);">INDIA IN MOTION</p><p style="font-size:.68rem;color:var(--text-muted);">Data: Ministry of Tourism, GoI · ASI · 2022</p></div></footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="../js/data-loader.js"></script>
+<script src="../js/charts.js"></script>
+<script src="../js/page-common.js"></script>
+<script>
+setTimeout(function() {
+(function(){
+  var MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var SI={Jan:7,Feb:8,Mar:7,Apr:5,May:3,Jun:2,Jul:2,Aug:2,Sep:4,Oct:7,Nov:9,Dec:9};
+  var dests=window.TOURISM_DATA['destinations'].destinations;
+  var sorted=[...dests].sort((a,b)=>(b.domestic_visitors_2022+b.foreign_visitors_2022)-(a.domestic_visitors_2022+a.foreign_visitors_2022));
+
+  ChartFactory.horizontalBar('ch-dest-total',sorted.map(d=>d.name.split(' ')[0]),[{label:'Total (M)',data:sorted.map(d=>+(d.domestic_visitors_2022+d.foreign_visitors_2022).toFixed(2)),colors:ChartFactory.PALETTE}],{plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>v+'M'}}}});
+  var cc={};dests.forEach(d=>{cc[d.category]=(cc[d.category]||0)+1;});
+  ChartFactory.donut('ch-dest-cats',Object.keys(cc),Object.values(cc),ChartFactory.PALETTE);
+  ChartFactory.stackedBar('ch-dest-split',sorted.slice(0,8).map(d=>d.name.split(' ')[0]),[{label:'Domestic',data:sorted.slice(0,8).map(d=>d.domestic_visitors_2022),color:'#E8770A'},{label:'Foreign',data:sorted.slice(0,8).map(d=>d.foreign_visitors_2022),color:'#C8A84B'}],{scales:{x:{stacked:true},y:{stacked:true,ticks:{callback:v=>v+'M'}}}});
+
+  var activeCat='all', openId=null;
+  var cats=['all','Heritage','Spiritual','Nature','Beach','Wildlife','Adventure'];
+  var cfEl=document.getElementById('cat-filters');
+  cats.forEach(function(cat){var b=document.createElement('button');b.className='cat-btn'+(cat==='all'?' active':'');b.textContent=cat==='all'?'All Categories':cat;b.dataset.cat=cat;b.addEventListener('click',function(){document.querySelectorAll('.cat-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');activeCat=cat;openId=null;document.getElementById('dest-detail').classList.remove('open');render();});cfEl.appendChild(b);});
+
+  function render(){
+    var filtered=activeCat==='all'?dests:dests.filter(d=>d.category===activeCat);
+    var grid=document.getElementById('dest-grid');
+    grid.innerHTML=filtered.map(function(d){
+      var tot=+(d.domestic_visitors_2022+d.foreign_visitors_2022).toFixed(2);
+      return '<article class="dcard'+(openId===d.id?' open':'')+'" data-id="'+d.id+'" role="listitem" tabindex="0" aria-label="'+d.name+'">'
+        +'<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;"><span class="badge badge-'+d.category.toLowerCase()+'">'+d.category+'</span>'+(d.sub_tags.includes('UNESCO')?'<span class="badge" style="background:rgba(123,158,166,.12);color:#7B9EA6;border:1px solid rgba(123,158,166,.2);">UNESCO</span>':'')+'</div>'
+        +'<p class="dname">'+d.name+'</p><p class="dmeta">'+d.state+' · '+d.key_site+'</p>'
+        +'<div class="dstats"><div class="dstat"><p class="dstat-v">'+tot+'M</p><p class="dstat-l">Total Visits</p></div><div class="dstat"><p class="dstat-v">'+d.domestic_share_pct+'%</p><p class="dstat-l">Domestic</p></div></div>'
+        +'<p style="font-size:.68rem;color:var(--text-muted);margin-top:8px;">Peak: '+d.peak_months.slice(0,3).join(', ')+'</p></article>';
+    }).join('');
+    grid.querySelectorAll('.dcard').forEach(function(card){
+      card.addEventListener('click',function(){openDetail(card.dataset.id,filtered);});
+      card.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' ')openDetail(card.dataset.id,filtered);});
+    });
+  }
+
+  function openDetail(id,filtered){
+    var d=filtered.find(x=>x.id===id)||dests.find(x=>x.id===id);
+    if(!d)return;
+    openId=id; render();
+    var seasons=MONTHS.map(function(m){return SI[m]*(d.peak_months.includes(m)?1.5:.5);});
+    var maxS=Math.max(...seasons);
+    var panel=document.getElementById('dest-detail');
+    panel.innerHTML='<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;flex-wrap:wrap;gap:12px;">'
+      +'<div><p class="label-caps-accent">'+d.category+' · '+d.state+'</p><h2 style="font-family:\'Playfair Display\',serif;font-size:clamp(1.4rem,3vw,2.2rem);font-weight:700;color:var(--text-primary);margin:4px 0;">'+d.name+'</h2><p style="font-size:.85rem;color:var(--text-secondary);max-width:560px;line-height:1.6;">'+d.description+'</p></div>'
+      +'<button onclick="document.getElementById(\'dest-detail\').classList.remove(\'open\');" style="background:var(--bg-elevated);border:1px solid var(--border-light);border-radius:var(--radius-sm);padding:6px 14px;color:var(--text-muted);cursor:pointer;font-family:\'Inter\',sans-serif;font-size:.75rem;">Close</button></div>'
+      +'<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-bottom:20px;">'
+      +'<div class="kpi-card" style="padding:10px 14px;"><p class="kpi-label">Domestic</p><p class="kpi-value" style="font-size:1.3rem;">'+d.domestic_visitors_2022+'M</p></div>'
+      +'<div class="kpi-card" style="padding:10px 14px;"><p class="kpi-label">Foreign</p><p class="kpi-value" style="font-size:1.3rem;">'+d.foreign_visitors_2022+'M</p></div>'
+      +'<div class="kpi-card" style="padding:10px 14px;"><p class="kpi-label">Dom. Share</p><p class="kpi-value" style="font-size:1.3rem;">'+d.domestic_share_pct+'%</p></div>'
+      +'<div class="kpi-card" style="padding:10px 14px;"><p class="kpi-label">Peak</p><p class="kpi-value" style="font-size:1rem;">'+d.peak_months.slice(0,2).join(', ')+'</p></div>'
+      +'</div>'
+      +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-5);margin-bottom:16px;">'
+      +'<div class="chart-card"><div class="chart-header"><p class="chart-title">Visitor Trend</p></div><div class="chart-body" style="height:180px;"><canvas id="ch-dt-trend-'+d.id+'"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism · Million</p></div></div>'
+      +'<div class="chart-card"><div class="chart-header"><p class="chart-title">Visitor Composition</p></div><div class="chart-body" style="height:180px;"><canvas id="ch-dt-comp-'+d.id+'"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism · 2022</p></div></div>'
+      +'</div>'
+      +'<div class="chart-card"><div class="chart-header"><p class="chart-title">Seasonality Pattern</p><p class="chart-subtitle">Derived from peak month classification — not measured monthly data</p></div>'
+      +'<div style="padding:var(--space-5) var(--space-6);"><div class="mbar">'
+      +MONTHS.map(function(m,i){return '<div class="mbar-col"><div class="mbar-fill" style="height:'+Math.max(3,(seasons[i]/maxS*44).toFixed(0))+'px;background:'+(d.peak_months.includes(m)?'var(--saffron)':'var(--border-light)')+'"></div><span class="mbar-lbl">'+m+'</span></div>';}).join('')
+      +'</div><p style="font-size:.65rem;color:var(--text-muted);margin-top:8px;">Derived metric · Not measured visitor counts</p></div></div>';
+    panel.classList.add('open');
+    panel.scrollIntoView({behavior:'smooth',block:'start'});
+    setTimeout(function(){
+      ChartFactory.area('ch-dt-trend-'+d.id,d.trend_years,[{label:'Visitors (M)',data:d.trend,color:'#E8770A',fill:true}],{plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>v+'M'}}}});
+      ChartFactory.donut('ch-dt-comp-'+d.id,['Domestic','Foreign'],[d.domestic_visitors_2022,d.foreign_visitors_2022],['#E8770A','#C8A84B']);
+    },80);
+  }
+  render();
+})();
+}, 50);
+</script>
+</body></html>

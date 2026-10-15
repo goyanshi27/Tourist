@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Culture &amp; Heritage — India in Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/animations.css"><link rel="stylesheet" href="../css/responsive.css">
+<style>.pg{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-5);margin-bottom:var(--space-5);}.pg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-5);margin-bottom:var(--space-5);}.fitem{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border-subtle);}.fitem:last-child{border-bottom:none;}.fmon{min-width:42px;padding:4px 8px;background:var(--saffron-dim);border:1px solid var(--border-saffron);border-radius:var(--radius-sm);text-align:center;font-family:'Inter',sans-serif;font-size:.65rem;font-weight:700;color:var(--saffron);text-transform:uppercase;}.dna-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-4);}@media(max-width:1023px){.pg3,.dna-grid{grid-template-columns:1fr 1fr;}}@media(max-width:767px){.pg,.pg3,.dna-grid{grid-template-columns:1fr;}}</style>
+</head>
+<body>
+<div id="cursor-light" aria-hidden="true"></div><div id="scroll-progress" aria-hidden="true"></div>
+<nav id="main-nav" class="visible" role="navigation"><div class="nav-inner">
+  <a href="../index.html" class="nav-logo"><span class="nav-logo-title">INDIA IN MOTION</span><span class="nav-logo-sub">Tourism Intelligence Atlas</span></a>
+  <ul class="nav-links" role="list"><li><a href="../index.html">Overview</a></li><li><a href="tourists.html">Tourists</a></li><li><a href="destinations.html">Destinations</a></li><li><a href="states.html">States</a></li><li><a href="economy.html">Economy</a></li><li><a href="culture.html" class="active" aria-current="page">Culture</a></li><li><a href="infrastructure.html">Infrastructure</a></li><li><a href="sustainability.html">Sustainability</a></li><li><a href="insights.html">Insights</a></li><li><a href="data-lab.html">Data Lab</a></li></ul>
+  <div class="nav-controls"><button id="search-open-btn" class="nav-btn" aria-label="Search"><i class="fas fa-search"></i></button><button id="theme-toggle" class="nav-btn" aria-label="Toggle theme"><i class="fas fa-sun"></i></button><button id="fullscreen-btn" class="nav-btn" aria-label="Fullscreen"><i class="fas fa-expand"></i></button><button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu" aria-expanded="false"><i class="fas fa-bars"></i></button></div>
+</div></nav>
+<div id="mobile-nav-drawer" class="mobile-nav-drawer"><a href="../index.html">Overview</a><a href="tourists.html">Tourists</a><a href="destinations.html">Destinations</a><a href="states.html">States</a><a href="economy.html">Economy</a><a href="culture.html">Culture</a><a href="infrastructure.html">Infrastructure</a><a href="sustainability.html">Sustainability</a><a href="insights.html">Insights</a><a href="data-lab.html">Data Lab</a></div>
+<div id="search-overlay" role="search"><div class="search-input-wrap"><input type="text" id="search-input" placeholder="Search culture, heritage..."><button class="search-close" id="search-close"><i class="fas fa-times"></i></button></div><div id="search-results" class="search-results"></div></div>
+
+<main class="page-wrapper page-content">
+<header style="background:var(--bg-secondary);border-bottom:1px solid var(--border-subtle);padding:var(--space-12) 0 var(--space-8);">
+  <div class="container-wide"><p class="section-label animate-in">Culture, Heritage &amp; Tourism</p><h1 class="section-title animate-in" style="font-size:clamp(2rem,4vw,3.2rem);">India's Heritage Economy</h1><p class="section-desc animate-in">42 UNESCO World Heritage Sites, 3,693 ASI-protected monuments, pilgrimage circuits, wildlife destinations and festivals — India's cultural diversity is its greatest tourism asset.</p></div>
+</header>
+
+<div class="container-wide" style="padding:var(--space-10) 0 var(--space-16);">
+  <div class="kpi-grid stagger-children" style="margin-bottom:var(--space-8);">
+    <article class="kpi-card"><p class="kpi-label">UNESCO Heritage Sites</p><div style="display:flex;align-items:baseline;gap:6px;"><span class="kpi-value"><span class="counter" data-target="42" data-decimals="0">—</span></span></div><div class="kpi-change positive"><i class="fas fa-landmark"></i>Cultural &amp; Natural</div><p class="kpi-source"><strong>Source:</strong> UNESCO WHC · 2024</p></article>
+    <article class="kpi-card"><p class="kpi-label">ASI Protected Monuments</p><div style="display:flex;align-items:baseline;gap:6px;"><span class="kpi-value"><span class="counter" data-target="3693" data-decimals="0">—</span></span></div><div class="kpi-change positive">Across India</div><p class="kpi-source"><strong>Source:</strong> ASI · 2024</p></article>
+    <article class="kpi-card"><p class="kpi-label">ASI Ticketed Monuments</p><div style="display:flex;align-items:baseline;gap:6px;"><span class="kpi-value"><span class="counter" data-target="143" data-decimals="0">—</span></span></div><div class="kpi-change positive">Paid entry</div><p class="kpi-source"><strong>Source:</strong> ASI Annual Report · 2022</p></article>
+    <article class="kpi-card"><p class="kpi-label">Monument Visitors 2022</p><div style="display:flex;align-items:baseline;gap:6px;"><span class="kpi-value"><span class="counter" data-target="163" data-decimals="0">—</span></span><span class="kpi-unit">M (Domestic)</span></div><div class="kpi-change positive"><i class="fas fa-arrow-up"></i>Recovery</div><p class="kpi-source"><strong>Source:</strong> ASI Annual Report · 2022</p></article>
+  </div>
+
+  <div class="tab-nav" role="tablist">
+    <button class="tab-btn active" data-tab="tc-heritage">Heritage</button>
+    <button class="tab-btn" data-tab="tc-spiritual">Spiritual</button>
+    <button class="tab-btn" data-tab="tc-wildlife">Wildlife</button>
+    <button class="tab-btn" data-tab="tc-festivals">Festivals</button>
+    <button class="tab-btn" data-tab="tc-dna">Tourism DNA</button>
+  </div>
+
+  <div id="tc-heritage" class="tab-panel active">
+    <div class="pg">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Top Monuments — Domestic Visitors</p><p class="chart-subtitle">ASI ticketed monuments · Million · 2022</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:300px;"><canvas id="ch-monuments"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> ASI Annual Report · Million · 2022</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">ASI Visitor Trend</p><p class="chart-subtitle">Domestic and foreign visitors · Million · 2017–2022</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:300px;"><canvas id="ch-asi-trend"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> ASI Annual Reports · 2017–2022</p></div></div>
+    </div>
+    <div class="pg">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Monument Visitor Split</p><p class="chart-subtitle">Domestic vs foreign at top 8 monuments · 2022</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:260px;"><canvas id="ch-mon-split"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> ASI · 2022</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">UNESCO Sites — Cultural vs Natural</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:260px;"><canvas id="ch-unesco"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> UNESCO WHC · 2024 · India: 42 sites</p></div></div>
+    </div>
+  </div>
+
+  <div id="tc-spiritual" class="tab-panel">
+    <div style="background:var(--saffron-dim);border:1px solid var(--border-saffron);border-radius:var(--radius-md);padding:var(--space-4) var(--space-5);margin-bottom:var(--space-5);display:flex;gap:10px;"><i class="fas fa-circle-info" style="color:var(--saffron);flex-shrink:0;margin-top:2px;"></i><p style="font-size:.82rem;color:var(--text-secondary);">Pilgrimage visitor figures are from state tourism departments and Ministry of Tourism where officially reported.</p></div>
+    <div class="pg3">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Major Pilgrimage Sites</p><p class="chart-subtitle">Estimated visitors · Million · 2022</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:260px;"><canvas id="ch-pilgrim"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism / State Depts · 2022</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Spiritual Tourism by State</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:260px;"><canvas id="ch-spir-state"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Faith Distribution</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:260px;"><canvas id="ch-faith"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Derived from PRASHAD scheme data</p></div></div>
+    </div>
+  </div>
+
+  <div id="tc-wildlife" class="tab-panel">
+    <div class="pg3">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Protected Area Network</p><p class="chart-subtitle">India's conservation areas by type · 2023</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:240px;"><canvas id="ch-pa"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> MoEFCC · 2023</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Tiger Reserve Growth</p><p class="chart-subtitle">Number of tiger reserves over time</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:240px;"><canvas id="ch-tiger"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> NTCA · Project Tiger</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Wildlife Tourism by State</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:240px;"><canvas id="ch-wild-state"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Derived analytical score</p></div></div>
+    </div>
+  </div>
+
+  <div id="tc-festivals" class="tab-panel">
+    <div class="pg" style="margin-bottom:var(--space-5);">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Festivals by Month</p><p class="chart-subtitle">Major tourism festivals — derived count by month</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:240px;"><canvas id="ch-fest-month"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism festival calendar · Derived</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Festival Categories</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:240px;"><canvas id="ch-fest-cats"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism · Derived classification</p></div></div>
+    </div>
+    <div class="chart-card animate-in">
+      <div class="chart-header"><p class="chart-title">Major Festival Calendar</p></div>
+      <div id="festival-list" style="padding:var(--space-4) var(--space-6);"></div>
+      <div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism · Dates vary by lunar calendar · Derived classification</p></div>
+    </div>
+  </div>
+
+  <div id="tc-dna" class="tab-panel">
+    <div style="text-align:center;margin-bottom:var(--space-6);"><p class="section-label" style="justify-content:center;">Signature Visualization</p><h2 class="section-title">India's Tourism DNA</h2><p class="section-desc" style="margin:10px auto;text-align:center;">Multi-dimensional profile across 12 tourism dimensions. Derived analytical metric — not an official index.</p></div>
+    <div class="pg" style="margin-bottom:var(--space-5);">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Tourism DNA Radar</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:360px;"><canvas id="ch-dna-radar"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Derived from Ministry of Tourism data · 0–10 scale</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Category Strength Bar</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:360px;"><canvas id="ch-dna-bar"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Derived analytical score · Not official</p></div></div>
+    </div>
+    <div class="dna-grid" id="dna-cards"></div>
+  </div>
+</div>
+<footer style="background:var(--bg-secondary);border-top:1px solid var(--border-subtle);padding:var(--space-6) 0;"><div class="container-wide" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;"><p style="font-family:'Playfair Display',serif;font-weight:700;color:var(--text-primary);">INDIA IN MOTION</p><p style="font-size:.68rem;color:var(--text-muted);">Data: ASI · UNESCO · Ministry of Tourism · MoEFCC · 2022–2024</p></div></footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="../js/data-loader.js"></script>
+<script src="../js/charts.js"></script>
+<script src="../js/page-common.js"></script>
+<script>
+setTimeout(function() {
+(function(){
+  var D=window.TOURISM_DATA,h=D['heritage'],s=D['sustainability'];
+  var top8=h.top_ticketed_monuments.slice(0,8);
+  ChartFactory.horizontalBar('ch-monuments',top8.map(m=>m.monument.split(' ')[0]+' '+m.monument.split(' ').slice(1,2).join(' ')),[{label:'Domestic (M)',data:top8.map(m=>+(m.domestic_2022/1e6).toFixed(2)),colors:ChartFactory.PALETTE}],{plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>v+'M'}}}});
+  var at=h.asi_visitors_trend;
+  ChartFactory.stackedBar('ch-asi-trend',at.map(r=>r.year),[{label:'Domestic (M)',data:at.map(r=>r.domestic_million),color:'#E8770A'},{label:'Foreign (M)',data:at.map(r=>r.foreign_million),color:'#C8A84B'}],{scales:{x:{stacked:true},y:{stacked:true,ticks:{callback:v=>v+'M'}}}});
+  ChartFactory.stackedBar('ch-mon-split',top8.map(m=>m.monument.split(' ')[0]),[{label:'Domestic',data:top8.map(m=>+(m.domestic_2022/1e6).toFixed(2)),color:'#E8770A'},{label:'Foreign',data:top8.map(m=>+(m.foreign_2022/1e6).toFixed(3)),color:'#C8A84B'}],{scales:{x:{stacked:true},y:{stacked:true,ticks:{callback:v=>v+'M'}}}});
+  var cul=h.unesco_sites.filter(x=>x.category==='Cultural').length,nat2=h.unesco_sites.filter(x=>x.category==='Natural').length,mix=42-cul-nat2;
+  ChartFactory.donut('ch-unesco',['Cultural','Natural','Mixed'],[cul,nat2,mix],['#C8A84B','#40916C','#7B9EA6']);
+  var pilgrim=[{n:'Amritsar',v:7.8},{n:'Varanasi',v:7.2},{n:'Tirupati',v:6.5},{n:'Shirdi',v:5.2},{n:'Puri',v:4.8},{n:'Haridwar',v:4.2},{n:'Ayodhya',v:3.8},{n:'Bodh Gaya',v:2.1}].sort((a,b)=>b.v-a.v);
+  ChartFactory.horizontalBar('ch-pilgrim',pilgrim.map(p=>p.n),[{label:'Visitors (M)',data:pilgrim.map(p=>p.v),colors:ChartFactory.PALETTE}],{plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>v+'M'}}}});
+  ChartFactory.bar('ch-spir-state',['UP','Punjab','AP','Odisha','UK','Bihar','Maha'],[{label:'M',data:[15.0,8.0,6.5,4.8,4.2,3.4,3.1],colors:ChartFactory.PALETTE}],{plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>v+'M'}}}});
+  ChartFactory.donut('ch-faith',['Hindu','Buddhist','Sikh','Jain','Sufi','Christian','Other'],[52,14,12,6,8,5,3],ChartFactory.PALETTE);
+  var pa=s.protected_areas;
+  ChartFactory.donut('ch-pa',['National Parks','Wildlife Sanctuaries','Tiger Reserves','Biosphere Reserves'],[pa.national_parks,pa.wildlife_sanctuaries,pa.tiger_reserves,pa.biosphere_reserves],['#40916C','#2D6A4F','#E8770A','#C8A84B']);
+  ChartFactory.line('ch-tiger',[1973,1984,1993,2006,2014,2018,2022,2023],[{label:'Tiger Reserves',data:[9,15,18,28,47,50,52,54],color:'#E8770A'}],{plugins:{legend:{display:false}}});
+  ChartFactory.horizontalBar('ch-wild-state',['Madhya Pradesh','Uttarakhand','Rajasthan','Assam','Karnataka','Maha','Kerala'],[{label:'Score',data:[9,8,8,7,7,6,7],color:'#40916C'}],{plugins:{legend:{display:false}},scales:{x:{max:10}}});
+  ChartFactory.bar('ch-fest-month',['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],[{label:'Festivals',data:[3,2,2,1,1,0,1,2,1,4,3,3],colors:ChartFactory.PALETTE}],{plugins:{legend:{display:false}}});
+  ChartFactory.donut('ch-fest-cats',['Religious','Cultural','Folk/Tribal','Harvest','Music/Arts','Adventure'],[35,25,15,12,8,5],ChartFactory.PALETTE);
+  var festivals=[{n:'Kumbh Mela',m:'Jan/Feb',t:'Spiritual',s:'UP / UK / MP / Jharkhand'},{n:'Holi',m:'Mar',t:'Cultural',s:'Nationwide (Mathura celebrated)'},{n:'Rath Yatra',m:'Jun/Jul',t:'Spiritual',s:'Puri, Odisha'},{n:'Onam',m:'Aug/Sep',t:'Harvest',s:'Kerala'},{n:'Durga Puja / Navratri',m:'Oct',t:'Religious',s:'Pan-India (Kolkata celebrated)'},{n:'Pushkar Fair',m:'Oct/Nov',t:'Cultural',s:'Rajasthan'},{n:'Diwali',m:'Oct/Nov',t:'Religious',s:'Nationwide'},{n:'Hornbill Festival',m:'Dec',t:'Tribal',s:'Nagaland'}];
+  var fEl=document.getElementById('festival-list');
+  if(fEl) fEl.innerHTML=festivals.map(f=>'<div class="fitem"><span class="fmon">'+f.m+'</span><div><p style="font-family:\'Playfair Display\',serif;font-size:.95rem;font-weight:600;color:var(--text-primary);margin-bottom:2px;">'+f.n+'</p><p style="font-size:.75rem;color:var(--saffron);margin-bottom:3px;">'+f.t+'</p><p style="font-size:.75rem;color:var(--text-muted);">'+f.s+'</p></div></div>').join('');
+  var cats=['Heritage','Culture','Spiritual','Nature','Wildlife','Beaches','Adventure','Wellness','Festivals','Food','Medical','Shopping'];
+  var scores=[9.5,9.0,9.2,8.8,8.5,7.5,7.8,8.2,9.0,8.8,7.6,7.4];
+  var icons={Heritage:'fa-landmark',Culture:'fa-masks-theater',Spiritual:'fa-star-and-crescent',Nature:'fa-tree',Wildlife:'fa-paw',Beaches:'fa-umbrella-beach',Adventure:'fa-mountain',Wellness:'fa-spa',Festivals:'fa-burst',Food:'fa-utensils',Medical:'fa-hospital',Shopping:'fa-bag-shopping'};
+  ChartFactory.radar('ch-dna-radar',cats,[{label:'India Tourism',data:scores,color:'#E8770A'}]);
+  ChartFactory.horizontalBar('ch-dna-bar',cats,[{label:'Score',data:scores,colors:ChartFactory.PALETTE}],{plugins:{legend:{display:false}},scales:{x:{max:10}}});
+  var dEl=document.getElementById('dna-cards');
+  if(dEl) dEl.innerHTML=cats.map((c,i)=>'<div style="background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:var(--space-4);text-align:center;transition:all .25s;" onmouseover="this.style.borderColor=\'var(--gold)\'" onmouseout="this.style.borderColor=\'var(--border-subtle)\'"><i class="fas '+(icons[c]||'fa-circle')+'" style="font-size:1.2rem;color:'+ChartFactory.PALETTE[i%ChartFactory.PALETTE.length]+';margin-bottom:8px;display:block;"></i><p style="font-family:\'Inter\',sans-serif;font-size:.72rem;font-weight:700;color:var(--text-primary);margin-bottom:5px;">'+c+'</p><p style="font-family:\'Playfair Display\',serif;font-size:1.2rem;font-weight:700;color:var(--text-primary);">'+scores[i]+'</p><p style="font-size:.6rem;color:var(--text-muted);">/ 10 · Derived</p></div>').join('');
+})();
+}, 50);
+</script>
+</body></html>

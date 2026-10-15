@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Infrastructure — India in Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/animations.css"><link rel="stylesheet" href="../css/responsive.css">
+<style>.pg{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-5);margin-bottom:var(--space-5);}.pg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-5);margin-bottom:var(--space-5);}.prow{display:grid;grid-template-columns:1fr 120px 90px 90px 80px;align-items:center;gap:12px;padding:9px 16px;border-bottom:1px solid var(--border-subtle);font-family:'Inter',sans-serif;font-size:.82rem;}.prow:hover{background:var(--bg-elevated);}.sbadge{padding:2px 8px;border-radius:var(--radius-full);font-family:'Inter',sans-serif;font-size:.62rem;font-weight:700;text-align:center;white-space:nowrap;}.sc{background:rgba(64,145,108,.12);color:var(--positive);}.so{background:rgba(232,119,10,.12);color:var(--saffron);}.sp{background:rgba(154,148,144,.12);color:var(--text-muted);}@media(max-width:1023px){.pg3{grid-template-columns:1fr 1fr;}.prow{grid-template-columns:1fr 80px 70px;}}@media(max-width:767px){.pg,.pg3{grid-template-columns:1fr;}.prow{grid-template-columns:1fr 70px;}}</style>
+</head>
+<body>
+<div id="cursor-light" aria-hidden="true"></div><div id="scroll-progress" aria-hidden="true"></div>
+<nav id="main-nav" class="visible" role="navigation"><div class="nav-inner">
+  <a href="../index.html" class="nav-logo"><span class="nav-logo-title">INDIA IN MOTION</span><span class="nav-logo-sub">Tourism Intelligence Atlas</span></a>
+  <ul class="nav-links" role="list"><li><a href="../index.html">Overview</a></li><li><a href="tourists.html">Tourists</a></li><li><a href="destinations.html">Destinations</a></li><li><a href="states.html">States</a></li><li><a href="economy.html">Economy</a></li><li><a href="culture.html">Culture</a></li><li><a href="infrastructure.html" class="active" aria-current="page">Infrastructure</a></li><li><a href="sustainability.html">Sustainability</a></li><li><a href="insights.html">Insights</a></li><li><a href="data-lab.html">Data Lab</a></li></ul>
+  <div class="nav-controls"><button id="search-open-btn" class="nav-btn" aria-label="Search"><i class="fas fa-search"></i></button><button id="theme-toggle" class="nav-btn" aria-label="Toggle theme"><i class="fas fa-sun"></i></button><button id="fullscreen-btn" class="nav-btn" aria-label="Fullscreen"><i class="fas fa-expand"></i></button><button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu" aria-expanded="false"><i class="fas fa-bars"></i></button></div>
+</div></nav>
+<div id="mobile-nav-drawer" class="mobile-nav-drawer"><a href="../index.html">Overview</a><a href="tourists.html">Tourists</a><a href="destinations.html">Destinations</a><a href="states.html">States</a><a href="economy.html">Economy</a><a href="culture.html">Culture</a><a href="infrastructure.html">Infrastructure</a><a href="sustainability.html">Sustainability</a><a href="insights.html">Insights</a><a href="data-lab.html">Data Lab</a></div>
+<div id="search-overlay" role="search"><div class="search-input-wrap"><input type="text" id="search-input" placeholder="Search airports, hotels..."><button class="search-close" id="search-close"><i class="fas fa-times"></i></button></div><div id="search-results" class="search-results"></div></div>
+
+<main class="page-wrapper page-content">
+<header style="background:var(--bg-secondary);border-bottom:1px solid var(--border-subtle);padding:var(--space-12) 0 var(--space-8);">
+  <div class="container-wide"><p class="section-label animate-in">Tourism Infrastructure</p><h1 class="section-title animate-in" style="font-size:clamp(2rem,4vw,3.2rem);">Building India for Tourists</h1><p class="section-desc animate-in">Hotels, airports, and government-funded tourism projects under Swadesh Darshan and PRASHAD schemes from official Ministry of Tourism reports.</p></div>
+</header>
+
+<div class="container-wide" style="padding:var(--space-10) 0 var(--space-16);">
+  <div class="kpi-grid stagger-children" style="margin-bottom:var(--space-8);">
+    <article class="kpi-card"><p class="kpi-label">Classified Hotels</p><div style="display:flex;align-items:baseline;gap:6px;"><span class="kpi-value"><span class="counter" data-target="10536" data-decimals="0">—</span></span></div><div class="kpi-change positive"><i class="fas fa-arrow-up"></i>+12% vs 2021</div><p class="kpi-source"><strong>Source:</strong> Ministry of Tourism · 2022</p></article>
+    <article class="kpi-card"><p class="kpi-label">International Airports</p><div style="display:flex;align-items:baseline;gap:6px;"><span class="kpi-value"><span class="counter" data-target="34" data-decimals="0">—</span></span></div><div class="kpi-change positive">Operational · 2023</div><p class="kpi-source"><strong>Source:</strong> AAI / DGCA · 2023</p></article>
+    <article class="kpi-card"><p class="kpi-label">Swadesh Darshan Projects</p><div style="display:flex;align-items:baseline;gap:6px;"><span class="kpi-value"><span class="counter" data-target="76" data-decimals="0">—</span></span></div><div class="kpi-change positive">Sanctioned</div><p class="kpi-source"><strong>Source:</strong> Ministry of Tourism · 2023</p></article>
+    <article class="kpi-card"><p class="kpi-label">PRASHAD Projects</p><div style="display:flex;align-items:baseline;gap:6px;"><span class="kpi-value"><span class="counter" data-target="45" data-decimals="0">—</span></span></div><div class="kpi-change positive">Pilgrimage sites</div><p class="kpi-source"><strong>Source:</strong> Ministry of Tourism · 2023</p></article>
+  </div>
+
+  <div class="tab-nav" role="tablist">
+    <button class="tab-btn active" data-tab="ti-hotels">Hotels</button>
+    <button class="tab-btn" data-tab="ti-airports">Airports</button>
+    <button class="tab-btn" data-tab="ti-projects">Gov. Projects</button>
+    <button class="tab-btn" data-tab="ti-state">State Infrastructure</button>
+  </div>
+
+  <div id="ti-hotels" class="tab-panel active">
+    <div class="pg">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Hotels by Star Category</p><p class="chart-subtitle">Classified hotel count · 2022</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:280px;"><canvas id="ch-hotels-cats"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism — ITS 2023 · 2022</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Classified Hotels Trend</p><p class="chart-subtitle">Total classified hotels 2017–2022</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:280px;"><canvas id="ch-hotels-trend"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism · Annual Reports</p></div></div>
+    </div>
+    <div class="pg">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Rooms by Category</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:240px;"><canvas id="ch-hotels-rooms"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism · 2022</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Hotel Category Mix</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:240px;"><canvas id="ch-hotels-donut"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism · 2022</p></div></div>
+    </div>
+  </div>
+
+  <div id="ti-airports" class="tab-panel">
+    <div class="chart-card animate-in" style="margin-bottom:var(--space-5);">
+      <div class="chart-header"><p class="chart-title">Major International Airports</p><p class="chart-subtitle" style="color:var(--text-muted);font-size:.75rem;margin-top:2px;">Passenger traffic (M) · 2022 — bubble size = traffic</p></div>
+      <div id="airport-map" style="height:380px;border-radius:0;"></div>
+      <div class="chart-footer"><p class="chart-source"><strong>Source:</strong> AAI / DGCA · Million passengers · 2022</p></div>
+    </div>
+    <div class="pg">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Airport Passenger Traffic</p><p class="chart-subtitle">Million passengers · 2022</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:280px;"><canvas id="ch-airports"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> AAI / DGCA · 2022</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">International vs Domestic</p><p class="chart-subtitle">Airport type distribution · 2023</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:280px;"><canvas id="ch-ap-split"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Civil Aviation · 2023</p></div></div>
+    </div>
+  </div>
+
+  <div id="ti-projects" class="tab-panel">
+    <div class="pg3" style="margin-bottom:var(--space-5);">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Projects by Status</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:220px;"><canvas id="ch-proj-status"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Projects by Category</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:220px;"><canvas id="ch-proj-cats"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Investment by Category</p><p class="chart-subtitle">INR Crore</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:220px;"><canvas id="ch-proj-invest"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism</p></div></div>
+    </div>
+    <div class="chart-card animate-in">
+      <div class="chart-header"><p class="chart-title">Project Tracker</p><p class="chart-subtitle" style="color:var(--text-muted);font-size:.75rem;margin-top:2px;">Swadesh Darshan and PRASHAD sanctioned projects</p></div>
+      <div style="padding:0;">
+        <div style="display:grid;grid-template-columns:1fr 120px 90px 90px 80px;gap:12px;padding:8px 16px;border-bottom:1px solid var(--border-light);background:var(--bg-elevated);font-family:'Inter',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);"><span>Project</span><span>Scheme</span><span>State</span><span style="text-align:right;">Invest (Cr)</span><span>Status</span></div>
+        <div id="proj-table" style="max-height:420px;overflow-y:auto;"></div>
+      </div>
+      <div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism — Swadesh Darshan &amp; PRASHAD Reports</p></div>
+    </div>
+  </div>
+
+  <div id="ti-state" class="tab-panel">
+    <div class="pg">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Hotels per State</p><p class="chart-subtitle">Classified hotel count by state · 2022</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:300px;"><canvas id="ch-state-hotels"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism · 2022</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Airports per State</p><p class="chart-subtitle">Operational airports by state · 2023</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:300px;"><canvas id="ch-state-airports"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> AAI · 2023</p></div></div>
+    </div>
+  </div>
+</div>
+<footer style="background:var(--bg-secondary);border-top:1px solid var(--border-subtle);padding:var(--space-6) 0;"><div class="container-wide" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;"><p style="font-family:'Playfair Display',serif;font-weight:700;color:var(--text-primary);">INDIA IN MOTION</p><p style="font-size:.68rem;color:var(--text-muted);">Data: Ministry of Tourism · AAI · DGCA · 2022–2023</p></div></footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="../js/data-loader.js"></script>
+<script src="../js/charts.js"></script>
+<script src="../js/page-common.js"></script>
+<script>
+setTimeout(function() {
+(function(){
+  var D=window.TOURISM_DATA,inf=D['infrastructure'],proj=D['projects'];
+  var hc=inf.hotels_classified.by_category;
+  ChartFactory.bar('ch-hotels-cats',hc.map(c=>c.category.replace(' Deluxe','★').replace('Heritage ','H.')),[{label:'Hotels',data:hc.map(c=>c.hotels),colors:ChartFactory.PALETTE}],{plugins:{legend:{display:false}},scales:{x:{ticks:{maxRotation:30,font:{size:9}}}}});
+  var ht=inf.hotels_trend;ChartFactory.area('ch-hotels-trend',ht.map(r=>r.year),[{label:'Classified Hotels',data:ht.map(r=>r.classified),color:'#C8A84B',fill:true}],{plugins:{legend:{display:false}}});
+  ChartFactory.horizontalBar('ch-hotels-rooms',hc.map(c=>c.category),[{label:'Rooms',data:hc.map(c=>c.rooms),colors:ChartFactory.PALETTE}],{plugins:{legend:{display:false}}});
+  ChartFactory.donut('ch-hotels-donut',['5★+','4★','3★','2★','1★','Heritage','Approved'],[341,385,1840,1927,780,128,5135],ChartFactory.PALETTE);
+
+  /* Airport map */
+  var theme=document.documentElement.getAttribute('data-theme');
+  var mapEl=document.getElementById('airport-map');
+  if(mapEl&&typeof L!=='undefined'){
+    var m=L.map('airport-map',{center:[22,80],zoom:4,zoomControl:false,scrollWheelZoom:false});
+    L.tileLayer(theme==='light'?'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png':'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{attribution:'&copy; CARTO',subdomains:'abcd'}).addTo(m);
+    L.control.zoom({position:'topright'}).addTo(m);
+    inf.airports.major_airports.forEach(function(ap){L.circleMarker([ap.lat,ap.lng],{radius:Math.max(6,ap.pax_million_2022*.35),color:'#E8770A',fillColor:'#E8770A',fillOpacity:.5,weight:1.5}).addTo(m).bindTooltip('<strong>'+ap.name+'</strong><br>'+ap.pax_million_2022+'M passengers · 2022',{direction:'top'});});
+  }
+
+  var aps=inf.airports.major_airports;
+  ChartFactory.horizontalBar('ch-airports',aps.map(a=>a.city),[{label:'Passengers (M)',data:aps.map(a=>a.pax_million_2022),colors:ChartFactory.PALETTE}],{plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>v+'M'}}}});
+  ChartFactory.donut('ch-ap-split',['International','Domestic'],[inf.airports.international,inf.airports.domestic],['#E8770A','#C8A84B']);
+
+  var ps=proj.status_summary;ChartFactory.donut('ch-proj-status',ps.map(s=>s.status),ps.map(s=>s.count),['#40916C','#E8770A','#9A9490']);
+  var pc=proj.category_summary;ChartFactory.donut('ch-proj-cats',pc.map(c=>c.category),pc.map(c=>c.count),ChartFactory.PALETTE);
+  ChartFactory.horizontalBar('ch-proj-invest',pc.map(c=>c.category),[{label:'INR Cr',data:pc.map(c=>c.investment_crore),colors:ChartFactory.PALETTE}],{plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>'₹'+v}}}});
+
+  var ptEl=document.getElementById('proj-table');
+  if(ptEl) ptEl.innerHTML=proj.projects.map(function(p){var sc=p.status==='Completed'?'sc':p.status==='Ongoing'?'so':'sp';return '<div class="prow"><div><p style="font-size:.85rem;color:var(--text-primary);">'+p.name+'</p><p style="font-size:.68rem;color:var(--text-muted);">'+p.category+'</p></div><span style="font-size:.75rem;color:var(--text-secondary);">'+p.scheme+'</span><span style="font-size:.75rem;color:var(--text-secondary);">'+p.state.replace(' Pradesh','').replace('Himachal','HP')+'</span><span style="font-size:.78rem;font-weight:600;color:var(--text-primary);text-align:right;">₹'+p.investment_crore+'Cr</span><span class="sbadge '+sc+'">'+p.status+'</span></div>';}).join('');
+
+  var si=inf.state_infrastructure_index.states;
+  ChartFactory.horizontalBar('ch-state-hotels',si.map(s=>s.state),[{label:'Hotels',data:si.map(s=>s.hotels),colors:ChartFactory.PALETTE}],{plugins:{legend:{display:false}}});
+  ChartFactory.horizontalBar('ch-state-airports',si.map(s=>s.state),[{label:'Airports',data:si.map(s=>s.airports),colors:ChartFactory.PALETTE}],{plugins:{legend:{display:false}}});
+})();
+}, 50);
+</script>
+</body></html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Sustainability — India in Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/animations.css"><link rel="stylesheet" href="../css/responsive.css">
+<style>.pg{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-5);margin-bottom:var(--space-5);}.pg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-5);margin-bottom:var(--space-5);}.iitem{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border-subtle);}.iitem:last-child{border-bottom:none;}@media(max-width:1023px){.pg3{grid-template-columns:1fr 1fr;}}@media(max-width:767px){.pg,.pg3{grid-template-columns:1fr;}}</style>
+</head>
+<body>
+<div id="cursor-light" aria-hidden="true"></div><div id="scroll-progress" aria-hidden="true"></div>
+<nav id="main-nav" class="visible" role="navigation"><div class="nav-inner">
+  <a href="../index.html" class="nav-logo"><span class="nav-logo-title">INDIA IN MOTION</span><span class="nav-logo-sub">Tourism Intelligence Atlas</span></a>
+  <ul class="nav-links" role="list"><li><a href="../index.html">Overview</a></li><li><a href="tourists.html">Tourists</a></li><li><a href="destinations.html">Destinations</a></li><li><a href="states.html">States</a></li><li><a href="economy.html">Economy</a></li><li><a href="culture.html">Culture</a></li><li><a href="infrastructure.html">Infrastructure</a></li><li><a href="sustainability.html" class="active" aria-current="page">Sustainability</a></li><li><a href="insights.html">Insights</a></li><li><a href="data-lab.html">Data Lab</a></li></ul>
+  <div class="nav-controls"><button id="search-open-btn" class="nav-btn" aria-label="Search"><i class="fas fa-search"></i></button><button id="theme-toggle" class="nav-btn" aria-label="Toggle theme"><i class="fas fa-sun"></i></button><button id="fullscreen-btn" class="nav-btn" aria-label="Fullscreen"><i class="fas fa-expand"></i></button><button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu" aria-expanded="false"><i class="fas fa-bars"></i></button></div>
+</div></nav>
+<div id="mobile-nav-drawer" class="mobile-nav-drawer"><a href="../index.html">Overview</a><a href="tourists.html">Tourists</a><a href="destinations.html">Destinations</a><a href="states.html">States</a><a href="economy.html">Economy</a><a href="culture.html">Culture</a><a href="infrastructure.html">Infrastructure</a><a href="sustainability.html">Sustainability</a><a href="insights.html">Insights</a><a href="data-lab.html">Data Lab</a></div>
+<div id="search-overlay" role="search"><div class="search-input-wrap"><input type="text" id="search-input" placeholder="Search sustainability..."><button class="search-close" id="search-close"><i class="fas fa-times"></i></button></div><div id="search-results" class="search-results"></div></div>
+
+<main class="page-wrapper page-content">
+<header style="background:var(--bg-secondary);border-bottom:1px solid var(--border-subtle);padding:var(--space-12) 0 var(--space-8);">
+  <div class="container-wide"><p class="section-label animate-in">Sustainable Tourism</p><h1 class="section-title animate-in" style="font-size:clamp(2rem,4vw,3.2rem);">Can Tourism Grow Sustainably?</h1><p class="section-desc animate-in">India's protected areas, eco-tourism, tourism pressure analysis and government sustainability initiatives. Derived metrics clearly labeled.</p></div>
+</header>
+
+<div class="container-wide" style="padding:var(--space-10) 0 var(--space-16);">
+  <div class="kpi-grid stagger-children" style="margin-bottom:var(--space-8);">
+    <article class="kpi-card"><p class="kpi-label">National Parks</p><div style="display:flex;align-items:baseline;gap:6px;"><span class="kpi-value"><span class="counter" data-target="106" data-decimals="0">—</span></span></div><div class="kpi-change positive"><i class="fas fa-tree"></i>Protected areas</div><p class="kpi-source"><strong>Source:</strong> MoEFCC · 2023</p></article>
+    <article class="kpi-card"><p class="kpi-label">Wildlife Sanctuaries</p><div style="display:flex;align-items:baseline;gap:6px;"><span class="kpi-value"><span class="counter" data-target="551" data-decimals="0">—</span></span></div><div class="kpi-change positive"><i class="fas fa-paw"></i>Designated</div><p class="kpi-source"><strong>Source:</strong> MoEFCC · 2023</p></article>
+    <article class="kpi-card"><p class="kpi-label">Tiger Reserves</p><div style="display:flex;align-items:baseline;gap:6px;"><span class="kpi-value"><span class="counter" data-target="54" data-decimals="0">—</span></span></div><div class="kpi-change positive"><i class="fas fa-leaf"></i>Project Tiger</div><p class="kpi-source"><strong>Source:</strong> NTCA / MoEFCC · 2023</p></article>
+    <article class="kpi-card"><p class="kpi-label">Ramsar Wetland Sites</p><div style="display:flex;align-items:baseline;gap:6px;"><span class="kpi-value"><span class="counter" data-target="75" data-decimals="0">—</span></span></div><div class="kpi-change positive"><i class="fas fa-water"></i>Ramsar designated</div><p class="kpi-source"><strong>Source:</strong> MoEFCC · 2023</p></article>
+  </div>
+
+  <div class="tab-nav" role="tablist">
+    <button class="tab-btn active" data-tab="ts-pressure">Tourism Pressure</button>
+    <button class="tab-btn" data-tab="ts-protected">Protected Areas</button>
+    <button class="tab-btn" data-tab="ts-eco">Eco-tourism</button>
+    <button class="tab-btn" data-tab="ts-init">Initiatives</button>
+  </div>
+
+  <div id="ts-pressure" class="tab-panel active">
+    <div style="background:var(--gold-dim);border:1px solid var(--border-accent);border-radius:var(--radius-md);padding:var(--space-4) var(--space-5);margin-bottom:var(--space-5);display:flex;gap:10px;"><i class="fas fa-circle-info" style="color:var(--gold);flex-shrink:0;margin-top:2px;"></i><p style="font-size:.82rem;color:var(--text-secondary);"><strong style="color:var(--text-primary);">Derived Metric.</strong> Tourism Pressure Index calculated from visitor volume relative to state area and population. Not an official government metric.</p></div>
+    <div class="pg">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Tourism Pressure Index by State</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:300px;"><canvas id="ch-pressure"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Derived from Ministry of Tourism data · Not official · 2022</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Visitors vs State Area</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:300px;"><canvas id="ch-pressure-scatter"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism / Census · Derived view</p></div></div>
+    </div>
+  </div>
+
+  <div id="ts-protected" class="tab-panel">
+    <div class="pg3">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Protected Area Network</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:240px;"><canvas id="ch-pa"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> MoEFCC · 2023</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Tiger Reserve Growth</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:240px;"><canvas id="ch-tiger"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> NTCA · Project Tiger</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Ramsar Sites Growth</p></div><span class="chart-badge official">Official</span></div><div class="chart-body" style="height:240px;"><canvas id="ch-ramsar"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> MoEFCC / Ramsar · 2023</p></div></div>
+    </div>
+  </div>
+
+  <div id="ts-eco" class="tab-panel">
+    <div class="pg" style="margin-bottom:var(--space-5);">
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Eco-tourism Destination Types</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:280px;"><canvas id="ch-eco-types"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism / Swadesh Darshan circuits</p></div></div>
+      <div class="chart-card animate-in"><div class="chart-header"><div><p class="chart-title">Sustainability Radar</p><p class="chart-subtitle">Top tourism states — derived analytical metric</p></div><span class="chart-badge derived">Derived</span></div><div class="chart-body" style="height:280px;"><canvas id="ch-sust-radar"></canvas></div><div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Derived from MoEFCC / Ministry of Tourism · Not official index</p></div></div>
+    </div>
+  </div>
+
+  <div id="ts-init" class="tab-panel">
+    <div class="chart-card animate-in">
+      <div class="chart-header"><p class="chart-title">Government Sustainability Initiatives</p></div>
+      <div id="initiatives-list" style="padding:var(--space-4) var(--space-6);"></div>
+      <div class="chart-footer"><p class="chart-source"><strong>Source:</strong> Ministry of Tourism / MoEFCC official programme documentation</p></div>
+    </div>
+  </div>
+</div>
+<footer style="background:var(--bg-secondary);border-top:1px solid var(--border-subtle);padding:var(--space-6) 0;"><div class="container-wide" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;"><p style="font-family:'Playfair Display',serif;font-weight:700;color:var(--text-primary);">INDIA IN MOTION</p><p style="font-size:.68rem;color:var(--text-muted);">Data: MoEFCC · Ministry of Tourism · NTCA · 2023</p></div></footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="../js/data-loader.js"></script>
+<script src="../js/charts.js"></script>
+<script src="../js/page-common.js"></script>
+<script>
+setTimeout(function() {
+(function(){
+  var D=window.TOURISM_DATA,s=D['sustainability'];
+  var pr=[...s.tourism_pressure_index.states].sort((a,b)=>b.index-a.index);
+  ChartFactory.bar('ch-pressure',pr.map(s=>s.state.replace(' Pradesh','').replace('Himachal','HP')),[{label:'Pressure Index',data:pr.map(s=>s.index),colors:pr.map(s=>s.index>8?'#E05252':s.index>6?'#E8770A':'#40916C')}],{plugins:{legend:{display:false}},scales:{y:{max:10,ticks:{callback:v=>v+'/10'}},x:{ticks:{maxRotation:30,font:{size:9}}}}});
+  ChartFactory.scatter('ch-pressure-scatter',[{label:'States',data:pr.map(s=>({x:s.visitors_2022,y:+(s.area_km2/1000).toFixed(0)})),color:'#E8770A',radius:6}],{plugins:{tooltip:{callbacks:{label:ctx=>pr.find(p=>p.visitors_2022===ctx.raw.x)?.state||''}},legend:{display:false}},scales:{x:{title:{display:true,text:'Visitors (M)',color:'var(--text-muted)',font:{size:11}}},y:{title:{display:true,text:'Area (thou. km²)',color:'var(--text-muted)',font:{size:11}}}}});
+  var pa=s.protected_areas;
+  ChartFactory.donut('ch-pa',['National Parks','Wildlife Sanctuaries','Tiger Reserves','Biosphere Reserves'],[pa.national_parks,pa.wildlife_sanctuaries,pa.tiger_reserves,pa.biosphere_reserves],['#40916C','#2D6A4F','#E8770A','#C8A84B']);
+  ChartFactory.line('ch-tiger',[1973,1984,1993,2006,2014,2018,2022,2023],[{label:'Tiger Reserves',data:[9,15,18,28,47,50,52,54],color:'#E8770A'}],{plugins:{legend:{display:false}}});
+  ChartFactory.area('ch-ramsar',[2000,2005,2010,2015,2019,2020,2021,2022,2023],[{label:'Ramsar Sites',data:[19,25,26,26,27,42,46,49,75],color:'#7B9EA6',fill:true}],{plugins:{legend:{display:false}}});
+  var eco=s.eco_tourism_destinations,tc={};eco.forEach(function(e){tc[e.type]=(tc[e.type]||0)+1;});
+  ChartFactory.donut('ch-eco-types',Object.keys(tc),Object.values(tc),ChartFactory.PALETTE);
+  ChartFactory.radar('ch-sust-radar',['Protected Areas','Eco Infra','Low Pressure','Wildlife','Water Bodies','Gov. Init.'],[{label:'Kerala',data:[8,9,6,8,9,8],color:'#40916C'},{label:'Uttarakhand',data:[8,7,7,8,7,7],color:'#C8A84B'},{label:'HP',data:[9,7,8,7,6,7],color:'#E8770A'},{label:'Madhya Pradesh',data:[9,6,7,9,6,8],color:'#7B9EA6'}]);
+  var initEl=document.getElementById('initiatives-list');
+  if(initEl) initEl.innerHTML=s.sustainability_initiatives.map(function(ini){return '<div class="iitem"><div style="width:38px;height:38px;background:var(--green-dim);border:1px solid rgba(64,145,108,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fas fa-leaf" style="color:var(--green-light);font-size:.85rem;"></i></div><div><p style="font-family:\'Playfair Display\',serif;font-size:.95rem;font-weight:600;color:var(--text-primary);margin-bottom:2px;">'+ini.name+'</p><p style="font-size:.75rem;color:var(--saffron);margin-bottom:3px;">'+ini.focus+'</p><p style="font-size:.72rem;color:var(--text-muted);">Ministry of '+ini.ministry+' · Est. '+ini.year+'</p></div></div>';}).join('');
+})();
+}, 50);
+</script>
+</body></html>

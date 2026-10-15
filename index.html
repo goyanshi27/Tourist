@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>India in Motion — Bharat Tourism Intelligence Atlas</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0B0D0F;--bg2:#111418;--bg3:#1A1E26;--bg4:#1C2028;
+  --text:#E8E6E0;--text2:#9A9490;--text3:#5C5855;
+  --saffron:#E8770A;--gold:#C8A84B;--green:#40916C;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
+  --pos:#40916C;--neg:#E05252;
+}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden}
+a{color:var(--gold);text-decoration:none}
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(11,13,15,0.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:58px;display:flex;align-items:center;padding:0 24px;gap:16px}
+.nav-logo{font-family:'Playfair Display',serif;font-weight:900;font-size:1rem;color:var(--text);white-space:nowrap}
+.nav-logo span{display:block;font-family:'Inter',sans-serif;font-size:.58rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.nav-links{display:flex;gap:0;overflow-x:auto;flex:1;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{padding:18px 12px;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);white-space:nowrap;border-bottom:2px solid transparent;transition:.2s}
+.nav-links a:hover,.nav-links a.active{color:var(--text);border-bottom-color:var(--saffron)}
+.nav-btn{width:32px;height:32px;background:transparent;border:1px solid var(--border);border-radius:4px;color:var(--text2);cursor:pointer;font-size:.8rem;display:flex;align-items:center;justify-content:center;transition:.2s;flex-shrink:0}
+.nav-btn:hover{border-color:var(--gold);color:var(--gold)}
+/* PAGE WRAPPER */
+#page{margin-top:58px}
+/* SECTIONS */
+.section{padding:56px 0}
+.section.dark{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.container{max-width:1400px;margin:0 auto;padding:0 24px}
+.sec-label{font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--saffron);margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.sec-label::before{content:'';width:18px;height:1px;background:var(--saffron)}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3vw,2.6rem);font-weight:700;margin-bottom:10px}
+.sec-desc{font-size:.9rem;color:var(--text2);line-height:1.7;max-width:620px}
+/* INTRO */
+#intro{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:32px}
+#intro-canvas{position:absolute;inset:0;opacity:.5}
+.intro-inner{position:relative;z-index:2}
+.intro-tag{font-size:.65rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.intro-h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,9vw,7rem);font-weight:900;line-height:.95;letter-spacing:-.04em;color:var(--text)}
+.intro-h1 em{color:var(--saffron);font-style:normal;display:block}
+.intro-div{width:56px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:20px auto}
+.intro-sub{font-size:.9rem;color:var(--text2);margin-bottom:32px}
+#explore-btn{display:inline-flex;align-items:center;gap:10px;padding:13px 36px;background:transparent;border:1px solid var(--gold);color:var(--gold);font-family:'Inter',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:.25s}
+#explore-btn:hover{background:var(--gold);color:#000}
+/* KPI GRID */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:32px}
+.kpi-card{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:18px 20px;position:relative;overflow:hidden;transition:.25s}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--saffron),var(--gold));opacity:0;transition:.25s}
+.kpi-card:hover{border-color:rgba(200,168,75,.3);transform:translateY(-2px)}
+.kpi-card:hover::before{opacity:1}
+.kpi-label{font-size:.62rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--text3);margin-bottom:8px}
+.kpi-val{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;line-height:1;margin-bottom:6px}
+.kpi-chg{font-size:.68rem;font-weight:600;color:var(--pos)}
+.kpi-chg.neg{color:var(--neg)}
+.kpi-src{font-size:.6rem;color:var(--text3);margin-top:10px;padding-top:8px;border-top:1px solid var(--border)}
+.sparkline{height:28px;margin-top:8px}
+/* CHART CARDS */
+.chart-grid-2{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:16px}
+.chart-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px}
+.chart-grid-eq{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.chart-card{background:var(--bg3);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.chart-head{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.chart-title{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700}
+.chart-sub{font-size:.72rem;color:var(--text2);margin-top:2px}
+.badge{font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:20px;border:1px solid;white-space:nowrap;flex-shrink:0}
+.badge.off{color:var(--green);border-color:rgba(64,145,108,.3);background:rgba(64,145,108,.08)}
+.badge.der{color:var(--gold);border-color:rgba(200,168,75,.3);background:rgba(200,168,75,.08)}
+.badge.ill{color:var(--text2);border-color:var(--border)}
+.chart-body{padding:16px 20px;position:relative;}
+.chart-foot{padding:10px 20px;border-top:1px solid var(--border);font-size:.6rem;color:var(--text3)}
+/* TABS */
+.tab-nav{display:flex;border-bottom:1px solid var(--border);margin-bottom:20px;overflow-x:auto;scrollbar-width:none}
+.tab-nav::-webkit-scrollbar{display:none}
+.tab-btn{padding:10px 18px;background:transparent;border:none;border-bottom:2px solid transparent;color:var(--text3);font-family:'Inter',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;white-space:nowrap;margin-bottom:-1px;transition:.2s}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--saffron);border-bottom-color:var(--saffron)}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+/* STATE CHIPS */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.chip{padding:5px 13px;background:var(--bg4);border:1px solid var(--border2);border-radius:20px;font-size:.7rem;font-weight:600;color:var(--text2);cursor:pointer;transition:.2s}
+.chip:hover,.chip.on{background:rgba(232,119,10,.1);border-color:var(--saffron);color:var(--saffron)}
+/* DEST CARDS */
+.dest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+.dest-card{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:18px;cursor:pointer;transition:.25s;position:relative;overflow:hidden}
+.dest-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--saffron),var(--gold));transform:scaleX(0);transition:.25s;transform-origin:left}
+.dest-card:hover{border-color:var(--gold);transform:translateY(-3px)}
+.dest-card:hover::before,.dest-card.open::before{transform:scaleX(1)}
+.detail-panel{background:var(--bg3);border:1px solid var(--border2);border-radius:12px;padding:28px 32px;margin-top:16px;display:none}
+.detail-panel.open{display:block}
+/* TABLE */
+.data-table{width:100%;border-collapse:collapse;font-size:.8rem}
+.data-table th{padding:8px 14px;text-align:left;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);background:var(--bg4);border-bottom:1px solid var(--border2)}
+.data-table td{padding:9px 14px;border-bottom:1px solid var(--border);color:var(--text2)}
+.data-table tbody tr:hover td{background:var(--bg4);color:var(--text)}
+/* FILTER */
+.fsel{padding:7px 10px;background:var(--bg4);border:1px solid var(--border2);border-radius:4px;color:var(--text);font-family:'Inter',sans-serif;font-size:.78rem;cursor:pointer;outline:none}
+.fsel:focus{border-color:var(--gold)}
+.fbtn{padding:8px 20px;background:var(--saffron);border:none;border-radius:4px;color:white;font-family:'Inter',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.rbtn{padding:7px 16px;background:transparent;border:1px solid var(--border2);border-radius:4px;color:var(--text2);font-family:'Inter',sans-serif;font-size:.72rem;cursor:pointer}
+/* STAT STRIP */
+.stat-strip{background:rgba(11,13,15,.95);border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(5,1fr)}
+.stat-item{padding:12px 16px;border-right:1px solid var(--border)}
+.stat-item:last-child{border-right:none}
+.stat-lbl{font-size:.58rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--text3)}
+.stat-val{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;line-height:1.2}
+.stat-chg{font-size:.62rem;font-weight:600;color:var(--pos)}
+/* MAP */
+.map-wrap{position:relative}
+#hero-map{width:100%;height:calc(100vh - 58px - 72px)}
+.map-layers{position:absolute;bottom:80px;left:50%;transform:translateX(-50%);z-index:10;display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.ml-btn{padding:5px 13px;background:rgba(11,13,15,.9);backdrop-filter:blur(8px);border:1px solid var(--border2);border-radius:4px;color:var(--text2);font-size:.65rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:.2s}
+.ml-btn:hover,.ml-btn.active{border-color:var(--saffron);color:var(--saffron);background:rgba(232,119,10,.1)}
+/* ORBIT */
+.orbit-wrap{position:relative;width:520px;height:520px;margin:50px auto 0}
+.orbit-ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;border:1px solid var(--border)}
+.orbit-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:92px;height:92px;background:var(--bg4);border:1px solid rgba(200,168,75,.3);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:5}
+.orbit-node{position:absolute;transform:translate(-50%,-50%);width:70px;height:70px;background:var(--bg3);border:1px solid var(--border2);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-decoration:none;z-index:4;transition:.25s;cursor:pointer}
+.orbit-node:hover{background:var(--bg4);border-color:var(--gold);transform:translate(-50%,-50%) scale(1.1);box-shadow:0 0 20px rgba(200,168,75,.15)}
+.orbit-node i{font-size:1rem;line-height:1}
+.orbit-node span{font-size:.55rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--text2);text-align:center}
+/* INSIGHT */
+.insight{display:flex;align-items:flex-start;gap:12px;padding:13px 16px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;margin-bottom:10px}
+.insight.pos{border-left:3px solid var(--pos)}
+.insight.neg{border-left:3px solid var(--neg)}
+.insight.info{border-left:3px solid var(--gold)}
+/* EXPLORE CARDS */
+.explore-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px;margin-top:28px}
+.exp-card{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:22px;display:flex;align-items:center;gap:18px;text-decoration:none;transition:.25s}
+.exp-card:hover{border-color:var(--gold);transform:translateY(-2px);background:var(--bg4)}
+.exp-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:rgba(255,255,255,.08);flex-shrink:0;width:40px}
+/* MISC */
+.flex{display:flex;align-items:center;gap:10px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.lab-layout{display:grid;grid-template-columns:240px 1fr;gap:20px;align-items:start}
+.fpanel{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:18px;position:sticky;top:78px}
+.fpanel label{display:block;font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:5px}
+.fsel{width:100%;margin-bottom:12px}
+.src-box{background:var(--bg4);border:1px solid var(--border);border-radius:6px;padding:10px 12px;margin-bottom:8px}
+.badge-row{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 20px}
+/* RESPONSIVE */
+@media(max-width:1023px){.chart-grid-2,.g2,.lab-layout{grid-template-columns:1fr}.chart-grid-3,.g3{grid-template-columns:1fr 1fr}.fpanel{position:static}}
+@media(max-width:767px){.chart-grid-3,.g3,.kpi-grid{grid-template-columns:1fr 1fr}.stat-strip{grid-template-columns:1fr 1fr}.orbit-wrap{display:none}#hero-map{height:360px}}
+@media(max-width:479px){.kpi-grid,.stat-strip{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- INTRO -->
+<div id="intro">
+  <canvas id="intro-canvas"></canvas>
+  <div class="intro-inner">
+    <p class="intro-tag">Bharat Tourism Intelligence Atlas</p>
+    <h1 class="intro-h1">INDIA<em>IN MOTION</em></h1>
+    <div class="intro-div"></div>
+    <p class="intro-sub">An interactive data atlas of India's tourism ecosystem</p>
+    <button id="explore-btn">EXPLORE INDIA &nbsp;<i class="fas fa-arrow-right"></i></button>
+    <p style="margin-top:22px;font-size:.6rem;color:var(--text3)">Data: Ministry of Tourism, GoI &nbsp;·&nbsp; RBI &nbsp;·&nbsp; ASI &nbsp;·&nbsp; WTTC</p>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="nav" style="display:none">
+  <a href="#" class="nav-logo">INDIA IN MOTION<span>Tourism Intelligence Atlas</span></a>
+  <div class="nav-links" id="nav-links">
+    <a href="#" onclick="showPage('tourists')" class="active">Tourists</a>
+    <a href="#" onclick="showPage('destinations')">Destinations</a>
+    <a href="#" onclick="showPage('states')">States</a>
+    <a href="#" onclick="showPage('economy')">Economy</a>
+    <a href="#" onclick="showPage('culture')">Culture</a>
+    <a href="#" onclick="showPage('infrastructure')">Infrastructure</a>
+    <a href="#" onclick="showPage('sustainability')">Sustainability</a>
+    <a href="#" onclick="showPage('insights')">Insights</a>
+    <a href="#" onclick="showPage('datalab')">Data Lab</a>
+  </div>
+  <button class="nav-btn" id="theme-btn" title="Toggle theme"><i class="fas fa-sun"></i></button>
+</nav>
+
+<!-- ALL PAGES -->
+<div id="page" style="display:none">
+
+
+<!-- ════ TOURISTS ════ -->
+<div id="p-tourists" class="page-section" style="display:none">
+<div class="section dark"><div class="container"><p class="sec-label">International Tourism</p><h2 class="sec-title">Where Does the World Come From?</h2><p class="sec-desc">Source markets, gateways and arrival trends. Data: Ministry of Tourism, Bureau of Immigration · 2022.</p></div></div>
+<div class="section"><div class="container">
+  <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr)">
+    <div class="kpi-card"><p class="kpi-label">Total FTA 2022</p><p class="kpi-val">6.19M</p><p class="kpi-chg">↑ +306% vs 2021</p><p class="kpi-src">Bureau of Immigration · 2022</p></div>
+    <div class="kpi-card"><p class="kpi-label">Top Source Market</p><p class="kpi-val" style="font-size:1.3rem">Bangladesh</p><p class="kpi-chg">32.2% share</p><p class="kpi-src">Ministry of Tourism · 2022</p></div>
+    <div class="kpi-card"><p class="kpi-label">Top Entry Gateway</p><p class="kpi-val" style="font-size:1.3rem">Delhi</p><p class="kpi-chg">36.2% of arrivals</p><p class="kpi-src">Bureau of Immigration · 2022</p></div>
+    <div class="kpi-card"><p class="kpi-label">Recovery vs 2019</p><p class="kpi-val">56.6%</p><p class="kpi-chg">↑ Recovering</p><p class="kpi-src">Derived from Ministry of Tourism</p></div>
+  </div>
+  <div class="tab-nav" id="tourists-tabs">
+    <button class="tab-btn active" onclick="tab('tourists-tabs','tp-sources',this)">Source Markets</button>
+    <button class="tab-btn" onclick="tab('tourists-tabs','tp-continents',this)">Continents</button>
+    <button class="tab-btn" onclick="tab('tourists-tabs','tp-gateways',this)">Gateways</button>
+    <button class="tab-btn" onclick="tab('tourists-tabs','tp-trends',this)">Trends</button>
+    <button class="tab-btn" onclick="tab('tourists-tabs','tp-purpose',this)">Purpose</button>
+  </div>
+  <div id="tp-sources" class="tab-panel active">
+    <div class="chart-grid-eq" style="margin-bottom:16px">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Top 10 Source Markets</p><p class="chart-sub">Thousand arrivals · 2022</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-top10" height="300"></canvas></div><div class="chart-foot">Source: Bureau of Immigration · Thousand · 2022</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Continental Distribution</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-cont-donut" height="300"></canvas></div><div class="chart-foot">Source: Ministry of Tourism · 2022</div></div>
+    </div>
+    <div class="chart-card"><div class="chart-head"><p class="chart-title">All Source Market Rankings</p><span class="badge off">Official</span></div><div style="overflow-x:auto"><table class="data-table" id="t-countries"><thead><tr><th>#</th><th>Country</th><th>Continent</th><th>Arrivals (K)</th><th>Share %</th><th>YoY %</th></tr></thead><tbody id="tb-countries"></tbody></table></div><div class="chart-foot">Source: Bureau of Immigration · 2022</div></div>
+  </div>
+  <div id="tp-continents" class="tab-panel">
+    <div class="g3">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Continental Arrivals</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-cont-bar" height="240"></canvas></div><div class="chart-foot">Source: Ministry of Tourism · 2022</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Recovery vs 2019</p></div><span class="badge der">Derived</span></div><div class="chart-body"><canvas id="c-cont-rec" height="240"></canvas></div><div class="chart-foot">Source: Derived from Ministry of Tourism</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Top Asian Markets</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-asia" height="240"></canvas></div><div class="chart-foot">Source: Bureau of Immigration · 2022</div></div>
+    </div>
+  </div>
+  <div id="tp-gateways" class="tab-panel">
+    <div class="chart-grid-eq">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Gateway Arrivals</p><p class="chart-sub">Thousand · 2022</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-gw-bar" height="300"></canvas></div><div class="chart-foot">Source: Bureau of Immigration · 2022</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Gateway Share</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-gw-donut" height="300"></canvas></div><div class="chart-foot">Source: Bureau of Immigration · 2022</div></div>
+    </div>
+  </div>
+  <div id="tp-trends" class="tab-panel">
+    <div class="chart-grid-eq">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Top 5 Markets — 2017–2022</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-market-trend" height="280"></canvas></div><div class="chart-foot">Source: Ministry of Tourism · 2017–2022</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Total FTA Trend</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-fta-trend" height="280"></canvas></div><div class="chart-foot">Source: Ministry of Tourism · 2013–2023</div></div>
+    </div>
+  </div>
+  <div id="tp-purpose" class="tab-panel">
+    <div style="background:rgba(232,119,10,.07);border:1px solid rgba(232,119,10,.25);border-radius:6px;padding:12px 16px;margin-bottom:16px;font-size:.82rem;color:var(--text2)"><i class="fas fa-circle-info" style="color:var(--saffron);margin-right:8px"></i><strong style="color:var(--text)">Data Note:</strong> Purpose figures are indicative survey-based estimates. <strong>Illustrative</strong> — not precise official breakdowns.</div>
+    <div class="chart-grid-eq">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Purpose of Visit</p></div><span class="badge ill">Illustrative</span></div><div class="chart-body"><canvas id="c-purpose" height="280"></canvas></div><div class="chart-foot">Source: India Tourism Statistics 2023 · Survey estimate · Illustrative</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Purpose by Region</p></div><span class="badge ill">Illustrative</span></div><div class="chart-body"><canvas id="c-purpose-reg" height="280"></canvas></div><div class="chart-foot">Source: India Tourism Statistics 2023 · Illustrative</div></div>
+    </div>
+  </div>
+</div></div>
+</div>
+
+<!-- ════ DESTINATIONS ════ -->
+<div id="p-destinations" class="page-section" style="display:none">
+<div class="section dark"><div class="container"><p class="sec-label">Destination Intelligence</p><h2 class="sec-title">Destination Explorer</h2><p class="sec-desc">Click any card for a mini-dashboard — visitors, growth, seasonality, category profile.</p></div></div>
+<div class="section"><div class="container">
+  <div class="g3" style="margin-bottom:24px">
+    <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Top Destinations — Total Visitors</p><p class="chart-sub">Million · 2022</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-dest-total" height="220"></canvas></div><div class="chart-foot">Source: Ministry of Tourism / ASI · 2022</div></div>
+    <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Category Distribution</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-dest-cats" height="220"></canvas></div><div class="chart-foot">Source: Ministry of Tourism · 2022</div></div>
+    <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Domestic vs Foreign Split</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-dest-split" height="220"></canvas></div><div class="chart-foot">Source: Ministry of Tourism · 2022</div></div>
+  </div>
+  <div id="dest-filters" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px"></div>
+  <div class="dest-grid" id="dest-grid"></div>
+  <div class="detail-panel" id="dest-detail"></div>
+</div></div>
+</div>
+
+<!-- ════ STATES ════ -->
+<div id="p-states" class="page-section" style="display:none">
+<div class="section dark"><div class="container"><p class="sec-label">State Analysis</p><h2 class="sec-title">State Comparison Lab</h2><p class="sec-desc">Select 2–5 states to compare. No state is ranked as "best" — this is an analytical tool.</p></div></div>
+<div class="section"><div class="container">
+  <div class="chart-grid-eq" style="margin-bottom:16px">
+    <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Top 10 — Domestic Visits</p><p class="chart-sub">Million · 2022</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-state-rank-d" height="300"></canvas></div><div class="chart-foot">Source: Ministry of Tourism / State Depts · 2022</div></div>
+    <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Top 10 — Foreign Arrivals</p><p class="chart-sub">Million · 2022</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-state-rank-f" height="300"></canvas></div><div class="chart-foot">Source: Ministry of Tourism / Bureau of Immigration · 2022</div></div>
+  </div>
+  <div class="chart-card" style="margin-bottom:16px"><div class="chart-head"><div><p class="chart-title">Recovery vs 2019 Baseline</p></div><span class="badge der">Derived</span></div><div class="chart-body"><canvas id="c-recovery" height="220"></canvas></div><div class="chart-foot">Source: Ministry of Tourism · Derived: 2022 vs 2019 · %</div></div>
+  <div style="margin:28px 0 12px"><p class="sec-label">Comparison Lab</p><h2 class="sec-title">Compare States</h2></div>
+  <div style="background:rgba(200,168,75,.07);border:1px solid rgba(200,168,75,.25);border-radius:6px;padding:12px 16px;margin-bottom:16px;font-size:.82rem;color:var(--text2)"><i class="fas fa-circle-info" style="color:var(--gold);margin-right:8px"></i>Select 2–5 states. Analytical comparison only — not a ranking.</div>
+  <div class="chips" id="state-chips"></div>
+  <div class="tab-nav" id="states-tabs">
+    <button class="tab-btn active" onclick="tab('states-tabs','sp-bar',this)">Grouped Bar</button>
+    <button class="tab-btn" onclick="tab('states-tabs','sp-radar',this)">Radar</button>
+    <button class="tab-btn" onclick="tab('states-tabs','sp-profiles',this)">Profiles</button>
+  </div>
+  <div id="sp-bar" class="tab-panel active">
+    <div class="chart-grid-eq">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Domestic Visits</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-cmp-d" height="240"></canvas></div><div class="chart-foot">Source: Ministry of Tourism · 2022</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">2019 vs 2022</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-cmp-2yr" height="240"></canvas></div><div class="chart-foot">Source: Ministry of Tourism</div></div>
+    </div>
+  </div>
+  <div id="sp-radar" class="tab-panel">
+    <div class="chart-grid-eq">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Tourism Profile Radar</p></div><span class="badge der">Derived</span></div><div class="chart-body"><canvas id="c-cmp-radar" height="320"></canvas></div><div class="chart-foot">Source: Derived · 0–10 normalised scale</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Recovery %</p></div><span class="badge der">Derived</span></div><div class="chart-body"><canvas id="c-cmp-rec" height="320"></canvas></div><div class="chart-foot">Source: Derived from Ministry of Tourism</div></div>
+    </div>
+  </div>
+  <div id="sp-profiles" class="tab-panel">
+    <div id="state-profiles-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px"></div>
+  </div>
+</div></div>
+</div>
+
+<!-- ════ ECONOMY ════ -->
+<div id="p-economy" class="page-section" style="display:none">
+<div class="section dark"><div class="container"><p class="sec-label">Economic Intelligence</p><h2 class="sec-title">Tourism = Economic Engine</h2><p class="sec-desc">India's tourism GDP, forex earnings and employment. Sources: RBI · WTTC India 2023 · Ministry of Tourism.</p></div></div>
+<div class="section"><div class="container">
+  <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:28px">
+    <div class="kpi-card"><p class="kpi-label">Forex Earnings 2023</p><p class="kpi-val">$22.9B</p><p class="kpi-chg">↑ +63.6% vs 2022</p><p class="kpi-src">Reserve Bank of India · 2023</p></div>
+    <div class="kpi-card"><p class="kpi-label">Tourism GDP Share</p><p class="kpi-val">7.6%</p><p class="kpi-chg">↑ +0.5pp vs 2022</p><p class="kpi-src">WTTC / Ministry of Tourism · 2023</p></div>
+    <div class="kpi-card"><p class="kpi-label">Direct GDP Share</p><p class="kpi-val">3.1%</p><p class="kpi-chg">↑ +0.2pp vs 2022</p><p class="kpi-src">WTTC India 2023</p></div>
+    <div class="kpi-card"><p class="kpi-label">Total Employment</p><p class="kpi-val">80M</p><p class="kpi-chg">↑ +3.6% vs 2022</p><p class="kpi-src">WTTC / Ministry of Tourism · 2023</p></div>
+  </div>
+  <div class="tab-nav" id="econ-tabs">
+    <button class="tab-btn active" onclick="tab('econ-tabs','ep-forex',this)">Forex &amp; Revenue</button>
+    <button class="tab-btn" onclick="tab('econ-tabs','ep-gdp',this)">GDP</button>
+    <button class="tab-btn" onclick="tab('econ-tabs','ep-emp',this)">Employment</button>
+    <button class="tab-btn" onclick="tab('econ-tabs','ep-spend',this)">Spending</button>
+  </div>
+  <div id="ep-forex" class="tab-panel active">
+    <div class="chart-grid-eq" style="margin-bottom:16px">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Forex Earnings Trend</p><p class="chart-sub">USD Billion · 2013–2023</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-fx-trend" height="260"></canvas></div><div class="chart-foot">Source: Reserve Bank of India</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Annual Forex Growth %</p></div><span class="badge der">Derived</span></div><div class="chart-body"><canvas id="c-fx-growth" height="260"></canvas></div><div class="chart-foot">Source: Derived from RBI data</div></div>
+    </div>
+  </div>
+  <div id="ep-gdp" class="tab-panel">
+    <div class="chart-grid-eq" style="margin-bottom:16px">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Total Tourism GDP %</p></div><span class="badge der">Derived</span></div><div class="chart-body"><canvas id="c-gdp-pct" height="260"></canvas></div><div class="chart-foot">Source: WTTC India 2023</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Direct vs Indirect GDP</p></div><span class="badge der">Derived</span></div><div class="chart-body"><canvas id="c-gdp-split" height="260"></canvas></div><div class="chart-foot">Source: WTTC India 2023 · INR Billion</div></div>
+    </div>
+    <div class="chart-grid-eq">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Direct GDP (INR B)</p></div><span class="badge der">Derived</span></div><div class="chart-body"><canvas id="c-gdp-abs" height="220"></canvas></div><div class="chart-foot">Source: WTTC India 2023</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">GDP Composition 2023</p></div><span class="badge der">Derived</span></div><div class="chart-body"><canvas id="c-gdp-donut" height="220"></canvas></div><div class="chart-foot">Source: WTTC India 2023</div></div>
+    </div>
+  </div>
+  <div id="ep-emp" class="tab-panel">
+    <div class="chart-grid-eq" style="margin-bottom:16px">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Employment Trend</p><p class="chart-sub">Million (direct + indirect)</p></div><span class="badge der">Derived</span></div><div class="chart-body"><canvas id="c-emp-trend" height="260"></canvas></div><div class="chart-foot">Source: WTTC / Ministry of Tourism</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Employment Mix 2023</p></div><span class="badge der">Derived</span></div><div class="chart-body"><canvas id="c-emp-donut" height="260"></canvas></div><div class="chart-foot">Source: WTTC India 2023</div></div>
+    </div>
+  </div>
+  <div id="ep-spend" class="tab-panel">
+    <div style="background:rgba(200,168,75,.07);border:1px solid rgba(200,168,75,.25);border-radius:6px;padding:12px 16px;margin-bottom:16px;font-size:.82rem;color:var(--text2)"><i class="fas fa-circle-info" style="color:var(--gold);margin-right:8px"></i>Spending composition is <strong>illustrative</strong> based on India Tourism Statistics 2023.</div>
+    <div class="chart-grid-eq">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Spending Composition</p></div><span class="badge ill">Illustrative</span></div><div class="chart-body"><canvas id="c-spend2-donut" height="280"></canvas></div><div class="chart-foot">Source: India Tourism Statistics 2023 · Illustrative · 2022</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Spending by Category</p></div><span class="badge ill">Illustrative</span></div><div class="chart-body"><canvas id="c-spend2-bar" height="280"></canvas></div><div class="chart-foot">Source: India Tourism Statistics 2023 · Illustrative · 2022</div></div>
+    </div>
+  </div>
+</div></div>
+</div>
+
+<!-- ════ CULTURE ════ -->
+<div id="p-culture" class="page-section" style="display:none">
+<div class="section dark"><div class="container"><p class="sec-label">Culture, Heritage &amp; Tourism</p><h2 class="sec-title">India's Heritage Economy</h2><p class="sec-desc">42 UNESCO sites, 3,693 ASI monuments, spiritual circuits, wildlife and festival tourism.</p></div></div>
+<div class="section"><div class="container">
+  <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:28px">
+    <div class="kpi-card"><p class="kpi-label">UNESCO Heritage Sites</p><p class="kpi-val">42</p><p class="kpi-chg">Cultural &amp; Natural</p><p class="kpi-src">UNESCO WHC · 2024</p></div>
+    <div class="kpi-card"><p class="kpi-label">ASI Protected Monuments</p><p class="kpi-val">3,693</p><p class="kpi-chg">Across India</p><p class="kpi-src">ASI · 2024</p></div>
+    <div class="kpi-card"><p class="kpi-label">ASI Ticketed Monuments</p><p class="kpi-val">143</p><p class="kpi-chg">Paid entry</p><p class="kpi-src">ASI Annual Report · 2022</p></div>
+    <div class="kpi-card"><p class="kpi-label">Monument Visitors 2022</p><p class="kpi-val">163M</p><p class="kpi-chg">Domestic</p><p class="kpi-src">ASI Annual Report · 2022</p></div>
+  </div>
+  <div class="tab-nav" id="culture-tabs">
+    <button class="tab-btn active" onclick="tab('culture-tabs','cp-heritage',this)">Heritage</button>
+    <button class="tab-btn" onclick="tab('culture-tabs','cp-spiritual',this)">Spiritual</button>
+    <button class="tab-btn" onclick="tab('culture-tabs','cp-wildlife',this)">Wildlife</button>
+    <button class="tab-btn" onclick="tab('culture-tabs','cp-dna',this)">Tourism DNA</button>
+  </div>
+  <div id="cp-heritage" class="tab-panel active">
+    <div class="chart-grid-eq" style="margin-bottom:16px">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Top Monuments — Domestic Visitors</p><p class="chart-sub">Million · 2022</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-monuments" height="280"></canvas></div><div class="chart-foot">Source: ASI Annual Report · Million · 2022</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">ASI Visitor Trend</p><p class="chart-sub">Million · 2017–2022</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-asi-trend" height="280"></canvas></div><div class="chart-foot">Source: ASI Annual Reports · 2017–2022</div></div>
+    </div>
+    <div class="chart-grid-eq">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Monument Visitor Split</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-mon-split" height="240"></canvas></div><div class="chart-foot">Source: ASI · 2022</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">UNESCO Sites — Cultural vs Natural</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-unesco" height="240"></canvas></div><div class="chart-foot">Source: UNESCO WHC · 2024 · India: 42 sites</div></div>
+    </div>
+  </div>
+  <div id="cp-spiritual" class="tab-panel">
+    <div class="g3">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Major Pilgrimage Sites</p><p class="chart-sub">Million visitors · 2022</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-pilgrim" height="240"></canvas></div><div class="chart-foot">Source: Ministry of Tourism / State Depts</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Spiritual Tourism by State</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-spir-state" height="240"></canvas></div><div class="chart-foot">Source: Ministry of Tourism</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Faith Distribution</p></div><span class="badge der">Derived</span></div><div class="chart-body"><canvas id="c-faith" height="240"></canvas></div><div class="chart-foot">Source: Derived from PRASHAD scheme data</div></div>
+    </div>
+  </div>
+  <div id="cp-wildlife" class="tab-panel">
+    <div class="g3">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Protected Area Network</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-pa" height="220"></canvas></div><div class="chart-foot">Source: MoEFCC · 2023</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Tiger Reserve Growth</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-tiger" height="220"></canvas></div><div class="chart-foot">Source: NTCA · Project Tiger</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Wildlife Tourism by State</p></div><span class="badge der">Derived</span></div><div class="chart-body"><canvas id="c-wild-state" height="220"></canvas></div><div class="chart-foot">Source: Derived analytical score</div></div>
+    </div>
+  </div>
+  <div id="cp-dna" class="tab-panel">
+    <div style="text-align:center;margin-bottom:24px"><p class="sec-label" style="justify-content:center">Signature Visualization</p><h2 class="sec-title">India's Tourism DNA</h2><p style="font-size:.85rem;color:var(--text2);margin-top:8px">Derived analytical metric · 0–10 scale · Not an official index</p></div>
+    <div class="chart-grid-eq">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Tourism DNA Radar</p></div><span class="badge der">Derived</span></div><div class="chart-body"><canvas id="c-dna-radar" height="340"></canvas></div><div class="chart-foot">Source: Derived from Ministry of Tourism data</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Category Strength</p></div><span class="badge der">Derived</span></div><div class="chart-body"><canvas id="c-dna-bar" height="340"></canvas></div><div class="chart-foot">Source: Derived analytical score</div></div>
+    </div>
+  </div>
+</div></div>
+</div>
+
+<!-- ════ INFRASTRUCTURE ════ -->
+<div id="p-infrastructure" class="page-section" style="display:none">
+<div class="section dark"><div class="container"><p class="sec-label">Tourism Infrastructure</p><h2 class="sec-title">Building India for Tourists</h2><p class="sec-desc">Hotels, airports and government projects under Swadesh Darshan and PRASHAD. Source: Ministry of Tourism · AAI · 2022–2023.</p></div></div>
+<div class="section"><div class="container">
+  <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:28px">
+    <div class="kpi-card"><p class="kpi-label">Classified Hotels</p><p class="kpi-val">10,536</p><p class="kpi-chg">↑ +12% vs 2021</p><p class="kpi-src">Ministry of Tourism · 2022</p></div>
+    <div class="kpi-card"><p class="kpi-label">International Airports</p><p class="kpi-val">34</p><p class="kpi-chg">Operational · 2023</p><p class="kpi-src">AAI / DGCA · 2023</p></div>
+    <div class="kpi-card"><p class="kpi-label">Swadesh Darshan Projects</p><p class="kpi-val">76</p><p class="kpi-chg">Sanctioned</p><p class="kpi-src">Ministry of Tourism · 2023</p></div>
+    <div class="kpi-card"><p class="kpi-label">PRASHAD Projects</p><p class="kpi-val">45</p><p class="kpi-chg">Pilgrimage sites</p><p class="kpi-src">Ministry of Tourism · 2023</p></div>
+  </div>
+  <div class="tab-nav" id="infra-tabs">
+    <button class="tab-btn active" onclick="tab('infra-tabs','ip-hotels',this)">Hotels</button>
+    <button class="tab-btn" onclick="tab('infra-tabs','ip-airports',this)">Airports</button>
+    <button class="tab-btn" onclick="tab('infra-tabs','ip-projects',this)">Gov. Projects</button>
+  </div>
+  <div id="ip-hotels" class="tab-panel active">
+    <div class="chart-grid-eq" style="margin-bottom:16px">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Hotels by Category</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-hotel-cats" height="260"></canvas></div><div class="chart-foot">Source: Ministry of Tourism — ITS 2023 · 2022</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Hotel Growth Trend</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-hotel-trend" height="260"></canvas></div><div class="chart-foot">Source: Ministry of Tourism · Annual Reports</div></div>
+    </div>
+    <div class="chart-grid-eq">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Rooms by Category</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-hotel-rooms" height="220"></canvas></div><div class="chart-foot">Source: Ministry of Tourism · 2022</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Hotel Mix</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-hotel-donut" height="220"></canvas></div><div class="chart-foot">Source: Ministry of Tourism · 2022</div></div>
+    </div>
+  </div>
+  <div id="ip-airports" class="tab-panel">
+    <div class="chart-grid-eq">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Airport Passenger Traffic</p><p class="chart-sub">Million passengers · 2022</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-airports" height="280"></canvas></div><div class="chart-foot">Source: AAI / DGCA · Million passengers · 2022</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">International vs Domestic Airports</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-ap-split" height="280"></canvas></div><div class="chart-foot">Source: Ministry of Civil Aviation · 2023</div></div>
+    </div>
+  </div>
+  <div id="ip-projects" class="tab-panel">
+    <div class="g3" style="margin-bottom:16px">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Projects by Status</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-proj-status" height="200"></canvas></div><div class="chart-foot">Source: Ministry of Tourism</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Projects by Category</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-proj-cats" height="200"></canvas></div><div class="chart-foot">Source: Ministry of Tourism</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Investment by Category (₹Cr)</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-proj-invest" height="200"></canvas></div><div class="chart-foot">Source: Ministry of Tourism</div></div>
+    </div>
+    <div class="chart-card"><div class="chart-head"><p class="chart-title">Project Tracker</p></div><div style="overflow-x:auto"><table class="data-table" id="t-projects"><thead><tr><th>Project</th><th>Scheme</th><th>State</th><th>Category</th><th style="text-align:right">₹Crore</th><th>Status</th></tr></thead><tbody id="tb-projects"></tbody></table></div><div class="chart-foot">Source: Ministry of Tourism — Swadesh Darshan &amp; PRASHAD</div></div>
+  </div>
+</div></div>
+</div>
+
+<!-- ════ SUSTAINABILITY ════ -->
+<div id="p-sustainability" class="page-section" style="display:none">
+<div class="section dark"><div class="container"><p class="sec-label">Sustainable Tourism</p><h2 class="sec-title">Can Tourism Grow Sustainably?</h2><p class="sec-desc">Protected areas, eco-tourism, tourism pressure and government sustainability initiatives. Derived metrics clearly labeled.</p></div></div>
+<div class="section"><div class="container">
+  <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:28px">
+    <div class="kpi-card"><p class="kpi-label">National Parks</p><p class="kpi-val">106</p><p class="kpi-chg">Protected areas</p><p class="kpi-src">MoEFCC · 2023</p></div>
+    <div class="kpi-card"><p class="kpi-label">Wildlife Sanctuaries</p><p class="kpi-val">551</p><p class="kpi-chg">Designated</p><p class="kpi-src">MoEFCC · 2023</p></div>
+    <div class="kpi-card"><p class="kpi-label">Tiger Reserves</p><p class="kpi-val">54</p><p class="kpi-chg">Project Tiger</p><p class="kpi-src">NTCA / MoEFCC · 2023</p></div>
+    <div class="kpi-card"><p class="kpi-label">Ramsar Wetland Sites</p><p class="kpi-val">75</p><p class="kpi-chg">Ramsar designated</p><p class="kpi-src">MoEFCC · 2023</p></div>
+  </div>
+  <div class="tab-nav" id="sust-tabs">
+    <button class="tab-btn active" onclick="tab('sust-tabs','sp2-pressure',this)">Pressure Index</button>
+    <button class="tab-btn" onclick="tab('sust-tabs','sp2-protected',this)">Protected Areas</button>
+    <button class="tab-btn" onclick="tab('sust-tabs','sp2-radar',this)">Sustainability Radar</button>
+  </div>
+  <div id="sp2-pressure" class="tab-panel active">
+    <div style="background:rgba(200,168,75,.07);border:1px solid rgba(200,168,75,.25);border-radius:6px;padding:12px 16px;margin-bottom:16px;font-size:.82rem;color:var(--text2)"><i class="fas fa-circle-info" style="color:var(--gold);margin-right:8px"></i><strong style="color:var(--text)">Derived Metric.</strong> Tourism Pressure Index = visitor volume / (area × population). Not an official government metric.</div>
+    <div class="chart-grid-eq">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Tourism Pressure Index by State</p></div><span class="badge der">Derived</span></div><div class="chart-body"><canvas id="c-pressure" height="280"></canvas></div><div class="chart-foot">Source: Derived from Ministry of Tourism · Not official · 2022</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Visitors vs State Area</p></div><span class="badge der">Derived</span></div><div class="chart-body"><canvas id="c-pressure-scatter" height="280"></canvas></div><div class="chart-foot">Source: Ministry of Tourism / Census · Derived</div></div>
+    </div>
+  </div>
+  <div id="sp2-protected" class="tab-panel">
+    <div class="g3">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Protected Area Network</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-pa2" height="220"></canvas></div><div class="chart-foot">Source: MoEFCC · 2023</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Tiger Reserve Growth</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-tiger2" height="220"></canvas></div><div class="chart-foot">Source: NTCA · Project Tiger</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Ramsar Sites Growth</p></div><span class="badge off">Official</span></div><div class="chart-body"><canvas id="c-ramsar" height="220"></canvas></div><div class="chart-foot">Source: MoEFCC / Ramsar · 2023</div></div>
+    </div>
+  </div>
+  <div id="sp2-radar" class="tab-panel">
+    <div class="chart-grid-eq">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Sustainability Radar — Top States</p></div><span class="badge der">Derived</span></div><div class="chart-body"><canvas id="c-sust-radar" height="320"></canvas></div><div class="chart-foot">Source: Derived from MoEFCC / Ministry of Tourism · Not official index</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Eco-tourism Destination Types</p></div><span class="badge der">Derived</span></div><div class="chart-body"><canvas id="c-eco-types" height="320"></canvas></div><div class="chart-foot">Source: Ministry of Tourism / Swadesh Darshan circuits</div></div>
+    </div>
+  </div>
+</div></div>
+</div>
+
+<!-- ════ INSIGHTS ════ -->
+<div id="p-insights" class="page-section" style="display:none">
+<div class="section dark"><div class="container"><p class="sec-label">Analytical Intelligence</p><h2 class="sec-title">Tourism Insights &amp; Opportunities</h2><p class="sec-desc">Concentration, emerging destinations and opportunity analysis. Derived metrics use transparent methodology.</p></div></div>
+<div class="section"><div class="container">
+  <div class="tab-nav" id="ins-tabs">
+    <button class="tab-btn active" onclick="tab('ins-tabs','ip2-conc',this)">Concentration</button>
+    <button class="tab-btn" onclick="tab('ins-tabs','ip2-emerg',this)">Emerging Dests.</button>
+    <button class="tab-btn" onclick="tab('ins-tabs','ip2-opp',this)">Opportunity</button>
+    <button class="tab-btn" onclick="tab('ins-tabs','ip2-season',this)">Seasonality</button>
+  </div>
+  <div id="ip2-conc" class="tab-panel active">
+    <div class="chart-grid-eq">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">State Tourism Share (Pareto)</p></div><span class="badge der">Derived</span></div><div class="chart-body"><canvas id="c-pareto" height="260"></canvas></div><div class="chart-foot">Source: Ministry of Tourism · 2022 · Derived share</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">State Share Distribution</p></div><span class="badge der">Derived</span></div><div class="chart-body"><canvas id="c-treemap" height="260"></canvas></div><div class="chart-foot">Source: Ministry of Tourism · Derived · 2022</div></div>
+    </div>
+  </div>
+  <div id="ip2-emerg" class="tab-panel">
+    <div style="background:rgba(232,119,10,.07);border:1px solid rgba(232,119,10,.25);border-radius:6px;padding:12px 16px;margin-bottom:16px;font-size:.82rem;color:var(--text2)"><i class="fas fa-circle-info" style="color:var(--saffron);margin-right:8px"></i><strong style="color:var(--text)">Methodology:</strong> Emerging destinations selected using growth, heritage assets and infrastructure variables. <strong>Analytical labels</strong> — not official government designations.</div>
+    <div class="chart-grid-eq" style="margin-bottom:16px">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Growth vs Volume Scatter</p></div><span class="badge der">Derived</span></div><div class="chart-body"><canvas id="c-emerg-scatter" height="280"></canvas></div><div class="chart-foot">Source: Ministry of Tourism · Derived analytical view</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Emerging Destination Radar</p></div><span class="badge der">Derived</span></div><div class="chart-body"><canvas id="c-emerg-radar" height="280"></canvas></div><div class="chart-foot">Source: Derived analytical metric · Not official scoring</div></div>
+    </div>
+    <div id="emerg-cards" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px"></div>
+  </div>
+  <div id="ip2-opp" class="tab-panel">
+    <div class="chart-grid-eq">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Opportunity Quadrant</p><p class="chart-sub">X = visitors · Y = infra score (derived)</p></div><span class="badge der">Derived</span></div><div class="chart-body"><canvas id="c-quadrant" height="340"></canvas></div><div class="chart-foot">Source: Derived from Ministry of Tourism · Not official · 2022</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Opportunity Bubble</p><p class="chart-sub">X = visitors · Y = infra · Bubble = FTA</p></div><span class="badge der">Derived</span></div><div class="chart-body"><canvas id="c-opp-bubble" height="340"></canvas></div><div class="chart-foot">Source: Derived composite metric · 2022</div></div>
+    </div>
+  </div>
+  <div id="ip2-season" class="tab-panel">
+    <div class="chart-grid-eq">
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Monthly Tourism Pattern</p></div><span class="badge der">Derived</span></div><div class="chart-body"><canvas id="c-season-line" height="260"></canvas></div><div class="chart-foot">Source: India Tourism Statistics 2023 · Derived seasonal index</div></div>
+      <div class="chart-card"><div class="chart-head"><div><p class="chart-title">Quarterly Distribution</p></div><span class="badge der">Derived</span></div><div class="chart-body"><canvas id="c-season-q" height="260"></canvas></div><div class="chart-foot">Source: Ministry of Tourism · Quarterly pattern</div></div>
+    </div>
+  </div>
+</div></div>
+</div>
+
+<!-- ════ DATA LAB ════ -->
+<div id="p-datalab" class="page-section" style="display:none">
+<div class="section dark"><div class="container"><p class="sec-label">Data Exploration</p><h2 class="sec-title">Data Lab</h2><p class="sec-desc">Explore, filter, compare and export India tourism data. All data from official government reports.</p></div></div>
+<div class="section"><div class="container">
+  <div class="tab-nav" id="dl-tabs">
+    <button class="tab-btn active" onclick="tab('dl-tabs','dl-explore',this)">Explore</button>
+    <button class="tab-btn" onclick="tab('dl-tabs','dl-compare',this)">Compare</button>
+    <button class="tab-btn" onclick="tab('dl-tabs','dl-method',this)">Methodology</button>
+  </div>
+  <div id="dl-explore" class="tab-panel active">
+    <div class="lab-layout">
+      <div class="fpanel">
+        <label>Dataset</label>
+        <select class="fsel" id="dl-dataset" onchange="dlApply()">
+          <option value="national">National Tourism</option>
+          <option value="states">State-wise Tourism</option>
+          <option value="countries">Source Countries</option>
+          <option value="economy">Tourism Economy</option>
+        </select>
+        <label>Chart Type</label>
+        <select class="fsel" id="dl-chart" onchange="dlApply()">
+          <option value="line">Line</option>
+          <option value="bar">Bar</option>
+          <option value="area">Area</option>
+        </select>
+        <div style="display:flex;gap:8px;margin-top:4px">
+          <button class="fbtn" onclick="dlApply()">Apply</button>
+          <button class="rbtn" onclick="dlReset()">Reset</button>
+        </div>
+        <div style="border-top:1px solid var(--border);margin-top:16px;padding-top:14px">
+          <button class="rbtn" style="width:100%;margin-bottom:8px" onclick="dlExportCSV()"><i class="fas fa-download"></i> Export CSV</button>
+          <button class="rbtn" style="width:100%" onclick="dlExportChart()"><i class="fas fa-image"></i> Export Chart</button>
+        </div>
+      </div>
+      <div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px" id="dl-stats"></div>
+        <div class="chart-card" style="margin-bottom:16px">
+          <div class="chart-head"><div><p class="chart-title" id="dl-title">National Tourism Trends</p></div><span class="badge off" id="dl-badge">Official</span></div>
+          <div class="chart-body"><canvas id="c-dl-main" height="300"></canvas></div>
+          <div class="chart-foot" id="dl-src">Source: Ministry of Tourism, GoI · Reserve Bank of India</div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-head"><div><p class="chart-title">Data Table</p></div><button class="rbtn" style="font-size:.68rem;padding:4px 10px" onclick="dlExportCSV()"><i class="fas fa-download"></i> CSV</button></div>
+          <div style="overflow-x:auto"><table class="data-table" id="dl-table"><thead id="dl-thead"></thead><tbody id="dl-tbody"></tbody></table></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="dl-compare" class="tab-panel">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+      <div><label style="font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:5px">Compare Type</label><select class="fsel" style="width:100%" id="cmp-type" onchange="cmpPopulate()"><option value="states">State vs State</option><option value="years">Year vs Year</option></select></div>
+      <div><label style="font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:5px">Metric</label><select class="fsel" style="width:100%" id="cmp-metric" onchange="cmpRun()"><option value="dtv">Domestic Visits</option><option value="fta">Foreign Arrivals</option><option value="forex">Forex Earnings</option></select></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:end;margin-bottom:20px">
+      <div><label style="font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:5px">Entity A</label><select class="fsel" style="width:100%" id="cmp-a" onchange="cmpRun()"></select></div>
+      <span style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--text2);padding-bottom:8px">vs</span>
+      <div><label style="font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:5px">Entity B</label><select class="fsel" style="width:100%" id="cmp-b" onchange="cmpRun()"></select></div>
+    </div>
+    <div class="chart-grid-eq" style="margin-bottom:16px">
+      <div class="chart-card"><div class="chart-head"><p class="chart-title" id="cmp-t1">Comparison</p></div><div class="chart-body"><canvas id="c-cmp-1" height="260"></canvas></div><div class="chart-foot">Source: Ministry of Tourism, GoI</div></div>
+      <div class="chart-card"><div class="chart-head"><p class="chart-title" id="cmp-t2">Trend</p></div><div class="chart-body"><canvas id="c-cmp-2" height="260"></canvas></div><div class="chart-foot">Source: Ministry of Tourism, GoI</div></div>
+    </div>
+    <div id="cmp-summary" style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:20px 24px"></div>
+  </div>
+  <div id="dl-method" class="tab-panel">
+    <div class="chart-grid-eq">
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:22px">
+        <p class="sec-label" style="margin-bottom:16px">Primary Sources</p>
+        <div class="src-box"><p style="font-size:.82rem;font-weight:600;color:var(--text);margin-bottom:2px">Ministry of Tourism, GoI</p><p style="font-size:.72rem;color:var(--text2)">Annual Reports, India Tourism Statistics 2023</p></div>
+        <div class="src-box"><p style="font-size:.82rem;font-weight:600;color:var(--text);margin-bottom:2px">Bureau of Immigration, GoI</p><p style="font-size:.72rem;color:var(--text2)">FTA data, Gateway-wise statistics</p></div>
+        <div class="src-box"><p style="font-size:.82rem;font-weight:600;color:var(--text);margin-bottom:2px">Reserve Bank of India</p><p style="font-size:.72rem;color:var(--text2)">Foreign Exchange Earnings from Tourism</p></div>
+        <div class="src-box"><p style="font-size:.82rem;font-weight:600;color:var(--text);margin-bottom:2px">ASI / UNESCO WHC</p><p style="font-size:.72rem;color:var(--text2)">Monument visitors, Heritage site classifications</p></div>
+        <div class="src-box"><p style="font-size:.82rem;font-weight:600;color:var(--text);margin-bottom:2px">WTTC India 2023</p><p style="font-size:.72rem;color:var(--text2)">GDP contribution, Employment figures</p></div>
+        <div class="src-box"><p style="font-size:.82rem;font-weight:600;color:var(--text);margin-bottom:2px">MoEFCC / NTCA</p><p style="font-size:.72rem;color:var(--text2)">Protected areas, Tiger reserves</p></div>
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:22px">
+        <p class="sec-label" style="margin-bottom:14px">Data Classification</p>
+        <div style="padding:12px;background:rgba(64,145,108,.06);border-left:3px solid var(--pos);border-radius:4px;margin-bottom:10px"><p style="font-size:.72rem;font-weight:700;color:var(--pos);margin-bottom:3px">OFFICIAL DATA</p><p style="font-size:.78rem;color:var(--text2);line-height:1.5">Directly from government sources. Source and year always cited.</p></div>
+        <div style="padding:12px;background:rgba(200,168,75,.06);border-left:3px solid var(--gold);border-radius:4px;margin-bottom:10px"><p style="font-size:.72rem;font-weight:700;color:var(--gold);margin-bottom:3px">DERIVED METRIC</p><p style="font-size:.78rem;color:var(--text2);line-height:1.5">Calculated from official data with transparent formula. Methodology always stated.</p></div>
+        <div style="padding:12px;background:rgba(154,148,144,.06);border-left:3px solid var(--text3);border-radius:4px;margin-bottom:20px"><p style="font-size:.72rem;font-weight:700;color:var(--text2);margin-bottom:3px">ILLUSTRATIVE</p><p style="font-size:.78rem;color:var(--text2);line-height:1.5">Used only when data is unavailable. Always clearly labeled.</p></div>
+        <p class="sec-label" style="margin-bottom:12px">Key Metrics</p>
+        <div style="border-top:1px solid var(--border)">
+          <div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="font-size:.7rem;font-weight:700;color:var(--saffron);min-width:76px">FTA</span><span style="font-size:.78rem;color:var(--text2)">Foreign Tourist Arrivals — visitors crossing international borders</span></div>
+          <div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="font-size:.7rem;font-weight:700;color:var(--saffron);min-width:76px">DTV</span><span style="font-size:.78rem;color:var(--text2)">Domestic Tourist Visits — not unique visitors</span></div>
+          <div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="font-size:.7rem;font-weight:700;color:var(--saffron);min-width:76px">Forex</span><span style="font-size:.78rem;color:var(--text2)">Foreign Exchange Earnings — reported by RBI</span></div>
+          <div style="display:flex;gap:10px;padding:8px 0"><span style="font-size:.7rem;font-weight:700;color:var(--saffron);min-width:76px">GDP %</span><span style="font-size:.78rem;color:var(--text2)">Total tourism (direct+indirect) as % of GDP — WTTC methodology</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+</div>
+
+<!-- FOOTER -->
+<footer style="background:var(--bg2);border-top:1px solid var(--border);padding:40px 0 28px">
+  <div class="container" style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:24px">
+    <div><p style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:900;margin-bottom:4px">INDIA IN MOTION</p><p style="font-size:.62rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)">People. Places. Movement. Economy.</p><p style="font-size:.78rem;color:var(--text3);margin-top:10px;max-width:340px;line-height:1.6">Independent data visualization project. All official statistics cited with source and year.</p></div>
+    <p style="font-size:.68rem;color:var(--text3);line-height:1.6;max-width:560px"><strong style="color:var(--text2)">Disclaimer:</strong> India in Motion is an independent portfolio and educational project. Not affiliated with any government agency. Official statistics sourced from Ministry of Tourism, GoI and other cited sources. Derived analytical metrics are clearly labeled.</p>
+  </div>
+</footer>
+
+</div><!-- /page -->
+
+<script>
+/* ══ ALL DATA INLINE ══ */
+var D = {
+  nat: {
+    yearly:[
+      {y:2013,fta:6.97,dtv:1145,fx:18.4,gdp:6.8,emp:37.4},{y:2014,fta:7.68,dtv:1282,fx:20.2,gdp:7.0,emp:38.4},
+      {y:2015,fta:8.03,dtv:1431,fx:21.1,gdp:7.1,emp:39.3},{y:2016,fta:8.80,dtv:1615,fx:22.9,gdp:7.3,emp:40.3},
+      {y:2017,fta:10.18,dtv:1657,fx:27.3,gdp:7.7,emp:41.6},{y:2018,fta:10.56,dtv:1854,fx:28.7,gdp:8.0,emp:42.7},
+      {y:2019,fta:10.93,dtv:2321,fx:30.1,gdp:6.8,emp:75.0},{y:2020,fta:2.74,dtv:610,fx:6.9,gdp:4.7,emp:62.6},
+      {y:2021,fta:1.52,dtv:677,fx:8.8,gdp:5.8,emp:68.9},{y:2022,fta:6.19,dtv:1447,fx:14.0,gdp:7.1,emp:77.2},
+      {y:2023,fta:9.24,dtv:2005,fx:22.9,gdp:7.6,emp:80.0}
+    ]
+  },
+  countries: [
+    {r:1,c:'Bangladesh',cont:'Asia',arr:1993.1,shr:32.2,prev:242.3},{r:2,c:'USA',cont:'Americas',arr:631.4,shr:10.2,prev:259.9},
+    {r:3,c:'UK',cont:'Europe',arr:453.1,shr:7.3,prev:181.0},{r:4,c:'Australia',cont:'Oceania',arr:198.6,shr:3.2,prev:70.4},
+    {r:5,c:'Canada',cont:'Americas',arr:188.9,shr:3.0,prev:60.3},{r:6,c:'Germany',cont:'Europe',arr:155.2,shr:2.5,prev:51.2},
+    {r:7,c:'Sri Lanka',cont:'Asia',arr:148.6,shr:2.4,prev:12.1},{r:8,c:'Malaysia',cont:'Asia',arr:134.4,shr:2.2,prev:13.3},
+    {r:9,c:'France',cont:'Europe',arr:123.1,shr:2.0,prev:43.5},{r:10,c:'Nepal',cont:'Asia',arr:118.4,shr:1.9,prev:8.4},
+    {r:11,c:'China',cont:'Asia',arr:85.6,shr:1.4,prev:1.2},{r:12,c:'UAE',cont:'Middle East',arr:80.4,shr:1.3,prev:26.8},
+    {r:13,c:'Singapore',cont:'Asia',arr:75.3,shr:1.2,prev:20.1},{r:14,c:'Italy',cont:'Europe',arr:72.1,shr:1.2,prev:24.3},
+    {r:15,c:'Japan',cont:'Asia',arr:68.9,shr:1.1,prev:8.2}
+  ],
+  continents:[
+    {n:'Asia',v:2792.4},{n:'Europe',v:1110.2},{n:'Americas',v:879.3},{n:'Middle East',v:370.1},{n:'Africa',v:207.8},{n:'Oceania',v:221.4}
+  ],
+  states:[
+    {n:'Uttar Pradesh',dtv:321.6,dtv19:540.1,fta:2.3,fta19:4.5,gr:121.9,cats:['Heritage','Spiritual'],dests:['Agra','Varanasi','Mathura'],tag:'The Land of Heritage'},
+    {n:'Tamil Nadu',dtv:225.3,dtv19:348.6,fta:0.66,fta19:0.91,gr:155.8,cats:['Heritage','Spiritual','Beach'],dests:['Chennai','Madurai','Ooty'],tag:'The Land of Temples'},
+    {n:'Andhra Pradesh',dtv:166.7,dtv19:265.4,fta:0.35,fta19:0.52,gr:130.2,cats:['Spiritual','Heritage'],dests:['Tirupati','Vijayawada'],tag:'The Sunrise State'},
+    {n:'Karnataka',dtv:155.6,dtv19:175.1,fta:1.22,fta19:1.48,gr:118.4,cats:['Heritage','Nature','Wildlife'],dests:['Mysore','Hampi','Coorg'],tag:'One State Many Worlds'},
+    {n:'Maharashtra',dtv:121.0,dtv19:155.6,fta:1.89,fta19:2.36,gr:109.3,cats:['Cultural','Heritage','Beach'],dests:['Mumbai','Pune','Aurangabad'],tag:'Unlimited'},
+    {n:'Madhya Pradesh',dtv:97.4,dtv19:116.5,fta:0.58,fta19:0.85,gr:141.9,cats:['Heritage','Wildlife'],dests:['Khajuraho','Bhopal','Ujjain'],tag:'Heart of Incredible India'},
+    {n:'Rajasthan',dtv:76.6,dtv19:118.0,fta:1.26,fta19:1.61,gr:101.4,cats:['Heritage','Cultural'],dests:['Jaipur','Udaipur','Jodhpur'],tag:'Padharo Mhare Desh'},
+    {n:'West Bengal',dtv:72.2,dtv19:91.4,fta:1.28,fta19:1.58,gr:122.7,cats:['Cultural','Nature'],dests:['Kolkata','Darjeeling','Sundarbans'],tag:'Biswa Bangla'},
+    {n:'Kerala',dtv:63.0,dtv19:173.6,fta:0.47,fta19:1.22,gr:167.2,cats:['Nature','Wellness','Beach'],dests:['Kochi','Munnar','Alleppey'],tag:"God's Own Country"},
+    {n:'Gujarat',dtv:55.6,dtv19:65.6,fta:0.54,fta19:0.72,gr:96.0,cats:['Heritage','Wildlife'],dests:['Ahmedabad','Rann of Kutch','Gir'],tag:'Vibrant Gujarat'},
+    {n:'Odisha',dtv:50.7,dtv19:63.1,fta:0.14,fta19:0.17,gr:113.0,cats:['Spiritual','Heritage','Beach'],dests:['Puri','Bhubaneswar','Konark'],tag:'Incredible Odisha'},
+    {n:'Uttarakhand',dtv:38.4,dtv19:43.7,fta:0.16,fta19:0.24,gr:92.5,cats:['Spiritual','Nature','Adventure'],dests:['Haridwar','Rishikesh','Mussoorie'],tag:'Simply Heaven'},
+    {n:'Bihar',dtv:40.4,dtv19:49.3,fta:0.64,fta19:0.76,gr:130.0,cats:['Spiritual','Heritage'],dests:['Patna','Bodh Gaya','Nalanda'],tag:'Blissful Bihar'},
+    {n:'Delhi',dtv:18.2,dtv19:19.8,fta:2.94,fta19:3.43,gr:97.8,cats:['Heritage','Cultural'],dests:['Red Fort','Qutub Minar','India Gate'],tag:'Dil Walon Ki Delhi'},
+    {n:'Himachal Pradesh',dtv:19.1,dtv19:17.0,fta:0.13,fta19:0.21,gr:71.0,cats:['Nature','Adventure'],dests:['Shimla','Manali','Dharamsala'],tag:'Himachal — Unforgettable'},
+    {n:'Goa',dtv:7.4,dtv19:9.3,fta:0.72,fta19:0.84,gr:132.1,cats:['Beach','Heritage'],dests:['Panaji','Calangute','Old Goa'],tag:'Go Goa'},
+    {n:'Assam',dtv:8.6,dtv19:9.2,fta:0.06,fta19:0.08,gr:82.5,cats:['Wildlife','Nature'],dests:['Guwahati','Kaziranga','Manas'],tag:'Flavours of Assam'},
+    {n:'Punjab',dtv:16.2,dtv19:21.4,fta:0.26,fta19:0.35,gr:86.4,cats:['Spiritual','Heritage'],dests:['Amritsar','Chandigarh'],tag:"Punjab: India's Heartland"}
+  ],
+  destinations:[
+    {id:'agra',n:'Agra',s:'Uttar Pradesh',cat:'Heritage',key:'Taj Mahal',dom:6.1,for:0.62,peak:['Oct','Nov','Dec','Feb'],trend:[4.2,5.8,7.4,0.8,1.2,6.7],desc:'Home to the Taj Mahal, Agra Fort and Fatehpur Sikri — all UNESCO World Heritage Sites.'},
+    {id:'varanasi',n:'Varanasi',s:'Uttar Pradesh',cat:'Spiritual',key:'Kashi Vishwanath',dom:7.2,for:0.28,peak:['Oct','Nov','Dec','Jan'],trend:[5.8,6.5,8.1,0.9,1.4,7.5],desc:'One of the world\'s oldest inhabited cities — major pilgrimage destination on the Ganges.'},
+    {id:'jaipur',n:'Jaipur',s:'Rajasthan',cat:'Heritage',key:'Amber Fort',dom:3.8,for:0.46,peak:['Oct','Nov','Dec','Jan'],trend:[3.2,3.5,4.2,0.4,0.7,4.3],desc:'The Pink City — Amber Fort, Hawa Mahal, City Palace and Jantar Mantar.'},
+    {id:'goa',n:'Goa',s:'Goa',cat:'Beach',key:'Calangute Beach',dom:6.9,for:0.72,peak:['Nov','Dec','Jan','Feb'],trend:[6.5,7.2,8.4,0.7,1.4,7.6],desc:"India's premier beach destination — beaches, Portuguese heritage and vibrant culture."},
+    {id:'kerala',n:'Kerala Backwaters',s:'Kerala',cat:'Nature',key:'Alleppey Backwaters',dom:4.2,for:0.38,peak:['Sep','Oct','Nov','Dec'],trend:[3.8,4.2,5.1,0.3,0.6,4.6],desc:'Famous for backwater houseboat experiences and Ayurveda wellness retreats.'},
+    {id:'hampi',n:'Hampi',s:'Karnataka',cat:'Heritage',key:'Virupaksha Temple',dom:2.1,for:0.12,peak:['Oct','Nov','Dec','Jan'],trend:[1.6,1.8,2.3,0.1,0.3,2.2],desc:'UNESCO World Heritage Site — ruins of the Vijayanagara Empire.'},
+    {id:'bodh-gaya',n:'Bodh Gaya',s:'Bihar',cat:'Spiritual',key:'Mahabodhi Temple',dom:1.8,for:0.32,peak:['Oct','Nov','Dec','Jan'],trend:[1.4,1.6,1.9,0.1,0.2,2.1],desc:'UNESCO World Heritage Site — the place of Buddha\'s enlightenment.'},
+    {id:'kaziranga',n:'Kaziranga',s:'Assam',cat:'Wildlife',key:'Kaziranga NP',dom:0.28,for:0.02,peak:['Nov','Dec','Jan','Feb'],trend:[0.18,0.21,0.26,0.01,0.04,0.30],desc:'UNESCO World Heritage Site — home to world\'s largest population of one-horned rhinos.'},
+    {id:'amritsar',n:'Amritsar',s:'Punjab',cat:'Spiritual',key:'Golden Temple',dom:7.8,for:0.22,peak:['Oct','Nov','Dec','Apr'],trend:[6.2,6.8,8.0,0.5,1.1,8.0],desc:'Home to the Golden Temple — holiest shrine of Sikhism.'},
+    {id:'manali',n:'Manali',s:'Himachal Pradesh',cat:'Adventure',key:'Rohtang Pass',dom:2.6,for:0.06,peak:['May','Jun','Jul','Dec'],trend:[2.0,2.2,2.8,0.1,0.3,2.7],desc:'High-altitude resort town — gateway to Rohtang Pass and Lahaul valley.'},
+    {id:'rishikesh',n:'Rishikesh',s:'Uttarakhand',cat:'Spiritual',key:'Laxman Jhula',dom:3.4,for:0.08,peak:['Feb','Mar','Apr','Sep'],trend:[2.8,3.0,3.6,0.2,0.4,3.5],desc:'The Yoga Capital of the World — gateway to Char Dham pilgrimage.'},
+    {id:'konark',n:'Konark',s:'Odisha',cat:'Heritage',key:'Sun Temple',dom:2.4,for:0.04,peak:['Oct','Nov','Dec','Jan'],trend:[1.8,2.0,2.6,0.1,0.3,2.4],desc:'UNESCO World Heritage Site — the 13th-century Sun Temple.'}
+  ],
+  economy:{
+    forex:[
+      {y:2013,usd:18.4},{y:2014,usd:20.2},{y:2015,usd:21.1},{y:2016,usd:22.9},
+      {y:2017,usd:27.3},{y:2018,usd:28.7},{y:2019,usd:30.1},{y:2020,usd:6.9},
+      {y:2021,usd:8.8},{y:2022,usd:14.0},{y:2023,usd:22.9}
+    ],
+    gdp:[
+      {y:2013,tot:6.8,dir:2.7,dinr:3240},{y:2014,tot:7.0,dir:2.8,dinr:3580},{y:2015,tot:7.1,dir:2.9,dinr:3920},
+      {y:2016,tot:7.3,dir:3.0,dinr:4280},{y:2017,tot:7.7,dir:3.1,dinr:4810},{y:2018,tot:8.0,dir:3.2,dinr:5360},
+      {y:2019,tot:6.8,dir:2.7,dinr:4860},{y:2020,tot:4.7,dir:1.9,dinr:2940},{y:2021,tot:5.8,dir:2.3,dinr:3820},
+      {y:2022,tot:7.1,dir:2.9,dinr:5420},{y:2023,tot:7.6,dir:3.1,dinr:6290}
+    ],
+    emp:[
+      {y:2013,tot:37.4,dir:19.8},{y:2014,tot:38.4,dir:20.4},{y:2015,tot:39.3,dir:20.9},
+      {y:2016,tot:40.3,dir:21.4},{y:2017,tot:41.6,dir:22.1},{y:2018,tot:42.7,dir:22.7},
+      {y:2019,tot:75.0,dir:39.5},{y:2020,tot:62.6,dir:33.1},{y:2021,tot:68.9,dir:36.4},
+      {y:2022,tot:77.2,dir:40.8},{y:2023,tot:80.0,dir:42.2}
+    ],
+    gateways:[
+      {n:'Delhi',v:2241.4,s:36.2},{n:'Mumbai',v:1178.3,s:19.0},{n:'Chennai',v:612.4,s:9.9},
+      {n:'Bengaluru',v:521.8,s:8.4},{n:'Hyderabad',v:248.2,s:4.0},{n:'Kolkata',v:245.0,s:4.0},
+      {n:'Kochi',v:218.9,s:3.5},{n:'Others',v:817.5,s:13.2}
+    ]
+  },
+  heritage:{
+    monuments:[
+      {n:'Taj Mahal',dom:5.81,for:0.62},{n:'Red Fort',dom:4.24,for:0.29},{n:'Qutub Minar',dom:3.84,for:0.31},
+      {n:'Agra Fort',dom:3.12,for:0.28},{n:'Humayun Tomb',dom:1.84,for:0.20},{n:'Sun Temple Konark',dom:2.28,for:0.04},
+      {n:'Khajuraho',dom:0.82,for:0.08},{n:'Fatehpur Sikri',dom:1.52,for:0.16}
+    ],
+    asiTrend:[
+      {y:2017,dom:176.2,for:5.4},{y:2018,dom:183.6,for:5.7},{y:2019,dom:195.1,for:6.3},
+      {y:2020,dom:40.2,for:0.8},{y:2021,dom:58.4,for:0.4},{y:2022,dom:163.2,for:4.1}
+    ]
+  },
+  infrastructure:{
+    hotels:[
+      {cat:'5★+',h:341,r:83000},{cat:'4★',h:385,r:56400},{cat:'3★',h:1840,r:148200},
+      {cat:'2★',h:1927,r:94800},{cat:'1★',h:780,r:26400},{cat:'Heritage',h:128,r:5940},{cat:'Approved',h:5135,r:608200}
+    ],
+    hotelTrend:[{y:2017,h:8032},{y:2018,h:8641},{y:2019,h:9338},{y:2020,h:9158},{y:2021,h:9403},{y:2022,h:10536}],
+    airports:[
+      {n:'Delhi',v:59.5},{n:'Mumbai',v:45.8},{n:'Bengaluru',v:33.2},{n:'Hyderabad',v:21.6},
+      {n:'Chennai',v:20.4},{n:'Kolkata',v:14.6},{n:'Kochi',v:11.6},{n:'Ahmedabad',v:10.2}
+    ],
+    stateHotels:[
+      {s:'Maharashtra',h:2140,ap:14},{s:'Uttar Pradesh',h:1820,ap:9},{s:'Tamil Nadu',h:1480,ap:4},
+      {s:'Rajasthan',h:1620,ap:8},{s:'Karnataka',h:1380,ap:7},{s:'Kerala',h:1240,ap:3},
+      {s:'Gujarat',h:900,ap:5},{s:'Goa',h:840,ap:2}
+    ]
+  },
+  projects:[
+    {n:'Ramayana Circuit',sc:'Swadesh Darshan',st:'Uttar Pradesh',cat:'Spiritual',inv:185,status:'Completed'},
+    {n:'Buddhist Circuit',sc:'Swadesh Darshan',st:'Bihar',cat:'Spiritual',inv:325,status:'Completed'},
+    {n:'Wildlife Circuit',sc:'Swadesh Darshan',st:'Madhya Pradesh',cat:'Wildlife',inv:98,status:'Completed'},
+    {n:'North East Discovery',sc:'Swadesh Darshan',st:'Assam',cat:'Eco-Tourism',inv:56,status:'Ongoing'},
+    {n:'Himalayan Circuit HP',sc:'Swadesh Darshan',st:'Himachal Pradesh',cat:'Adventure',inv:142,status:'Completed'},
+    {n:'Coastal Circuit Kerala',sc:'Swadesh Darshan',st:'Kerala',cat:'Beach',inv:116,status:'Completed'},
+    {n:'Heritage Rajasthan',sc:'Swadesh Darshan',st:'Rajasthan',cat:'Heritage',inv:98,status:'Ongoing'},
+    {n:'Tirupati PRASHAD',sc:'PRASHAD',st:'Andhra Pradesh',cat:'Spiritual',inv:48,status:'Completed'},
+    {n:'Varanasi PRASHAD',sc:'PRASHAD',st:'Uttar Pradesh',cat:'Spiritual',inv:89,status:'Completed'},
+    {n:'Puri PRASHAD',sc:'PRASHAD',st:'Odisha',cat:'Spiritual',inv:52,status:'Completed'},
+    {n:'Amritsar PRASHAD',sc:'PRASHAD',st:'Punjab',cat:'Spiritual',inv:44,status:'Completed'},
+    {n:'Tribal Circuit Odisha',sc:'Swadesh Darshan',st:'Odisha',cat:'Tribal',inv:68,status:'Ongoing'},
+    {n:'Rural Circuit Gujarat',sc:'Swadesh Darshan',st:'Gujarat',cat:'Rural',inv:42,status:'Planned'},
+    {n:'Adventure HP-2',sc:'Swadesh Darshan 2.0',st:'Himachal Pradesh',cat:'Adventure',inv:96,status:'Ongoing'},
+    {n:'Eco Circuit W.Ghats',sc:'Swadesh Darshan 2.0',st:'Karnataka',cat:'Eco-Tourism',inv:78,status:'Planned'}
+  ],
+  sustainability:{
+    pressure:[
+      {s:'Goa',v:7.4,area:3702,pop:1.6,idx:9.2},{s:'Delhi',v:18.2,area:1484,pop:20.0,idx:8.4},
+      {s:'Tamil Nadu',v:225.3,area:130058,pop:77.8,idx:7.8},{s:'Uttar Pradesh',v:321.6,area:240928,pop:241.5,idx:7.1},
+      {s:'Kerala',v:63.0,area:38852,pop:35.7,idx:7.4},{s:'Uttarakhand',v:38.4,area:53483,pop:11.1,idx:6.9},
+      {s:'Himachal Pradesh',v:19.1,area:55673,pop:7.5,idx:6.8},{s:'Karnataka',v:155.6,area:191791,pop:67.6,idx:6.2},
+      {s:'Rajasthan',v:76.6,area:342239,pop:81.0,idx:5.8},{s:'Maharashtra',v:121.0,area:307713,pop:126.4,idx:5.2}
+    ]
+  }
+};
+
+/* ══ PALETTE & CHART HELPERS ══ */
+var PAL=['#E8770A','#C8A84B','#40916C','#7B9EA6','#B5470B','#A67C52','#5C7C6A','#DFC06A','#E8B34B','#6B9E8A'];
+var TOOLTIP={backgroundColor:'#1C2028',borderColor:'rgba(200,168,75,.25)',borderWidth:1,titleColor:'#E8E6E0',bodyColor:'#9A9490',titleFont:{family:"'Playfair Display',serif",size:13},bodyFont:{family:"'Inter',sans-serif",size:11},padding:12,cornerRadius:6};
+var LEGEND_OFF={display:false};
+var LEGEND_ON={display:true,position:'bottom',labels:{color:'#9A9490',font:{family:"'Inter',sans-serif",size:11},boxWidth:10,boxHeight:10,padding:14,usePointStyle:true,pointStyle:'circle'}};
+function sc(){return{grid:{color:'rgba(255,255,255,0.05)',drawTicks:false},border:{display:false},ticks:{color:'#9A9490',font:{family:"'Inter',sans-serif",size:11}}};}
+
+function mk(id,cfg){
+  var el=document.getElementById(id);if(!el)return null;
+  /* destroy any existing chart on this canvas element */
+  var ex=Chart.getChart(id);if(ex)try{ex.destroy();}catch(e){}
+  /* also destroy by canvas element reference in case id lookup differs */
+  var ex2=Chart.getChart(el);if(ex2&&ex2!==ex)try{ex2.destroy();}catch(e){}
+  try{return new Chart(el,cfg);}catch(e){console.error(id,e);return null;}
+}
+
+function line(id,labels,datasets,opts){
+  var ds=datasets.map(function(d,i){var c=d.color||PAL[i%PAL.length];return{label:d.label||'',data:d.data,borderColor:c,backgroundColor:c+(d.fill?'22':'00'),fill:d.fill||false,tension:.35,borderWidth:2,pointRadius:3,pointHoverRadius:6};});
+  var base={type:'line',data:{labels:labels,datasets:ds},options:{responsive:true,maintainAspectRatio:false,animation:{duration:700},plugins:{legend:datasets.length>1?LEGEND_ON:LEGEND_OFF,tooltip:TOOLTIP},scales:{x:sc(),y:sc()}}};
+  if(opts)applyOpts(base.options,opts);
+  return mk(id,base);
+}
+function area(id,labels,datasets,opts){return line(id,labels,datasets.map(function(d){return Object.assign({},d,{fill:true});}),opts);}
+function bar(id,labels,datasets,opts,horiz){
+  var ds=datasets.map(function(d,i){return{label:d.label||'',data:d.data,backgroundColor:d.colors||d.color||PAL[i%PAL.length],borderRadius:3};});
+  var base={type:'bar',data:{labels:labels,datasets:ds},options:{responsive:true,maintainAspectRatio:false,animation:{duration:700},plugins:{legend:datasets.length>1?LEGEND_ON:LEGEND_OFF,tooltip:TOOLTIP},scales:{x:sc(),y:sc()}}};
+  if(horiz)base.options.indexAxis='y';
+  if(opts)applyOpts(base.options,opts);
+  return mk(id,base);
+}
+function hbar(id,labels,datasets,opts){return bar(id,labels,datasets,opts,true);}
+function sbar(id,labels,datasets,opts){
+  var o=opts||{};if(!o.scales)o.scales={};o.scales.x=Object.assign({stacked:true},o.scales.x||{});o.scales.y=Object.assign({stacked:true},o.scales.y||{});
+  return bar(id,labels,datasets,o);
+}
+function donut(id,labels,data,colors){
+  return mk(id,{type:'doughnut',data:{labels:labels,datasets:[{data:data,backgroundColor:colors||PAL,borderColor:'#1A1E26',borderWidth:2,hoverOffset:5}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',animation:{duration:700},plugins:{legend:LEGEND_ON,tooltip:TOOLTIP}}});
+}
+function radar(id,labels,datasets){
+  var ds=datasets.map(function(d,i){var c=d.color||PAL[i%PAL.length];return{label:d.label||'',data:d.data,borderColor:c,backgroundColor:c+'22',pointBackgroundColor:c,borderWidth:2,pointRadius:4};});
+  return mk(id,{type:'radar',data:{labels:labels,datasets:ds},options:{responsive:true,maintainAspectRatio:false,animation:{duration:700},plugins:{legend:datasets.length>1?LEGEND_ON:LEGEND_OFF,tooltip:TOOLTIP},scales:{r:{grid:{color:'rgba(255,255,255,.05)'},angleLines:{color:'rgba(255,255,255,.05)'},pointLabels:{color:'#9A9490',font:{family:"'Inter',sans-serif",size:11}},ticks:{display:false}}}}});
+}
+function scatter(id,datasets,opts){
+  var ds=datasets.map(function(d,i){var c=d.color||PAL[i%PAL.length];return{label:d.label||'',data:d.data,backgroundColor:c+'BB',borderColor:c,borderWidth:1,pointRadius:d.r||6,pointHoverRadius:(d.r||6)+3};});
+  var base={type:'scatter',data:{datasets:ds},options:{responsive:true,maintainAspectRatio:false,animation:{duration:700},plugins:{legend:LEGEND_OFF,tooltip:TOOLTIP},scales:{x:sc(),y:sc()}}};
+  if(opts)applyOpts(base.options,opts);
+  return mk(id,base);
+}
+function bubble(id,datasets,opts){
+  var ds=datasets.map(function(d,i){var c=d.color||PAL[i%PAL.length];return{label:d.label||'',data:d.data,backgroundColor:c+'88',borderColor:c,borderWidth:1};});
+  var base={type:'bubble',data:{datasets:ds},options:{responsive:true,maintainAspectRatio:false,animation:{duration:700},plugins:{legend:LEGEND_OFF,tooltip:TOOLTIP},scales:{x:sc(),y:sc()}}};
+  if(opts)applyOpts(base.options,opts);
+  return mk(id,base);
+}
+
+function applyOpts(base,opts){
+  if(!opts)return;
+  if(opts.plugins){
+    if(opts.plugins.legend&&opts.plugins.legend.display===false)base.plugins.legend=LEGEND_OFF;
+    if(opts.plugins.tooltip&&opts.plugins.tooltip.callbacks)base.plugins.tooltip.callbacks=opts.plugins.tooltip.callbacks;
+  }
+  if(opts.scales){
+    Object.keys(opts.scales).forEach(function(k){
+      var ov=opts.scales[k];
+      if(!base.scales)base.scales={};
+      if(!base.scales[k])base.scales[k]=sc();
+      if(ov.ticks)Object.keys(ov.ticks).forEach(function(tk){base.scales[k].ticks[tk]=ov.ticks[tk];});
+      if(ov.min!=null)base.scales[k].min=ov.min;
+      if(ov.max!=null)base.scales[k].max=ov.max;
+      if(ov.stacked!=null)base.scales[k].stacked=ov.stacked;
+      if(ov.title)base.scales[k].title=Object.assign({display:true,color:'#9A9490',font:{size:11}},ov.title);
+    });
+  }
+  if(opts.indexAxis)base.indexAxis=opts.indexAxis;
+}
+
+/* ══ INTRO CANVAS ══ */
+(function(){
+  var cv=document.getElementById('intro-canvas');
+  var ctx=cv.getContext('2d');
+  var pts,w,h;
+  function rz(){w=cv.width=innerWidth;h=cv.height=innerHeight;}
+  function mk(){pts=Array.from({length:55},function(){return{x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*1.5+.8,a:Math.random()*.35+.1};});}
+  function draw(){
+    ctx.clearRect(0,0,w,h);
+    pts.forEach(function(p){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba(200,168,75,'+p.a+')';ctx.fill();});
+    for(var i=0;i<pts.length;i++)for(var j=i+1;j<pts.length;j++){var dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<110){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle='rgba(200,168,75,'+(0.06*(1-d/110))+')';ctx.lineWidth=.5;ctx.stroke();}}
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize',function(){rz();mk();},{passive:true});
+  rz();mk();draw();
+})();
+
+/* ══ EXPLORE BTN ══ */
+document.getElementById('explore-btn').addEventListener('click',function(){
+  var intro=document.getElementById('intro');
+  intro.style.transition='opacity .7s ease';intro.style.opacity='0';
+  setTimeout(function(){
+    intro.style.display='none';
+    document.getElementById('nav').style.display='flex';
+    document.getElementById('page').style.display='block';
+    requestAnimationFrame(function(){requestAnimationFrame(function(){setTimeout(initAll,80);});});
+  },700);
+});
+
+/* ══ PAGE NAVIGATION ══ */
+var currentPage='tourists';
+var chartsInit={};
+function showPage(name){
+  document.querySelectorAll('.page-section').forEach(function(el){el.style.display='none';});
+  var el=document.getElementById('p-'+name);if(el)el.style.display='block';
+  document.querySelectorAll('.nav-links a').forEach(function(a){a.classList.remove('active');});
+  var found=false;
+  document.querySelectorAll('.nav-links a').forEach(function(a){if(!found&&a.getAttribute('onclick')&&a.getAttribute('onclick').includes("'"+name+"'")){a.classList.add('active');found=true;}});
+  currentPage=name;
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(!chartsInit[name]){
+    chartsInit[name]=true;
+    setTimeout(function(){initPage(name);},60);
+  }
+  return false;
+}
+
+/* ══ TAB ══ */
+function tab(navId,panelId,btn){
+  var nav=document.getElementById(navId);
+  if(nav)nav.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+  if(btn)btn.classList.add('active');
+  var panel=document.getElementById(panelId);
+  if(!panel)return false;
+  var parent=panel.parentElement;
+  if(parent)parent.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});
+  panel.classList.add('active');
+  return false;
+}
+
+/* ══ THEME ══ */
+document.getElementById('theme-btn').addEventListener('click',function(){
+  var root=document.documentElement;
+  var dark=!root.getAttribute('data-dark');
+  root.setAttribute('data-dark',dark);
+  if(dark){
+    root.style.setProperty('--bg','#0B0D0F');root.style.setProperty('--bg2','#111418');root.style.setProperty('--bg3','#1A1E26');root.style.setProperty('--text','#E8E6E0');root.style.setProperty('--text2','#9A9490');
+    this.querySelector('i').className='fas fa-sun';
+  }else{
+    root.style.setProperty('--bg','#F7F3EC');root.style.setProperty('--bg2','#EEE9DF');root.style.setProperty('--bg3','#FDFAF5');root.style.setProperty('--text','#1A1714');root.style.setProperty('--text2','#5A534A');
+    this.querySelector('i').className='fas fa-moon';
+  }
+});
+
+/* ══ LEAFLET MAP ══ */
+var leafMap=null,mapLayer=null,mapData=null;
+function initMap(){
+  if(leafMap)return;
+  var el=document.getElementById('hero-map');if(!el)return;
+  leafMap=L.map('hero-map',{center:[22.5,82.5],zoom:4.5,zoomControl:false,scrollWheelZoom:false,attributionControl:true});
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{attribution:'&copy; CARTO &copy; OpenStreetMap',subdomains:'abcd',maxZoom:18}).addTo(leafMap);
+  L.control.zoom({position:'topright'}).addTo(leafMap);
+  mapData=D.states;
+  addCityDots();
+  setTimeout(function(){leafMap.invalidateSize();},200);
+}
+function addCityDots(){
+  var cities=[{n:'Delhi',lat:28.61,lng:77.21,c:'#E8770A'},{n:'Mumbai',lat:19.08,lng:72.88,c:'#C8A84B'},{n:'Kolkata',lat:22.57,lng:88.36,c:'#40916C'},{n:'Chennai',lat:13.08,lng:80.27,c:'#7B9EA6'},{n:'Bengaluru',lat:12.97,lng:77.59,c:'#E8770A'},{n:'Agra',lat:27.18,lng:78.01,c:'#C8A84B'},{n:'Varanasi',lat:25.32,lng:82.97,c:'#B5470B'},{n:'Jaipur',lat:26.91,lng:75.79,c:'#C8A84B'},{n:'Goa',lat:15.30,lng:74.12,c:'#40916C'},{n:'Kochi',lat:9.93,lng:76.27,c:'#40916C'},{n:'Amritsar',lat:31.63,lng:74.87,c:'#B5470B'},{n:'Rishikesh',lat:30.09,lng:78.27,c:'#7B9EA6'}];
+  cities.forEach(function(city){
+    var icon=L.divIcon({className:'',html:'<div style="width:9px;height:9px;background:'+city.c+';border:2px solid rgba(255,255,255,.25);border-radius:50%;box-shadow:0 0 8px '+city.c+'66;"></div>',iconSize:[9,9],iconAnchor:[4,4]});
+    L.marker([city.lat,city.lng],{icon:icon}).addTo(leafMap).bindTooltip('<span style="font-family:\'Inter\',sans-serif;font-size:12px;background:#1C2028;color:#E8E6E0;padding:4px 10px;border-radius:4px;border:1px solid rgba(200,168,75,.25)">'+city.n+'</span>',{permanent:false,direction:'top',offset:[0,-8],opacity:1,className:''});
+  });
+}
+function switchLayer(layer,btn){
+  document.querySelectorAll('.ml-btn').forEach(function(b){b.classList.remove('active');});
+  if(btn)btn.classList.add('active');
+}
+
+/* ══ SPARKLINE — uses fixed dimensions, works on injected canvases ══ */
+function sparklineFix(id,data,color){
+  var c=document.getElementById(id);if(!c||!data||data.length<2)return;
+  /* use explicit pixel size — don't rely on offsetWidth of injected canvas */
+  var W=160,H=28;
+  c.width=W*devicePixelRatio; c.height=H*devicePixelRatio;
+  c.style.width=W+'px'; c.style.height=H+'px';
+  var ctx=c.getContext('2d');
+  ctx.scale(devicePixelRatio,devicePixelRatio);
+  var mn=Math.min.apply(null,data),mx=Math.max.apply(null,data),rng=mx-mn||1;
+  var pad=2;
+  var pts=data.map(function(v,i){return{x:pad+(i/(data.length-1))*(W-pad*2),y:H-pad-((v-mn)/rng)*(H-pad*2)};});
+  ctx.beginPath();ctx.moveTo(pts[0].x,H);pts.forEach(function(p){ctx.lineTo(p.x,p.y);});ctx.lineTo(pts[pts.length-1].x,H);ctx.closePath();
+  var g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,color+'44');g.addColorStop(1,color+'00');ctx.fillStyle=g;ctx.fill();
+  ctx.beginPath();pts.forEach(function(p,i){i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y);});
+  ctx.strokeStyle=color;ctx.lineWidth=1.5;ctx.lineJoin='round';ctx.stroke();
+}
+/* keep old sparkline as alias */
+function sparkline(id,data,color){sparklineFix(id,data,color);}
+
+/* ══ KPI COUNTER — supports prefix ══ */
+function counter(el,target,dec,pre){
+  if(!el)return;
+  pre=pre||'';
+  var dur=1400,t0=performance.now();
+  (function step(now){
+    var prog=Math.min((now-t0)/dur,1);
+    var ease=1-Math.pow(1-prog,3);
+    var val=target*ease;
+    el.textContent=pre+(dec>0?val.toFixed(dec):Math.round(val).toLocaleString());
+    if(prog<1)requestAnimationFrame(step);
+  })(t0);
+}
+
+
+/* ══ TOURISTS INIT ══ */
+function initTourists(){
+  var t10=D.countries.slice(0,10);
+  hbar('c-top10',t10.map(function(c){return c.c;}),[{label:'Arrivals (K)',data:t10.map(function(c){return c.arr;}),colors:PAL}],{plugins:{legend:{display:false}},scales:{x:{ticks:{callback:function(v){return v+'K';}}}}});
+  donut('c-cont-donut',D.continents.map(function(c){return c.n;}),D.continents.map(function(c){return c.v;}),PAL);
+  bar('c-cont-bar',D.continents.map(function(c){return c.n;}),[{label:'Arrivals (K)',data:D.continents.map(function(c){return c.v;}),colors:PAL}],{plugins:{legend:{display:false}}});
+  var rec=[62,55,44,48,35,57];
+  bar('c-cont-rec',D.continents.map(function(c){return c.n;}),[{label:'Recovery %',data:rec,colors:rec.map(function(v){return v>55?'#40916C':'#E8770A';})}],{plugins:{legend:{display:false}},scales:{y:{max:100,ticks:{callback:function(v){return v+'%';}}}}});
+  var asian=D.countries.filter(function(c){return c.cont==='Asia';}).slice(0,6);
+  hbar('c-asia',asian.map(function(c){return c.c;}),[{label:'K',data:asian.map(function(c){return c.arr;}),color:'#E8770A'}],{plugins:{legend:{display:false}}});
+  var gw=D.economy.gateways;
+  hbar('c-gw-bar',gw.map(function(g){return g.n;}),[{label:'K',data:gw.map(function(g){return g.v;}),colors:PAL}],{plugins:{legend:{display:false}}});
+  donut('c-gw-donut',gw.map(function(g){return g.n;}),gw.map(function(g){return g.v;}),PAL);
+  var tYears=[2017,2018,2019,2020,2021,2022];
+  var trend5={Bangladesh:[754.9,888.0,1129.9,242.3,215.6,1993.1],USA:[1267.6,1332.1,1436.0,259.9,143.8,631.4],UK:[940.9,1000.7,1071.3,181.0,104.5,453.1],Canada:[368.1,395.7,431.9,60.3,38.8,188.9],Australia:[326.0,361.8,387.9,70.4,42.1,198.6]};
+  line('c-market-trend',tYears,Object.keys(trend5).map(function(k,i){return{label:k,data:trend5[k],color:PAL[i]};}));
+  area('c-fta-trend',D.nat.yearly.map(function(y){return y.y;}),[{label:'FTA (M)',data:D.nat.yearly.map(function(y){return y.fta;}),color:'#E8770A'}],{plugins:{legend:{display:false}}});
+  donut('c-purpose',['Leisure','Business','Pilgrimage','Medical','Visit F&R','Education','Other'],[41,15,18,6,10,3,7],PAL);
+  sbar('c-purpose-reg',['Asia','Europe','Americas','Middle East','Oceania'],[{label:'Leisure',data:[35,58,62,40,70],color:'#E8770A'},{label:'Business',data:[18,20,16,32,14],color:'#C8A84B'},{label:'Pilgrimage',data:[25,8,6,10,4],color:'#40916C'},{label:'Other',data:[22,14,16,18,12],color:'#7B9EA6'}]);
+  /* table */
+  var tb=document.getElementById('tb-countries');
+  if(tb)tb.innerHTML=D.countries.map(function(c){var chg=((c.arr-c.prev)/c.prev*100).toFixed(1);var pos=parseFloat(chg)>=0;return '<tr><td>'+c.r+'</td><td>'+c.c+'</td><td>'+c.cont+'</td><td style="text-align:right;font-weight:600">'+c.arr.toFixed(1)+'K</td><td style="text-align:right">'+c.shr+'%</td><td style="text-align:right;color:'+(pos?'var(--pos)':'var(--neg)')+';">'+(pos?'+':'')+chg+'%</td></tr>';}).join('');
+}
+
+/* ══ DESTINATIONS INIT ══ */
+function initDestinations(){
+  var dests=D.destinations;
+  var sorted=[...dests].sort(function(a,b){return (b.dom+b.for)-(a.dom+a.for);});
+  hbar('c-dest-total',sorted.map(function(d){return d.n.split(' ')[0];}),[{label:'Total (M)',data:sorted.map(function(d){return+(d.dom+d.for).toFixed(2);}),colors:PAL}],{plugins:{legend:{display:false}}});
+  var cc={};dests.forEach(function(d){cc[d.cat]=(cc[d.cat]||0)+1;});
+  donut('c-dest-cats',Object.keys(cc),Object.values(cc),PAL);
+  sbar('c-dest-split',sorted.slice(0,8).map(function(d){return d.n.split(' ')[0];}),[{label:'Domestic',data:sorted.slice(0,8).map(function(d){return d.dom;}),color:'#E8770A'},{label:'Foreign',data:sorted.slice(0,8).map(function(d){return d.for;}),color:'#C8A84B'}]);
+  /* filters */
+  var cats=['All','Heritage','Spiritual','Nature','Beach','Wildlife','Adventure'];
+  var fEl=document.getElementById('dest-filters');
+  if(fEl){
+    fEl.innerHTML=cats.map(function(c){return '<button class="chip'+(c==='All'?' on':'')+'" onclick="filterDests(\''+c+'\',this)">'+c+'</button>';}).join('');
+  }
+  renderDests('All');
+}
+var openDestId=null;
+function filterDests(cat,btn){
+  document.querySelectorAll('#dest-filters .chip').forEach(function(b){b.classList.remove('on');});
+  if(btn)btn.classList.add('on');
+  renderDests(cat);
+}
+function renderDests(cat){
+  var dests=cat==='All'?D.destinations:D.destinations.filter(function(d){return d.cat===cat;});
+  var grid=document.getElementById('dest-grid');if(!grid)return;
+  grid.innerHTML=dests.map(function(d){
+    var tot=+(d.dom+d.for).toFixed(2);
+    return '<div class="dest-card'+(openDestId===d.id?' open':'')+'" onclick="openDest(\''+d.id+'\')" tabindex="0"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="background:rgba(232,119,10,.1);border:1px solid rgba(232,119,10,.25);border-radius:20px;padding:2px 8px;font-size:.6rem;font-weight:700;color:var(--saffron)">'+d.cat+'</span></div><p style="font-family:\'Playfair Display\',serif;font-size:1.05rem;font-weight:700;margin-bottom:3px">'+d.n+'</p><p style="font-size:.7rem;color:var(--text2);margin-bottom:10px">'+d.s+' · '+d.key+'</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div style="background:var(--bg4);border-radius:6px;padding:8px 10px"><p style="font-family:\'Playfair Display\',serif;font-size:.9rem;font-weight:700">'+tot+'M</p><p style="font-size:.58rem;color:var(--text2);text-transform:uppercase;letter-spacing:.08em">Total Visits</p></div><div style="background:var(--bg4);border-radius:6px;padding:8px 10px"><p style="font-family:\'Playfair Display\',serif;font-size:.9rem;font-weight:700">'+(d.dom/(d.dom+d.for)*100).toFixed(0)+'%</p><p style="font-size:.58rem;color:var(--text2);text-transform:uppercase;letter-spacing:.08em">Domestic</p></div></div><p style="font-size:.65rem;color:var(--text3);margin-top:8px">Peak: '+d.peak.slice(0,3).join(', ')+'</p></div>';
+  }).join('');
+}
+function openDest(id){
+  var d=D.destinations.find(function(x){return x.id===id;});if(!d)return;
+  openDestId=id;
+  var MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var SI={Jan:7,Feb:8,Mar:7,Apr:5,May:3,Jun:2,Jul:2,Aug:2,Sep:4,Oct:7,Nov:9,Dec:9};
+  var seasons=MONTHS.map(function(m){return SI[m]*(d.peak.includes(m)?1.5:.5);});
+  var maxS=Math.max.apply(null,seasons);
+  var panel=document.getElementById('dest-detail');if(!panel)return;
+  panel.innerHTML='<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;flex-wrap:wrap;gap:10px"><div><p style="font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:5px">'+d.cat+' · '+d.s+'</p><h2 style="font-family:\'Playfair Display\',serif;font-size:clamp(1.3rem,3vw,2rem);font-weight:700;margin-bottom:5px">'+d.n+'</h2><p style="font-size:.83rem;color:var(--text2);max-width:540px;line-height:1.55">'+d.desc+'</p></div><button onclick="closeDestPanel()" style="background:var(--bg4);border:1px solid var(--border);border-radius:4px;padding:5px 12px;color:var(--text2);cursor:pointer;font-size:.72rem">Close</button></div>'
+  +'<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-bottom:18px"><div class="kpi-card" style="padding:10px 12px"><p class="kpi-label">Domestic</p><p class="kpi-val" style="font-size:1.2rem">'+d.dom+'M</p></div><div class="kpi-card" style="padding:10px 12px"><p class="kpi-label">Foreign</p><p class="kpi-val" style="font-size:1.2rem">'+d.for+'M</p></div><div class="kpi-card" style="padding:10px 12px"><p class="kpi-label">Dom. Share</p><p class="kpi-val" style="font-size:1.2rem">'+(d.dom/(d.dom+d.for)*100).toFixed(0)+'%</p></div><div class="kpi-card" style="padding:10px 12px"><p class="kpi-label">Peak</p><p class="kpi-val" style="font-size:.95rem">'+d.peak.slice(0,2).join(', ')+'</p></div></div>'
+  +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px"><div class="chart-card"><div class="chart-head"><p class="chart-title">Visitor Trend</p></div><div class="chart-body"><canvas id="cd-trend" height="160"></canvas></div></div><div class="chart-card"><div class="chart-head"><p class="chart-title">Visitor Mix</p></div><div class="chart-body"><canvas id="cd-mix" height="160"></canvas></div></div></div>'
+  +'<div class="chart-card"><div class="chart-head"><p class="chart-title">Seasonality (Derived)</p></div><div style="padding:14px 18px"><div style="display:flex;gap:2px;align-items:flex-end;height:44px">'+MONTHS.map(function(m,i){return '<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;border-radius:2px 2px 0 0;min-height:2px;height:'+(Math.max(2,(seasons[i]/maxS*40).toFixed(0)))+'px;background:'+(d.peak.includes(m)?'var(--saffron)':'var(--border)')+';"></div><span style="font-size:.5rem;color:var(--text3)">'+m+'</span></div>';}).join('')+'</div><p style="font-size:.62rem;color:var(--text3);margin-top:6px">Derived from peak month classification · Not measured monthly data</p></div></div>';
+  panel.classList.add('open');
+  panel.scrollIntoView({behavior:'smooth',block:'start'});
+  setTimeout(function(){
+    area('cd-trend',[2017,2018,2019,2020,2021,2022],[{label:'M',data:d.trend,color:'#E8770A'}],{plugins:{legend:{display:false}}});
+    donut('cd-mix',['Domestic','Foreign'],[d.dom,d.for],['#E8770A','#C8A84B']);
+  },60);
+}
+function closeDestPanel(){openDestId=null;var p=document.getElementById('dest-detail');if(p)p.classList.remove('open');}
+
+/* ══ STATES INIT ══ */
+var selStates=['Kerala','Rajasthan','Goa'];
+function initStates(){
+  var st=D.states,byDtv=[...st].sort(function(a,b){return b.dtv-a.dtv;});
+  hbar('c-state-rank-d',byDtv.slice(0,10).map(function(s){return s.n.replace(' Pradesh','');}), [{label:'Domestic (M)',data:byDtv.slice(0,10).map(function(s){return s.dtv;}),colors:PAL}],{plugins:{legend:{display:false}}});
+  hbar('c-state-rank-f',[...st].sort(function(a,b){return b.fta-a.fta;}).slice(0,10).map(function(s){return s.n.replace(' Pradesh','');}), [{label:'Foreign (M)',data:[...st].sort(function(a,b){return b.fta-a.fta;}).slice(0,10).map(function(s){return s.fta;}),colors:PAL}],{plugins:{legend:{display:false}}});
+  var wr=st.filter(function(s){return s.dtv19;}).map(function(s){return{n:s.n.replace(' Pradesh','').replace('Himachal','HP'),r:+(s.dtv/s.dtv19*100).toFixed(1)};}).sort(function(a,b){return b.r-a.r;});
+  bar('c-recovery',wr.map(function(s){return s.n;}),[{label:'%',data:wr.map(function(s){return s.r;}),colors:wr.map(function(s){return s.r>=100?'#40916C':s.r>=70?'#E8770A':'#E05252';})}],{plugins:{legend:{display:false}},scales:{y:{ticks:{callback:function(v){return v+'%';}}},x:{ticks:{maxRotation:35,font:{size:9}}}}});
+  /* chips */
+  var el=document.getElementById('state-chips');if(!el)return;
+  el.innerHTML=st.map(function(s){return '<button class="chip'+(selStates.includes(s.n)?' on':'')+'" onclick="toggleState(\''+s.n+'\',this)">'+s.n+'</button>';}).join('');
+  updateStateCmp();
+}
+function toggleState(name,btn){
+  if(selStates.includes(name)){if(selStates.length<=2)return;selStates=selStates.filter(function(x){return x!==name;});btn.classList.remove('on');}
+  else{if(selStates.length>=5)return;selStates.push(name);btn.classList.add('on');}
+  updateStateCmp();
+}
+function updateStateCmp(){
+  var st=D.states,sel=st.filter(function(s){return selStates.includes(s.n);});
+  var clrs=sel.map(function(_,i){return PAL[i%PAL.length];});
+  var nm=sel.map(function(s){return s.n.replace(' Pradesh','');});
+  bar('c-cmp-d',nm,[{label:'Domestic (M)',data:sel.map(function(s){return s.dtv;}),colors:clrs}],{plugins:{legend:{display:false}},scales:{y:{ticks:{callback:function(v){return v+'M';}}}}});
+  bar('c-cmp-2yr',nm,[{label:'2019',data:sel.map(function(s){return s.dtv19||null;}),color:'#5C7C6A'},{label:'2022',data:sel.map(function(s){return s.dtv;}),color:'#E8770A'}],{scales:{y:{ticks:{callback:function(v){return v+'M';}}}}});
+  var allD=D.states.map(function(s){return s.dtv;}),allF=D.states.map(function(s){return s.fta;}),allG=D.states.map(function(s){return s.gr||0;});
+  var mnD=Math.min.apply(null,allD),mxD=Math.max.apply(null,allD),mnF=Math.min.apply(null,allF),mxF=Math.max.apply(null,allF),mnG=Math.min.apply(null,allG),mxG=Math.max.apply(null,allG);
+  function nrm(v,mn,mx){return mx===mn?5:+((v-mn)/(mx-mn)*10).toFixed(1);}
+  radar('c-cmp-radar',['Domestic','Foreign','Growth','Destinations','Categories'],sel.map(function(s,i){return{label:nm[i],data:[nrm(s.dtv,mnD,mxD),nrm(s.fta,mnF,mxF),nrm(s.gr||0,mnG,mxG),nrm((s.dests||[]).length,0,8),nrm((s.cats||[]).length,0,5)],color:clrs[i]};}));
+  bar('c-cmp-rec',nm,[{label:'Recovery %',data:sel.map(function(s){return s.dtv19?+(s.dtv/s.dtv19*100).toFixed(1):null;}),colors:clrs}],{plugins:{legend:{display:false}},scales:{y:{ticks:{callback:function(v){return v+'%';}}}}});
+  var pg=document.getElementById('state-profiles-grid');
+  if(pg)pg.innerHTML=sel.map(function(s){return '<div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:18px"><p style="font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:5px">'+(s.cats||[]).join(' · ')+'</p><p style="font-family:\'Playfair Display\',serif;font-size:1.05rem;font-weight:700;margin-bottom:3px">'+s.n+'</p><p style="font-size:.72rem;color:var(--text2);margin-bottom:12px">'+s.tag+'</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px"><div style="background:var(--bg4);border-radius:6px;padding:8px 10px"><p style="font-family:\'Playfair Display\',serif;font-size:1.1rem;font-weight:700">'+s.dtv+'M</p><p style="font-size:.6rem;color:var(--text2);text-transform:uppercase;letter-spacing:.08em">Domestic</p></div><div style="background:var(--bg4);border-radius:6px;padding:8px 10px"><p style="font-family:\'Playfair Display\',serif;font-size:1.1rem;font-weight:700">'+s.fta+'M</p><p style="font-size:.6rem;color:var(--text2);text-transform:uppercase;letter-spacing:.08em">Foreign</p></div></div><p style="font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:6px">Top Destinations</p><div style="display:flex;flex-wrap:wrap;gap:5px">'+(s.dests||[]).map(function(d){return '<span style="background:var(--bg4);border:1px solid var(--border);border-radius:4px;padding:2px 7px;font-size:.62rem;color:var(--text2)">'+d+'</span>';}).join('')+'</div><p style="font-size:.6rem;color:var(--text3);margin-top:8px">Source: Ministry of Tourism · 2022</p></div>';}).join('');
+}
+
+/* ══ ECONOMY INIT ══ */
+function initEconomy(){
+  var ec=D.economy,fx=ec.forex,gdp=ec.gdp,emp=ec.emp;
+  var fxLb=fx.map(function(r){return r.y;});
+  area('c-fx-trend',fxLb,[{label:'Forex USD B',data:fx.map(function(r){return r.usd;}),color:'#C8A84B'}],{plugins:{legend:{display:false}},scales:{y:{ticks:{callback:function(v){return '$'+v+'B';}}}}});
+  var gr=fx.map(function(r,i){return i===0?null:+((r.usd-fx[i-1].usd)/fx[i-1].usd*100).toFixed(1);});
+  bar('c-fx-growth',fxLb,[{label:'%',data:gr,colors:gr.map(function(g){return g===null?'transparent':g>=0?'#40916C':'#E05252';})}],{plugins:{legend:{display:false}},scales:{y:{ticks:{callback:function(v){return v+'%';}}}}});
+  var gYr=gdp.map(function(r){return r.y;});
+  line('c-gdp-pct',gYr,[{label:'Total %',data:gdp.map(function(r){return r.tot;}),color:'#E8770A'},{label:'Direct %',data:gdp.map(function(r){return r.dir;}),color:'#C8A84B'}],{scales:{y:{ticks:{callback:function(v){return v+'%';}}}}});
+  sbar('c-gdp-split',gYr,[{label:'Direct',data:gdp.map(function(r){return r.dinr;}),color:'#E8770A'},{label:'Indirect',data:gdp.map(function(r){return(r.tot/r.dir*r.dinr)-r.dinr;}),color:'#C8A84B'}]);
+  bar('c-gdp-abs',gYr,[{label:'Direct INR B',data:gdp.map(function(r){return r.dinr;}),color:'#40916C'}],{plugins:{legend:{display:false}}});
+  var lg=gdp[gdp.length-1];donut('c-gdp-donut',['Direct','Indirect'],[lg.dir,lg.tot-lg.dir],['#E8770A','#C8A84B']);
+  var eYr=emp.map(function(r){return r.y;});
+  line('c-emp-trend',eYr,[{label:'Total (M)',data:emp.map(function(r){return r.tot;}),color:'#40916C'},{label:'Direct (M)',data:emp.map(function(r){return r.dir;}),color:'#E8770A'}],{scales:{y:{ticks:{callback:function(v){return v+'M';}}}}});
+  var le=emp[emp.length-1];donut('c-emp-donut',['Direct','Indirect'],[le.dir,le.tot-le.dir],['#E8770A','#40916C']);
+  donut('c-spend2-donut',['Accommodation','Food & Bev','Transport','Shopping','Entertainment','Other'],[28,22,18,14,8,10],PAL);
+  hbar('c-spend2-bar',['Accommodation','Food & Bev','Transport','Shopping','Entertainment','Other'],[{label:'%',data:[28,22,18,14,8,10],colors:PAL}],{plugins:{legend:{display:false}}});
+}
+
+/* ══ CULTURE INIT ══ */
+function initCulture(){
+  var m=D.heritage.monuments;
+  hbar('c-monuments',m.map(function(x){return x.n.split(' ')[0];}),[{label:'Domestic (M)',data:m.map(function(x){return x.dom;}),colors:PAL}],{plugins:{legend:{display:false}}});
+  var at=D.heritage.asiTrend;
+  sbar('c-asi-trend',at.map(function(r){return r.y;}),[{label:'Domestic (M)',data:at.map(function(r){return r.dom;}),color:'#E8770A'},{label:'Foreign (M)',data:at.map(function(r){return r.for;}),color:'#C8A84B'}]);
+  sbar('c-mon-split',m.map(function(x){return x.n.split(' ')[0];}),[{label:'Domestic',data:m.map(function(x){return x.dom;}),color:'#E8770A'},{label:'Foreign',data:m.map(function(x){return x.for;}),color:'#C8A84B'}]);
+  donut('c-unesco',['Cultural','Natural','Mixed'],[26,7,9],['#C8A84B','#40916C','#7B9EA6']);
+  var pl=[{n:'Amritsar',v:7.8},{n:'Varanasi',v:7.2},{n:'Tirupati',v:6.5},{n:'Shirdi',v:5.2},{n:'Puri',v:4.8},{n:'Haridwar',v:4.2},{n:'Ayodhya',v:3.8},{n:'Bodh Gaya',v:2.1}];
+  hbar('c-pilgrim',pl.map(function(p){return p.n;}),[{label:'M',data:pl.map(function(p){return p.v;}),colors:PAL}],{plugins:{legend:{display:false}}});
+  bar('c-spir-state',['UP','Punjab','AP','Odisha','UK','Bihar','Maha'],[{label:'M',data:[15.0,8.0,6.5,4.8,4.2,3.4,3.1],colors:PAL}],{plugins:{legend:{display:false}}});
+  donut('c-faith',['Hindu','Buddhist','Sikh','Jain','Sufi','Christian','Other'],[52,14,12,6,8,5,3],PAL);
+  donut('c-pa',['National Parks','Sanctuaries','Tiger Reserves','Biosphere'],[106,551,54,18],['#40916C','#2D6A4F','#E8770A','#C8A84B']);
+  line('c-tiger',[1973,1984,1993,2006,2014,2018,2022,2023],[{label:'Tiger Reserves',data:[9,15,18,28,47,50,52,54],color:'#E8770A'}],{plugins:{legend:{display:false}}});
+  hbar('c-wild-state',['Madhya Pradesh','Uttarakhand','Rajasthan','Assam','Karnataka','Maharashtra','Kerala'],[{label:'Score',data:[9,8,8,7,7,6,7],color:'#40916C'}],{plugins:{legend:{display:false}},scales:{x:{ticks:{callback:function(v){return v+'/10';}}}}});
+  var dnaCats=['Heritage','Culture','Spiritual','Nature','Wildlife','Beaches','Adventure','Wellness','Festivals','Food','Medical','Shopping'];
+  var dnaScores=[9.5,9.0,9.2,8.8,8.5,7.5,7.8,8.2,9.0,8.8,7.6,7.4];
+  radar('c-dna-radar',dnaCats,[{label:'India Tourism',data:dnaScores,color:'#E8770A'}]);
+  hbar('c-dna-bar',dnaCats,[{label:'Score',data:dnaScores,colors:PAL}],{plugins:{legend:{display:false}},scales:{x:{ticks:{callback:function(v){return v+'/10';}}}}});
+}
+
+/* ══ INFRASTRUCTURE INIT ══ */
+function initInfrastructure(){
+  var inf=D.infrastructure;
+  bar('c-hotel-cats',inf.hotels.map(function(h){return h.cat;}),[{label:'Hotels',data:inf.hotels.map(function(h){return h.h;}),colors:PAL}],{plugins:{legend:{display:false}}});
+  area('c-hotel-trend',inf.hotelTrend.map(function(r){return r.y;}),[{label:'Hotels',data:inf.hotelTrend.map(function(r){return r.h;}),color:'#C8A84B'}],{plugins:{legend:{display:false}}});
+  hbar('c-hotel-rooms',inf.hotels.map(function(h){return h.cat;}),[{label:'Rooms',data:inf.hotels.map(function(h){return h.r;}),colors:PAL}],{plugins:{legend:{display:false}}});
+  donut('c-hotel-donut',['5★+','4★','3★','2★','1★','Heritage','Approved'],[341,385,1840,1927,780,128,5135],PAL);
+  hbar('c-airports',inf.airports.map(function(a){return a.n;}),[{label:'Passengers (M)',data:inf.airports.map(function(a){return a.v;}),colors:PAL}],{plugins:{legend:{display:false}}});
+  donut('c-ap-split',['International','Domestic'],[34,114],['#E8770A','#C8A84B']);
+  var proj=D.projects;
+  var statuses=['Completed','Ongoing','Planned'];
+  var sCounts=statuses.map(function(s){return proj.filter(function(p){return p.status===s;}).length;});
+  donut('c-proj-status',statuses,sCounts,['#40916C','#E8770A','#9A9490']);
+  var cats=['Spiritual','Adventure','Heritage','Eco-Tourism','Beach','Wildlife','Tribal','Rural'];
+  var cCounts=cats.map(function(c){return proj.filter(function(p){return p.cat===c;}).length;});
+  donut('c-proj-cats',cats,cCounts,PAL);
+  var cInv=cats.map(function(c){return proj.filter(function(p){return p.cat===c;}).reduce(function(s,p){return s+p.inv;},0);});
+  hbar('c-proj-invest',cats,[{label:'₹Crore',data:cInv,colors:PAL}],{plugins:{legend:{display:false}}});
+  var tb=document.getElementById('tb-projects');
+  if(tb)tb.innerHTML=proj.map(function(p){var sc=p.status==='Completed'?'color:var(--pos)':p.status==='Ongoing'?'color:var(--saffron)':'color:var(--text2)';return '<tr><td>'+p.n+'</td><td>'+p.sc+'</td><td>'+p.st.replace(' Pradesh','').replace('Himachal','HP')+'</td><td>'+p.cat+'</td><td style="text-align:right;font-weight:600">₹'+p.inv+'Cr</td><td style="'+sc+';font-weight:600;font-size:.72rem">'+p.status+'</td></tr>';}).join('');
+}
+
+/* ══ SUSTAINABILITY INIT ══ */
+function initSustainability(){
+  var pr=[...D.sustainability.pressure].sort(function(a,b){return b.idx-a.idx;});
+  bar('c-pressure',pr.map(function(s){return s.s.replace(' Pradesh','').replace('Himachal','HP');}),[{label:'Index',data:pr.map(function(s){return s.idx;}),colors:pr.map(function(s){return s.idx>8?'#E05252':s.idx>6?'#E8770A':'#40916C';})}],{plugins:{legend:{display:false}},scales:{y:{max:10,ticks:{callback:function(v){return v+'/10';}}},x:{ticks:{maxRotation:30,font:{size:9}}}}});
+  scatter('c-pressure-scatter',[{label:'States',data:pr.map(function(s){return{x:s.v,y:+(s.area/1000).toFixed(0)};}),color:'#E8770A',r:6}],{plugins:{tooltip:{callbacks:{label:function(ctx){return pr.find(function(p){return p.v===ctx.raw.x;})?pr.find(function(p){return p.v===ctx.raw.x;}).s:'';}}}},scales:{x:{title:{display:true,text:'Visitors (M)',color:'#9A9490',font:{size:11}}},y:{title:{display:true,text:'Area (thou. km²)',color:'#9A9490',font:{size:11}}}}});
+  donut('c-pa2',['National Parks','Sanctuaries','Tiger Reserves','Biosphere'],[106,551,54,18],['#40916C','#2D6A4F','#E8770A','#C8A84B']);
+  line('c-tiger2',[1973,1984,1993,2006,2014,2018,2022,2023],[{label:'Tiger Reserves',data:[9,15,18,28,47,50,52,54],color:'#E8770A'}],{plugins:{legend:{display:false}}});
+  area('c-ramsar',[2000,2005,2010,2015,2019,2020,2021,2022,2023],[{label:'Ramsar Sites',data:[19,25,26,26,27,42,46,49,75],color:'#7B9EA6'}],{plugins:{legend:{display:false}}});
+  radar('c-sust-radar',['Protected Areas','Eco Infra','Low Pressure','Wildlife','Water Bodies','Gov. Init.'],[{label:'Kerala',data:[8,9,6,8,9,8],color:'#40916C'},{label:'Uttarakhand',data:[8,7,7,8,7,7],color:'#C8A84B'},{label:'HP',data:[9,7,8,7,6,7],color:'#E8770A'},{label:'MP',data:[9,6,7,9,6,8],color:'#7B9EA6'}]);
+  donut('c-eco-types',['Nature','Adventure','Cultural','Wildlife'],[4,2,2,1],['#40916C','#E8770A','#C8A84B','#7B9EA6']);
+}
+
+/* ══ INSIGHTS INIT ══ */
+function initInsights(){
+  var st=D.states,total=st.reduce(function(s,x){return s+x.dtv;},0);
+  var sorted=[...st].sort(function(a,b){return b.dtv-a.dtv;});
+  bar('c-pareto',sorted.map(function(s){return s.n.replace(' Pradesh','');}),[{label:'Share %',data:sorted.map(function(s){return+(s.dtv/total*100).toFixed(1);}),colors:sorted.map(function(_,i){return PAL[i%PAL.length];})}],{plugins:{legend:{display:false}},scales:{y:{ticks:{callback:function(v){return v+'%';}}},x:{ticks:{maxRotation:35,font:{size:9}}}}});
+  hbar('c-treemap',sorted.map(function(s){return s.n.replace(' Pradesh','');}),[{label:'Share %',data:sorted.map(function(s){return+(s.dtv/total*100).toFixed(1);}),colors:sorted.map(function(_,i){return PAL[i%PAL.length];})}],{plugins:{legend:{display:false}}});
+  var rec=st.filter(function(s){return s.dtv19;}).map(function(s){return{n:s.n,x:s.dtv,y:+(s.dtv/s.dtv19*100).toFixed(1)};});
+  scatter('c-emerg-scatter',[{label:'States',data:rec.map(function(r){return{x:r.x,y:r.y};}),color:'#E8770A',r:6}],{plugins:{tooltip:{callbacks:{label:function(ctx){return rec.find(function(r){return r.x===ctx.raw.x;})?rec.find(function(r){return r.x===ctx.raw.x;}).n:'';}}}},scales:{x:{title:{display:true,text:'2022 Visitors (M)',color:'#9A9490',font:{size:11}}},y:{title:{display:true,text:'Recovery vs 2019 (%)',color:'#9A9490',font:{size:11}}}}});
+  radar('c-emerg-radar',['Visitor Vol','Growth','Heritage','Infrastructure','Connectivity','Foreign Interest'],[{label:'Odisha',data:[5,8,9,6,5,6],color:'#E8770A'},{label:'Bihar',data:[6,8,9,5,5,7],color:'#C8A84B'},{label:'Assam',data:[4,7,8,5,6,6],color:'#40916C'},{label:'Karnataka',data:[7,6,9,7,8,8],color:'#7B9EA6'}]);
+  var eCards=[{n:'Hampi',s:'Karnataka',score:8.4,tags:['UNESCO Heritage','Adventure','Photography']},{n:'Ziro Valley',s:'Arunachal Pradesh',score:7.8,tags:['Tribal Culture','Nature','Bird Watching']},{n:'Majuli Island',s:'Assam',score:7.6,tags:['River Island','Satras','Wildlife']},{n:'Rann of Kutch',s:'Gujarat',score:8.2,tags:['Unique Landscape','Festival','Craft']},{n:'Spiti Valley',s:'Himachal Pradesh',score:8.0,tags:['High Altitude','Adventure','Buddhism']},{n:'Konark',s:'Odisha',score:7.9,tags:['UNESCO','Sculpture','Heritage']}];
+  var ecEl=document.getElementById('emerg-cards');
+  if(ecEl)ecEl.innerHTML=eCards.map(function(d){return '<div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:18px"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><div><p style="font-family:\'Playfair Display\',serif;font-size:1.05rem;font-weight:700">'+d.n+'</p><p style="font-size:.7rem;color:var(--text2)">'+d.s+'</p></div><span style="background:rgba(232,119,10,.1);border:1px solid rgba(232,119,10,.25);border-radius:20px;padding:2px 8px;font-size:.6rem;font-weight:700;color:var(--saffron);align-self:flex-start">Rising</span></div><div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px">'+d.tags.map(function(t){return '<span style="background:var(--bg4);border:1px solid var(--border);border-radius:4px;padding:2px 7px;font-size:.62rem;color:var(--text2)">'+t+'</span>';}).join('')+'</div><div style="display:flex;align-items:center;gap:8px"><span style="font-size:.62rem;color:var(--text3)">Opportunity Score (derived):</span><span style="font-family:\'Playfair Display\',serif;font-weight:700">'+d.score+'/10</span></div></div>';}).join('');
+  var iScores={'Goa':8.5,'Delhi':8.2,'Maharashtra':7.8,'Rajasthan':7.5,'Karnataka':7.2,'Kerala':7.4,'Tamil Nadu':7.0,'Uttar Pradesh':6.8,'Himachal Pradesh':7.2,'Uttarakhand':6.9,'Gujarat':6.6,'Odisha':5.8,'Bihar':5.2,'West Bengal':6.4,'Punjab':6.2,'Assam':5.4};
+  var qd=st.map(function(s){return{x:s.dtv,y:iScores[s.n]||5.5,r:Math.sqrt(s.fta)*3+4,n:s.n};});
+  bubble('c-quadrant',[{label:'States',data:qd.map(function(d){return{x:d.x,y:d.y,r:d.r};}),color:'#E8770A'}],{plugins:{tooltip:{callbacks:{label:function(ctx){return qd[ctx.dataIndex]?qd[ctx.dataIndex].n:'';}}}},scales:{x:{title:{display:true,text:'Visitors (M)',color:'#9A9490',font:{size:11}}},y:{title:{display:true,text:'Infra Score (Derived)',color:'#9A9490',font:{size:11}},min:4,max:10}}});
+  bubble('c-opp-bubble',st.slice(0,10).map(function(s,i){return{label:s.n.replace(' Pradesh',''),data:[{x:s.dtv,y:iScores[s.n]||5.5,r:Math.sqrt(s.fta)*3+4}],color:PAL[i%PAL.length]};}),[]);
+  line('c-season-line',['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],[{label:'Seasonal Index',data:[100,95,88,70,55,45,48,52,65,90,98,105],color:'#E8770A'}],{plugins:{legend:{display:false}}});
+  bar('c-season-q',['Q1','Q2','Q3','Q4'],[{label:'Share %',data:[29.1,19.3,18.5,33.1],colors:['#E8770A','#7B9EA6','#5C7C6A','#C8A84B']}],{plugins:{legend:{display:false}},scales:{y:{ticks:{callback:function(v){return v+'%';}}}}});
+}
+
+/* ══ DATA LAB INIT ══ */
+function initDatalab(){
+  dlApply();cmpPopulate();
+}
+function dlApply(){
+  var ds=document.getElementById('dl-dataset').value;
+  var ct=document.getElementById('dl-chart').value;
+  var yr=D.nat.yearly,lb=yr.map(function(y){return y.y;});
+  var fn={line:line,bar:bar,area:area};var chartFn=fn[ct]||line;
+  if(ds==='national'){
+    document.getElementById('dl-title').textContent='National Tourism Trends';
+    chartFn('c-dl-main',lb,[{label:'FTA (M)',data:yr.map(function(y){return y.fta;}),color:'#E8770A'},{label:'Domestic (×100M)',data:yr.map(function(y){return+(y.dtv/100).toFixed(1);}),color:'#C8A84B'},{label:'Forex USD B',data:yr.map(function(y){return y.fx;}),color:'#40916C'}]);
+    dlSetStats([{v:yr[yr.length-1].y,l:'Latest Year'},{v:yr[yr.length-1].fta+'M',l:'FTA'},{v:'$'+yr[yr.length-1].fx+'B',l:'Forex'},{v:yr[yr.length-1].gdp+'%',l:'Tourism GDP'}]);
+    dlSetTable(['Year','FTA (M)','Domestic (M)','Forex USD B','GDP %','Employment (M)'],yr.map(function(y){return[y.y,y.fta,y.dtv,y.fx,y.gdp,y.emp];}));
+  }else if(ds==='states'){
+    var st=[...D.states].sort(function(a,b){return b.dtv-a.dtv;});
+    document.getElementById('dl-title').textContent='State-wise Tourism · 2022';
+    hbar('c-dl-main',st.map(function(s){return s.n.replace(' Pradesh','');}),[{label:'Domestic (M)',data:st.map(function(s){return s.dtv;}),colors:PAL}],{plugins:{legend:{display:false}}});
+    dlSetStats([{v:st.length,l:'States'},{v:st[0].dtv+'M',l:'Top Domestic'},{v:st[0].n.split(' ')[0],l:'Top State'}]);
+    dlSetTable(['State','Domestic (M)','Foreign (M)','Recovery %'],st.map(function(s){return[s.n,s.dtv,s.fta,s.dtv19?+(s.dtv/s.dtv19*100).toFixed(0)+'%':'—'];}));
+  }else if(ds==='countries'){
+    var cn=D.countries;
+    document.getElementById('dl-title').textContent='Source Countries · 2022';
+    hbar('c-dl-main',cn.map(function(c){return c.c;}),[{label:'Arrivals (K)',data:cn.map(function(c){return c.arr;}),colors:PAL}],{plugins:{legend:{display:false}}});
+    dlSetStats([{v:cn.length,l:'Countries'},{v:cn[0].c,l:'Top Market'},{v:cn[0].shr+'%',l:'Top Share'}]);
+    dlSetTable(['Rank','Country','Arrivals (K)','Share %','Continent'],cn.map(function(c){return[c.r,c.c,c.arr,c.shr+'%',c.cont];}));
+  }else{
+    var ec=D.economy;
+    document.getElementById('dl-title').textContent='Tourism Economy';
+    area('c-dl-main',ec.forex.map(function(r){return r.y;}),[{label:'Forex USD B',data:ec.forex.map(function(r){return r.usd;}),color:'#C8A84B'}],{plugins:{legend:{display:false}}});
+    dlSetStats([{v:'$'+ec.forex[ec.forex.length-1].usd+'B',l:'Latest Forex'},{v:ec.gdp[ec.gdp.length-1].tot+'%',l:'Tourism GDP'}]);
+    dlSetTable(['Year','Forex USD B','GDP Total %','GDP Direct %'],ec.forex.map(function(r){var g=ec.gdp.find(function(x){return x.y===r.y;});return[r.y,r.usd,g?g.tot:'—',g?g.dir:'—'];}));
+  }
+}
+function dlSetStats(items){
+  var el=document.getElementById('dl-stats');if(!el)return;
+  el.innerHTML=items.map(function(i){return '<div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 14px"><p style="font-family:\'Playfair Display\',serif;font-size:1.1rem;font-weight:700">'+i.v+'</p><p style="font-size:.6rem;color:var(--text2);text-transform:uppercase;letter-spacing:.1em">'+i.l+'</p></div>';}).join('');
+}
+function dlSetTable(headers,rows){
+  var th=document.getElementById('dl-thead'),tb=document.getElementById('dl-tbody');
+  if(th)th.innerHTML='<tr>'+headers.map(function(h){return '<th>'+h+'</th>';}).join('')+'</tr>';
+  if(tb)tb.innerHTML=rows.map(function(r){return '<tr>'+r.map(function(c){return '<td>'+(c!=null?c:'—')+'</td>';}).join('')+'</tr>';}).join('');
+}
+function dlReset(){document.getElementById('dl-dataset').selectedIndex=0;document.getElementById('dl-chart').selectedIndex=0;dlApply();}
+function dlExportCSV(){
+  var t=document.getElementById('dl-table');if(!t)return;
+  var rows=Array.from(t.querySelectorAll('tr'));
+  var csv=rows.map(function(r){return Array.from(r.querySelectorAll('th,td')).map(function(c){return'"'+c.textContent+'"';}).join(',');}).join('\n');
+  var blob=new Blob([csv],{type:'text/csv'});var link=document.createElement('a');link.href=URL.createObjectURL(blob);link.download='india-tourism-data.csv';link.click();
+}
+function dlExportChart(){
+  var c=document.getElementById('c-dl-main');if(!c)return;
+  var link=document.createElement('a');link.download='chart.png';link.href=c.toDataURL();link.click();
+}
+
+/* Compare */
+function cmpPopulate(){
+  var type=document.getElementById('cmp-type').value,opts=[];
+  if(type==='states')opts=D.states.map(function(s){return s.n;});
+  else opts=D.nat.yearly.map(function(y){return y.y;});
+  ['cmp-a','cmp-b'].forEach(function(id,idx){
+    var el=document.getElementById(id);if(!el)return;
+    el.innerHTML=opts.map(function(o,j){return '<option value="'+o+'"'+(j===idx?' selected':'')+'>'+o+'</option>';}).join('');
+  });
+  cmpRun();
+}
+function cmpRun(){
+  var type=document.getElementById('cmp-type').value,a=document.getElementById('cmp-a').value,b=document.getElementById('cmp-b').value;
+  if(type==='states'){
+    var sa=D.states.find(function(s){return s.n===a;}),sb=D.states.find(function(s){return s.n===b;});if(!sa||!sb)return;
+    bar('c-cmp-1',[a.replace(' Pradesh',''),b.replace(' Pradesh','')],[{label:'Domestic (M)',data:[sa.dtv,sb.dtv],colors:['#E8770A','#C8A84B']},{label:'Foreign (M)',data:[sa.fta,sb.fta],colors:['#B5470B','#40916C']}],{scales:{y:{ticks:{callback:function(v){return v+'M';}}}}});
+    radar('c-cmp-2',['Domestic','Foreign','Recovery','Destinations','Categories'],[{label:a.replace(' Pradesh',''),data:[sa.dtv/5,sa.fta*3,sa.dtv19?+(sa.dtv/sa.dtv19*10).toFixed(1):5,(sa.dests||[]).length*1.5,(sa.cats||[]).length*2],color:'#E8770A'},{label:b.replace(' Pradesh',''),data:[sb.dtv/5,sb.fta*3,sb.dtv19?+(sb.dtv/sb.dtv19*10).toFixed(1):5,(sb.dests||[]).length*1.5,(sb.cats||[]).length*2],color:'#C8A84B'}]);
+    var sumEl=document.getElementById('cmp-summary');if(sumEl)sumEl.innerHTML='<p style="font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:12px">Summary · Ministry of Tourism · 2022</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">'+[sa,sb].map(function(s){return '<div><p style="font-family:\'Playfair Display\',serif;font-size:1rem;font-weight:700;margin-bottom:8px">'+s.n+'</p><p style="font-size:.8rem;color:var(--text2);margin-bottom:4px"><strong>Domestic:</strong> '+s.dtv+'M</p><p style="font-size:.8rem;color:var(--text2);margin-bottom:4px"><strong>Foreign:</strong> '+s.fta+'M</p><p style="font-size:.8rem;color:var(--text2)"><strong>Recovery:</strong> '+(s.dtv19?+(s.dtv/s.dtv19*100).toFixed(0)+'%':'—')+'</p></div>';}).join('')+'</div><p style="font-size:.62rem;color:var(--text3);margin-top:12px">Analytical comparison — not a ranking. Source: Ministry of Tourism, GoI.</p>';
+  }else{
+    var ya=D.nat.yearly.find(function(y){return y.y==a;}),yb=D.nat.yearly.find(function(y){return y.y==b;});if(!ya||!yb)return;
+    bar('c-cmp-1',['FTA (M)','Domestic (M)','Forex B','GDP %'],[{label:String(a),data:[ya.fta,+(ya.dtv/100).toFixed(1),ya.fx,ya.gdp],color:'#E8770A'},{label:String(b),data:[yb.fta,+(yb.dtv/100).toFixed(1),yb.fx,yb.gdp],color:'#C8A84B'}]);
+    line('c-cmp-2',D.nat.yearly.map(function(y){return y.y;}),[{label:'FTA (M)',data:D.nat.yearly.map(function(y){return y.fta;}),color:'#E8770A'}],{plugins:{legend:{display:false}}});
+  }
+}
+document.getElementById('cmp-type').addEventListener('change',cmpPopulate);
+document.getElementById('cmp-a').addEventListener('change',cmpRun);
+document.getElementById('cmp-b').addEventListener('change',cmpRun);
+document.getElementById('cmp-metric').addEventListener('change',cmpRun);
+
+/* ══ MASTER INIT ══ */
+function initPage(name){
+  var fns={tourists:initTourists,destinations:initDestinations,states:initStates,economy:initEconomy,culture:initCulture,infrastructure:initInfrastructure,sustainability:initSustainability,insights:initInsights,datalab:initDatalab};
+  if(fns[name])try{fns[name]();}catch(e){console.error('Page init error:',name,e);}
+}
+function initAll(){
+  showPage('tourists');
+}
+</script>
+</body>
+</html>

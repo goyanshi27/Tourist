@@ -1,0 +1,205 @@
+/* ============================================================
+   INDIA IN MOTION — Responsive Design
+   ============================================================ */
+
+/* ── Breakpoints:
+   xs:  < 480px
+   sm:  480px – 767px
+   md:  768px – 1023px
+   lg:  1024px – 1279px
+   xl:  1280px+
+   ──────────────────────────────────────────────────────────── */
+
+/* ── Tablet (≤1023px) ────────────────────────────────────── */
+@media (max-width: 1023px) {
+  .nav-links { display: none; }
+  .mobile-menu-btn { display: flex; }
+
+  #hero-map-section {
+    grid-template-columns: 1fr;
+    grid-template-rows: 460px auto;
+  }
+
+  .hero-info-panel {
+    border-left: none;
+    border-top: 1px solid var(--border-subtle);
+    padding: var(--space-6);
+  }
+
+  .grid-4 { grid-template-columns: 1fr 1fr; }
+  .grid-3 { grid-template-columns: 1fr 1fr; }
+
+  .kpi-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+
+  .container-wide,
+  .container-xl { padding: 0 var(--space-5); }
+
+  .section-header { padding: var(--space-10) 0 var(--space-8); }
+
+  #state-detail-panel {
+    width: 100%;
+    right: -100%;
+    top: auto;
+    bottom: -100%;
+    height: 85vh;
+    border-left: none;
+    border-top: 1px solid var(--border-light);
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    transition: bottom var(--transition-slower), right 0s;
+  }
+
+  #state-detail-panel.open {
+    right: 0;
+    bottom: 0;
+  }
+
+  .display-hero {
+    font-size: clamp(2.5rem, 7vw, 5rem);
+  }
+}
+
+/* ── Mobile Landscape / Large Phone (≤767px) ─────────────── */
+@media (max-width: 767px) {
+  :root {
+    --space-8: 1.5rem;
+    --space-10: 2rem;
+    --space-12: 2.5rem;
+    --space-16: 3rem;
+  }
+
+  .container-wide,
+  .container-xl,
+  .container { padding: 0 var(--space-5); }
+
+  .grid-2 { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: 1fr; }
+  .grid-4 { grid-template-columns: 1fr 1fr; }
+  .grid-auto { grid-template-columns: 1fr; }
+
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+
+  .nav-inner { padding: 0 var(--space-4); }
+
+  .filter-bar {
+    gap: var(--space-2);
+    padding: var(--space-3);
+  }
+
+  .chart-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .chart-body { padding: var(--space-4); }
+
+  .section-title {
+    font-size: clamp(1.4rem, 5vw, 2rem);
+  }
+
+  .tab-nav {
+    gap: 0;
+  }
+
+  .tab-btn {
+    padding: 8px 14px;
+    font-size: 0.68rem;
+  }
+
+  .map-inner { height: 380px; }
+
+  .map-layer-controls {
+    flex-direction: row;
+    flex-wrap: wrap;
+    top: auto;
+    bottom: var(--space-4);
+    left: var(--space-4);
+    right: var(--space-4);
+    max-width: calc(100% - var(--space-8));
+  }
+
+  .rank-bar-item {
+    grid-template-columns: 20px 100px 1fr 60px;
+    gap: var(--space-2);
+  }
+
+  .rank-name { font-size: 0.75rem; }
+
+  .india360-wrapper { height: 450px; }
+
+  .story-section { min-height: auto; padding: var(--space-10) 0; }
+  .story-number { font-size: 5rem; }
+
+  .display-hero { font-size: clamp(2rem, 10vw, 3.5rem); }
+
+  /* Make charts horizontally scrollable when needed */
+  .chart-scroll-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    padding-bottom: var(--space-3);
+  }
+
+  .chart-scroll-inner {
+    min-width: 480px;
+  }
+
+  /* Tables */
+  .data-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Footer */
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+
+  .intro-title { font-size: clamp(2.8rem, 12vw, 5rem); }
+}
+
+/* ── Small Mobile (≤479px) ───────────────────────────────── */
+@media (max-width: 479px) {
+  .kpi-grid { grid-template-columns: 1fr; }
+  .grid-4   { grid-template-columns: 1fr; }
+
+  .kpi-value { font-size: 1.75rem; }
+
+  .filter-chip { font-size: 0.65rem; padding: 4px 10px; }
+
+  .nav-logo-sub { display: none; }
+
+  .footer-grid { grid-template-columns: 1fr; }
+
+  .chart-footer { flex-direction: column; align-items: flex-start; gap: var(--space-2); }
+
+  .map-inner { height: 300px; }
+
+  #hero-map-section { grid-template-rows: 340px auto; }
+}
+
+/* ── Large Desktop (≥1440px) ─────────────────────────────── */
+@media (min-width: 1440px) {
+  .kpi-grid { grid-template-columns: repeat(4, 1fr); }
+
+  #hero-map-section { grid-template-columns: 1fr 520px; }
+}
+
+/* ── Print ───────────────────────────────────────────────── */
+@media print {
+  #intro-screen,
+  #main-nav,
+  #search-overlay,
+  #cursor-light,
+  #scroll-progress,
+  .nav-controls,
+  .chart-actions,
+  .filter-bar,
+  .map-layer-controls { display: none !important; }
+
+  .page-wrapper { padding-top: 0; }
+
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  .chart-card { border: 1px solid #ccc; }
+}
